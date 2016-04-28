@@ -1,12 +1,12 @@
   [
     {
-        descriptionId: "987654",
-        descriptionTitle: "First text",
-        descriptionContent: "Hello World!"
+        id: "987654",
+        title: "First text",
+        content: "Hello World!"
     },
     {
-        descriptionId: "123456",
-        descriptionTitle: "Second text",
-        descriptionContent: "Nice to meet you!"
+        id: "123456",
+        title: "Second text",
+        content: "Nice to meet you!"
     }
 ]
