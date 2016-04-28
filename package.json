@@ -1,0 +1,28 @@
+{
+  "name": "falcorjs-tutorial",
+  "version": "1.0.0",
+  "description": "",
+  "main": "initData.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ReactConvention/falcorjs-tutorial.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ReactConvention/falcorjs-tutorial/issues"
+  },
+  "homepage": "https://github.com/ReactConvention/falcorjs-tutorial#readme",
+  "dependencies": {
+    "babel": "^4.7.16",
+    "babel-register": "^6.5.2",
+    "body-parser": "^1.15.0",
+    "cors": "^2.7.1",
+    "express": "^4.13.4",
+    "mongoose": "^4.4.14"
+  }
+}
