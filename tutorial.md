@@ -48,5 +48,17 @@ After executing this command we can view through Robomongo that data was succesf
 
 ### Now let's do server setup with NodeJS and Express.js
 
+First step is to initialze NPM project in our directory and create a server.js file in server directory:
+```
+npm init --yes
 
+mkdir server
+cd server
+touch index.js
+```
+
+Then install all necessary dependencies:
+```
+npm i express@4.13.4 babel@4.7.16 babel-register@6.5.2 cors@2.7.1 body-parser@1.15.0 --save
+```
 

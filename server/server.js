@@ -19,7 +19,7 @@ First argument is a name of a model?
 Second is that variable looking like some validation
 */
 
-var FalcorTutorial = mongoose.model('FalcorTutorial', tutorialSchema, 'falcor-descriptions')
+var FalcorTutorial = mongoose.model('FalcorTutorial', tutorialSchema, 'descriptions')
 
 var app = express();
 app.server = http.createServer(app);
@@ -36,7 +36,7 @@ app.get('/', (req, res) => {
     FalcorTutorial.find(function (err, tutorialDescriptions) {
 
         let ourDescriptions = tutorialDescriptions.map(function(tutorialItem){
-            return `<h2>${tutorialItem.title}</h2> ${tutorialItem.content}`;
+            return `<h2>${tutorialItem.title}</h2> <p>${tutorialItem.content}</p>`;
         }).join("<br/>");
 
         res.send(`<h1>Publishing App Initial Application!</h1> ${ourDescriptions}`);
