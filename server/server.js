@@ -7,9 +7,9 @@ import mongoose from 'mongoose';
 mongoose.connect('mongodb://localhost/local');
 
 var tutorialSchema = {
-    descriptionTitle:String,
-    descriptionContent: String,
-    descriptionId: Number
+    title:String,
+    content: String,
+    id: String
 }
 
 /*Explanations for me:
@@ -36,7 +36,7 @@ app.get('/', (req, res) => {
     FalcorTutorial.find(function (err, tutorialDescriptions) {
 
         let ourDescriptions = tutorialDescriptions.map(function(tutorialItem){
-            return `<h2>${tutorialItem.descriptionTitle}</h2> ${tutorialItem.descriptionContent}`;
+            return `<h2>${tutorialItem.title}</h2> ${tutorialItem.content}`;
         }).join("<br/>");
 
         res.send(`<h1>Publishing App Initial Application!</h1> ${ourDescriptions}`);
