@@ -32,6 +32,8 @@ app.use(bodyParser.json({extended: false}));
 
 app.use(express.static('dist'));
 
+
+
 app.get('/', (req, res) => { 
     FalcorTutorial.find(function (err, tutorialDescriptions) {
 
@@ -39,7 +41,9 @@ app.get('/', (req, res) => {
             return `<h2>${tutorialItem.title}</h2> <p>${tutorialItem.content}</p>`;
         }).join("<br/>");
 
-        res.send(`<h1>Publishing App Initial Application!</h1> ${ourDescriptions}`);
+        res.send(`<h1>FalcorJS Tutorial</h1> ${ourDescriptions}`);
+
+
     });
 });
 

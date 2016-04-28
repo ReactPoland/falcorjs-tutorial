@@ -87,7 +87,7 @@ app.use(cors());
 // This is required by falcor-express middleware to work correctly with falcor-browser
 app.use(bodyParser.json({extended: false}));
 
-app.get('/', (req, res) => res.send('Publishing App Initial Application!'));
+app.get('/', (req, res) => res.send('FalcorJS Tutorial'));
 
 app.server.listen(process.env.PORT || 3000);
 console.log(`Started on port ${app.server.address().port}`);
@@ -95,3 +95,7 @@ console.log(`Started on port ${app.server.address().port}`);
 export default app;
 
 ```
+
+After running this through node js, 'FalcorJS Tutorial' that we are sending should show on the screen:
+
+![Display header](falcor-header.jpg)
