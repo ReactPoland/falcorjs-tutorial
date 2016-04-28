@@ -7,10 +7,19 @@ import mongoose from 'mongoose';
 mongoose.connect('mongodb://localhost/local');
 
 var tutorialSchema = {
-    tutorialText:String
+    descriptionTitle:String,
+    descriptionContent: String,
+    descriptionId: Number
 }
 
-var FalcorTutorial = mongoose.model('FalcorTutorial', tutorialSchema, 'texts')
+/*Explanations for me:
+Third argument  - 'falcor-description' is name of collection of imported to mongodb ---->
+mongoimport --db local --collection falcor-description --jsonArray initData.js --host=127.0.0.1
+First argument is a name of a model?
+Second is that variable looking like some validation
+*/
+
+var FalcorTutorial = mongoose.model('FalcorTutorial', tutorialSchema, 'falcor-descriptions')
 
 var app = express();
 app.server = http.createServer(app);
@@ -23,24 +32,17 @@ app.use(bodyParser.json({extended: false}));
 
 app.use(express.static('dist'));
 
-// Send app data when starting
+app.get('/', (req, res) => { 
+    FalcorTutorial.find(function (err, tutorialDescriptions) {
 
-/*app.get('/', (req, res) => res.send('Publishing App Initial Application!'));*/
-
-// Send app data from book, with articles example
-
-/*app.get('/', (req, res) => { 
-    Article.find(function (err, articlesDocs) {
-
-        let ourArticles = articlesDocs.map(function(articleItem){
-            return `<h2>${articleItem.articleTitle}</h2> ${articleItem.articleContent}`;
+        let ourDescriptions = tutorialDescriptions.map(function(tutorialItem){
+            return `<h2>${tutorialItem.descriptionTitle}</h2> ${tutorialItem.descriptionContent}`;
         }).join("<br/>");
 
-        res.send(`<h1>Publishing App Initial Application!</h1> ${ourArticles}`);
+        res.send(`<h1>Publishing App Initial Application!</h1> ${ourDescriptions}`);
     });
-});*/
+});
 
-// Send app data for my tutorial example, TODO...
 
 app.server.listen(process.env.PORT || 3000);
 console.log(`Started on port ${app.server.address().port}`);
