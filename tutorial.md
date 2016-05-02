@@ -102,3 +102,63 @@ node server/index.js
 After running this through node js, 'FalcorJS Tutorial' string that we are sending should show on the screen:
 
 ![Display header](falcor-header.jpg)
+
+## Adding Redux
+
+First let's create reducer for adding description.
+
+```
+mkdir src
+cd src
+mkdir reducers
+cd reducers
+touch article.js
+```
+
+Our reducer will look like this:
+
+```
+const defaultDescriptions = {
+	"987654": {
+		descriptionTitle: "First title",
+		descriptionContent: "Our description content"
+	},
+	"123456": {
+		descriptionTitle: "Second title",
+		descriptionContent: "Another description content"
+	}
+};
+
+const descriptionReducer = (state = defaultDescriptions, action) => {
+	switch (action.type) {
+		case 'RETURN_ALL_DESCRIPTIONS':
+			return Object.assign({}, state);
+		default:
+			return state;
+	}
+}
+
+export default descriptionReducer
+```
+
+Later we will need webpack, so enter your main directory and create dist directory with index.html file inside:
+
+```
+mkdir dist
+cd dist
+touch index.html
+```
+
+Insert to index.html following code:
+
+<!doctype html>
+<html lang="en">
+<head>
+  <title>Tutorial App</title>
+  <meta charset="utf-8">
+
+</head>
+<body>
+  <div id="tutorial-app-root"></div>
+</body>
+</html>
