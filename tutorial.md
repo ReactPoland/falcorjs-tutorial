@@ -151,6 +151,7 @@ touch index.html
 
 Insert to index.html following code:
 
+```
 <!doctype html>
 <html lang="en">
 <head>
@@ -162,3 +163,4 @@ Insert to index.html following code:
   <div id="tutorial-app-root"></div>
 </body>
 </html>
+```
