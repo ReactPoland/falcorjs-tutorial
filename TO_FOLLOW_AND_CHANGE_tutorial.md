@@ -550,6 +550,8 @@ We also need to update our package.json file (add scripts):
   },
 ```
 
+<!-- I AM HERE - MONDAY 02.05.2016 Michal -->
+
 Our complete package.json should looks as following with all front-end dependencies:
 
 ```
