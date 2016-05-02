@@ -112,7 +112,7 @@ mkdir src
 cd src
 mkdir reducers
 cd reducers
-touch article.js
+touch description.js
 ```
 
 Our reducer will look like this:
@@ -163,4 +163,56 @@ Insert to index.html following code:
   <div id="tutorial-app-root"></div>
 </body>
 </html>
+```
+
+Install Webpack, React, Redux and other important dependencies (you may need sudo root's access for it):
+
+```
+npm i --save webpack@1.12.14 webpack-dev-server@1.14.1
+
+npm i --save react@0.14.7 react-dom@0.14.7 react-redux@4.4.0 redux@3.3.1
+
+npm i --save-dev babel-core@6.6.5 babel-polyfill@6.6.1 babel-loader@6.2.4 babel-preset-es2015@6.6.0 babel-preset-react@6.5.0 babel-preset-stage-0
+```
+
+
+...then in the main directory create file:
+```
+touch webpack.config.js
+```
+
+And enter webpack's configuration:
+```
+module.exports = {
+    entry: ['babel-polyfill', './src/App.js'],
+    output: {
+        path: './dist',
+        filename: 'app.js',
+        publicPath: '/'
+    },
+    devServer: {
+        inline: true,
+        port: 3333,
+        contentBase: './dist'
+    },
+    module: {
+        loaders: [
+            {
+                test: /\.js$/,
+                exclude: /(node_modules|bower_components)/,
+                loader: 'babel',
+                query: {
+                    presets: ['es2015', 'stage-0', 'react']
+                }
+            }
+        ]
+    }
+}
+```
+We also need to update our package.json file (add scripts):
+
+```
+  "scripts": {
+    "dev": "webpack-dev-server"
+  },
 ```
