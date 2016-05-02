@@ -666,6 +666,7 @@ Let's finish our first React+Redux app. For a summary let's see our current dire
 ```
 
 ├── dist
+<<<<<<< HEAD
 │   └── index.html
 ├── initData.js
 ├── node_modules
@@ -678,6 +679,20 @@ Let's finish our first React+Redux app. For a summary let's see our current dire
 │   ├── App.js
 │   └── reducers
 │       └── article.js
+=======
+│   └── index.html
+├── initData.js
+├── node_modules
+│   ├── ********** (A LOT OF LIBRARIES HERE)
+├── package.json
+├── server
+│   ├── index.js
+│   └── server.js
+├── src
+│   ├── App.js
+│   └── reducers
+│       └── article.js
+>>>>>>> 56e9772f73572bb72258ff851b0ff71cb9fe214e
 └── webpack.config.js
 ```
 
@@ -1492,24 +1507,3 @@ Almost on everystep the UI part of our app is identical. The above screenshot is
 
 
 Let's expand on that simple publishing app in next chapters. We also will make that application looking nicer with Material Design CSS (http://material-ui.com).
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
