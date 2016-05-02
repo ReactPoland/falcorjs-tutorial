@@ -99,6 +99,6 @@ Next run this command in terminal:
 ```
 node server/index.js 
 ```
-After running this through node js, 'FalcorJS Tutorial' that we are sending should show on the screen:
+After running this through node js, 'FalcorJS Tutorial' string that we are sending should show on the screen:
 
 ![Display header](falcor-header.jpg)
