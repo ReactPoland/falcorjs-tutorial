@@ -285,7 +285,7 @@ as following (in src/views/DescriptionApp.js):
     for(let descriptionKey in this.props) {
         let descriptionDetails = this.props[descriptionKey];
         let currentDescriptionJSX = (
-            <div key={articleKey}>
+            <div key={descriptionKey}>
                 <h2>{descriptionDetails.descriptionTitle}</h2>
                 <h3>{descriptionDetails.descriptionContent}</h3>
             </div>);
