@@ -9,9 +9,11 @@ const defaultDescriptions = {
 	}
 };
 
+/*There is no action passed to reducer at the moment , need to create it*/
+
 const descriptionReducer = (state = defaultDescriptions, action) => {
 	switch (action.type) {
-		case 'RETURN_ALL_ARTICLES':
+		case 'RETURN_ALL_DESCRIPTIONS':
 			return Object.assign({}, state);
 		default:
 			return state;

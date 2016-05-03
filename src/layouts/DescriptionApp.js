@@ -13,6 +13,8 @@ class DescriptionApp extends React.Component {
     super(props);
   }
   render () {
+    console.info("from reducer -> ", this.props);
+    console.info("from reducer -> ", this.props.descriptionReducer);
     let descriptionsJSX = [];
     for(let descriptionKey in this.props) {
         let descriptionDetails = this.props[descriptionKey];
