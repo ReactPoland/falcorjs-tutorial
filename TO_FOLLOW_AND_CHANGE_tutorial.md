@@ -550,7 +550,7 @@ We also need to update our package.json file (add scripts):
   },
 ```
 
-<!-- I AM HERE - MONDAY 02.05.2016 Michal -->
+
 
 Our complete package.json should looks as following with all front-end dependencies:
 
@@ -796,7 +796,7 @@ On the above's code snippet we are iterating ***for(let articleKey in this.props
           {articlesJSX}
       </div>
 ```
-
+<!-- I AM HERE - MONDAY 03.05.2016 Michal -->
 This comment will start your project on 3333 ports:
 ```
 npm dev

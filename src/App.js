@@ -2,14 +2,14 @@ import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
-import article from './reducers/article'
-import PublishingApp from './layouts/PublishingApp'
+import description from './reducers/description'
+import DescriptionApp from './layouts/DescriptionApp'
 
-let store = createStore(article)
+let store = createStore(description);
 
 render(
     <Provider store={store}>
-        <PublishingApp />
+        <DescriptionApp />
     </Provider>,
-    document.getElementById('publishingAppRoot')
+    document.getElementById('descriptionApp')
 );
