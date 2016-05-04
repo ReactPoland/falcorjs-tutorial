@@ -1,15 +1,15 @@
-import React from 'react';
-import { render } from 'react-dom';
-import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import description from './reducers/description';
-import DescriptionApp from './layouts/DescriptionApp';
+import React from 'react'
+import { render } from 'react-dom'
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
+import article from './reducers/article'
+import PublishingApp from './layouts/PublishingApp'
 
-let store = createStore(description);
+let store = createStore(article)
 
 render(
     <Provider store={store}>
-        <DescriptionApp />
+        <PublishingApp />
     </Provider>,
-    document.getElementById('descriptionApp')
+    document.getElementById('publishingAppRoot')
 );

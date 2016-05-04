@@ -796,7 +796,7 @@ On the above's code snippet we are iterating ***for(let articleKey in this.props
           {articlesJSX}
       </div>
 ```
-<!-- I AM HERE - MONDAY 03.05.2016 Michal -->
+
 This comment will start your project on 3333 ports:
 ```
 npm dev
