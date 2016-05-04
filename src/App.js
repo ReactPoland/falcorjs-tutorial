@@ -4,12 +4,12 @@ import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import article from './reducers/article'
 import PublishingApp from './layouts/PublishingApp'
+import TempApp from './layouts/TempApp'
 
-let store = createStore(article)
+let store = createStore(article);
+
 
 render(
-    <Provider store={store}>
-        <PublishingApp />
-    </Provider>,
+    <TempApp />,
     document.getElementById('publishingAppRoot')
 );

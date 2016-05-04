@@ -2,7 +2,7 @@
   "name": "falcorjs-tutorial",
   "version": "1.0.0",
   "description": "",
-  "main": "data.js",
+  "main": "initData.js",
   "scripts": {
     "dev": "webpack-dev-server"
   },
