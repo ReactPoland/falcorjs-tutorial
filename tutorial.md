@@ -161,6 +161,7 @@ Insert to index.html following code:
 </head>
 <body>
   <div id="tutorial-app-root"></div>
+  <script src="app.js"></script>
 </body>
 </html>
 ```
