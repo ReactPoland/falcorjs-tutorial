@@ -112,7 +112,7 @@ mkdir src
 cd src
 mkdir reducers
 cd reducers
-touch description.js
+touch BookDescriptionReducer.js
 ```
 
 Our reducer will look like this:
@@ -193,7 +193,7 @@ module.exports = {
     },
     devServer: {
         inline: true,
-        port: 3333,
+        port: 3000,
         contentBase: './dist'
     },
     module: {
@@ -225,16 +225,16 @@ import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
-import description from './reducers/description'
-import DescriptionApp from './layouts/DescriptionApp'
+import BookDescriptionReducer from './reducers/BookDescriptionReducer'
+import BookDescriptionApp from './layouts/BookDescriptionApp'
 
-let store = createStore(description)
+let store = createStore(BookDescriptionReducer)
 
 render(
     <Provider store={store}>
-        <DescriptionApp />
+        <BookDescriptionApp />
     </Provider>,
-    document.getElementById('descriptionApp')
+    document.getElementById('tutorial-app-root')
 );
 ```
 
@@ -243,7 +243,7 @@ Now we need to create the main view of our app in 'src' directory.
 ```
 mkdir layouts
 cd layouts
-touch DescriptionApp.js
+touch BookDescriptionApp.js
 ```
 
 With following content:
@@ -259,7 +259,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
 });
 
-class DescriptionApp extends React.Component {
+class BookDescriptionApp extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -273,7 +273,7 @@ class DescriptionApp extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DescriptionApp);
+export default connect(mapStateToProps, mapDispatchToProps)(BookDescriptionApp);
 ```
 
 ### Finishing our first static description app
@@ -301,7 +301,7 @@ as following (in src/views/DescriptionApp.js):
   }
 ```
 
-This command will start your project on 3333 ports:
+This command will start your project on 3000 ports:
 ```
 npm run dev
 ```
