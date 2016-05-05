@@ -319,3 +319,28 @@ Let's create our app's Falcor model on the client-side:
 cd src
 touch falcorModel.js
 ```
+```
+const falcor = require('falcor');
+const FalcorDataSource = require('falcor-http-datasource');
+
+let cache = {
+
+  descriptions: [
+                  {
+                    id: "987654",
+                    title: "First text",
+                    content: "Hello World!"
+                  },
+                  {
+                    id: "123456",
+                    title: "Second text",
+                    content: "Nice to meet you!"
+                  }
+                ]
+              };
+const model = new falcor.Model({
+  "cache": cache
+});
+
+export default model;
+```
