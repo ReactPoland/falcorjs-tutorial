@@ -305,3 +305,17 @@ This command will start your project on 3000 ports:
 ```
 npm run dev
 ```
+
+### Building app trough combining Falcor and Redux
+
+We will start by installing Falcor from NPM.
+
+```
+npm i --save falcor@0.1.16 falcor-http-datasource@0.1.3
+```
+
+Let's create our app's Falcor model on the client-side:
+```
+cd src
+touch falcorModel.js
+```
