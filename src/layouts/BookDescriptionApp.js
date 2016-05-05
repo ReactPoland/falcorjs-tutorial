@@ -12,6 +12,23 @@ class BookDescriptionApp extends React.Component {
   constructor(props) {
     super(props);
   }
+   componentWillMount() {
+    this._fetch();
+  }
+
+  async _fetch() {
+    let articlesLength = await falcorModel.
+      getValue("articles.length").
+      then(function(length) {  
+        return length;
+      });
+
+    let articles = await falcorModel.
+      get(['articles', {from: 0, to: articlesLength-1}, ['id','articleTitle', 'articleContent']]). 
+      then(function(articlesResponse) {  
+        return articlesResponse.json.articles;
+      });
+  }
   render () {
     let descriptionsJSX = [];
     for(let descriptionKey in this.props) {

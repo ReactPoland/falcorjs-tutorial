@@ -344,3 +344,39 @@ const model = new falcor.Model({
 
 export default model;
 ```
+
+Next we will fetch data from frontend's Falcor's model in our BookDescriptionApp component, we will add a new function called _fetch() which will be responsible for fetching all descriptions on our application start.
+
+BookDescriptionsApp.js:
+
+```
+import falcorModel from '../falcorModel.js';
+```
+
+And in our BookDescriptionsApp.js app we need to add two following functions componentWillMount() and _fetch() :
+
+```
+class BookDescriptionApp extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  componentWillMount() {
+    this._fetch();
+  }
+
+  async _fetch() {
+    let articlesLength = await falcorModel.
+      getValue("articles.length").
+      then(function(length) {  
+        return length;
+      });
+
+    let articles = await falcorModel.
+      get(['articles', {from: 0, to: articlesLength-1}, ['id','articleTitle', 'articleContent']]). 
+      then(function(articlesResponse) {  
+        return articlesResponse.json.articles;
+      });
+  }
+ 
+```
