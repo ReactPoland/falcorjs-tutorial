@@ -1079,7 +1079,7 @@ const mapDispatchToProps = (dispatch) => ({
   articleActions: bindActionCreators(articleActions, dispatch)
 });
 ```
-<!-- I am here -->
+
 Thanks to the aboves  changes (***articleActions: bindActionCreators(articleActions, dispatch)***), in our component will be able to dispatch an action from props because now when you will do ***this.props.articleActions.articlesList(articles)*** then the articles object fetched from falcor will be available in our Reducer (and from there, there is only one step to make our app fetch data working).
 
 
@@ -1142,7 +1142,7 @@ export default article
 
 and it returns a new articlesList object (with a new reference in the memory thanks to Object.assign).
 
-
+<!-- I am here -->
 ### A summary of client-side Falcor + Redux
 If you will run ***http://localhost:3000/index.html*** then you will see:
 
