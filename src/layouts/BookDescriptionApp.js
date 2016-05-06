@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import falcorModel from '../falcorModel.js';
 
 const mapStateToProps = (state) => ({
   ...state
@@ -28,9 +29,11 @@ class BookDescriptionApp extends React.Component {
       then(function(articlesResponse) {  
         return articlesResponse.json.articles;
       });
+      console.log("articlesFalcor is: ", articles);
   }
   render () {
     console.log("this.props is: ", this.props);
+    
     let descriptionsJSX = [];
     for(let descriptionKey in this.props) {
         let descriptionDetails = this.props[descriptionKey];
