@@ -1058,7 +1058,7 @@ export default {
   }
 }
 ```
-<!-- I am here -->
+
 There isn't too much in that actions/article.js file ... if you are familiar to FLUX already then it's very similar. ***One important rule for actions in Redux is that it has to be PURE FUNCTION***. For now we will hard-code a constant called ***ARTICLES_LIST_ADD*** into actions/article.js (later in the book we will create a separate constants directory).
 
 
@@ -1068,7 +1068,7 @@ import { bindActionCreators } from 'redux';
 import articleActions from '../actions/article.js';
 ```
 
-when you have added the two above in our PublishingApp then  modify our exsiting function in the same file from:
+when you have added the two above in our PublishingApp then modify our exsiting function in the same file from:
 ```
 const mapDispatchToProps = (dispatch) => ({
 });
@@ -1079,7 +1079,7 @@ const mapDispatchToProps = (dispatch) => ({
   articleActions: bindActionCreators(articleActions, dispatch)
 });
 ```
-
+<!-- I am here -->
 Thanks to the aboves  changes (***articleActions: bindActionCreators(articleActions, dispatch)***), in our component will be able to dispatch an action from props because now when you will do ***this.props.articleActions.articlesList(articles)*** then the articles object fetched from falcor will be available in our Reducer (and from there, there is only one step to make our app fetch data working).
 
 

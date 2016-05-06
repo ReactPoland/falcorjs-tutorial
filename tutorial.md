@@ -380,3 +380,50 @@ class BookDescriptionApp extends React.Component {
   }
  
 ```
+
+In the end, we receive from Falcor an array of descriptions objects:
+![falcor's first response](http://test.przeorski.pl/book/009_falcor_response_object.png).
+
+
+Create actions directory with descriptions.js:
+```
+pwd
+$ /Users/przeor/Desktop/React-Convention-Book
+cd src
+mkdir actions
+cd actions
+touch descriptions.js
+```
+
+And create the content for our src/actions/descriptions.js file as following:
+
+```
+export default {
+  descriptionsList: (response) => {
+    return {
+      type: 'ADD_LIST_DESCRIPTION',
+      payload: { response: response }
+    }
+  }
+}
+```
+
+In the src/layouts/BookDescriptionApp.js file we need add in top of the file's a new import code:
+```
+import { bindActionCreators } from 'redux';
+import descriptionActions from '../actions/descriptions.js';
+```
+
+Then modify our existing function in BookDescriptionApp.js:
+
+```
+const mapDispatchToProps = (dispatch) => ({
+  descriptionActions: bindActionCreators(descriptionActions, dispatch)
+});
+```
+
+Now, after you are done with this changes then add an action into our component in _fetch function: 
+
+```
+this.props.descriptionsList.descriptionsList(articles);
+```

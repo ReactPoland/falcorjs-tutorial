@@ -1,12 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import falcorModel from '../falcorModel.js';
+import { bindActionCreators } from 'redux';
+import descriptionActions from '../actions/descriptions.js';
 
 const mapStateToProps = (state) => ({
   ...state
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  descriptionActions: bindActionCreators(descriptionActions, dispatch)
 });
 
 class BookDescriptionApp extends React.Component {
@@ -30,6 +33,7 @@ class BookDescriptionApp extends React.Component {
         return articlesResponse.json.articles;
       });
       console.log("articlesFalcor is: ", articles);
+      this.props.descriptionActions.descriptionsList(articles);
   }
   render () {
     console.log("this.props is: ", this.props);
