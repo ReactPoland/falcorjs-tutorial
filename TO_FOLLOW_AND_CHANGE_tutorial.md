@@ -975,7 +975,7 @@ let articlesLength = await falcorModel.
     return length;
   });
 ```
-
+<!-- I am here -->
 In the articlesLength variable we will have a count of articles.length from our model (in our case it will be number two).
 
 2) After we know that we have two articles in our model, then the next block of code is executing:

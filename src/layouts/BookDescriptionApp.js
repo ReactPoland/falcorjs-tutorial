@@ -30,6 +30,7 @@ class BookDescriptionApp extends React.Component {
       });
   }
   render () {
+    console.log("this.props is: ", this.props);
     let descriptionsJSX = [];
     for(let descriptionKey in this.props) {
         let descriptionDetails = this.props[descriptionKey];
