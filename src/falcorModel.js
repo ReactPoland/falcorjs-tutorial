@@ -5,16 +5,17 @@ let cache = {
   articles: [
     {
         id: 987654,
-        articleTitle: "Lorem ipsum - article one",
-        articleContent: "Here goes the content of the article"
+        descriptionTitle: "First title is..",
+        descriptionContent: "Our description content"
     },
     {
         id: 123456,
-        articleTitle: "Lorem ipsum - article two from backend",
-        articleContent: "Sky is the limit, the content goes here."
+        descriptionTitle: "Second title",
+        descriptionContent: "Another description content is..."
     }
   ]
 };
+
 
 const model = new falcor.Model({
   "cache": cache
