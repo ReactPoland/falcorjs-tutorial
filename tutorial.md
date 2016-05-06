@@ -446,6 +446,6 @@ export default descriptionReducer
 
 ```
 
-If you will run ***http://localhost:3000/index.html*** then you will see:
+If you will run http://localhost:3000/index.html then you should see:
 
-TODO NEXT...
+![Display header](react-redux-falcor.jpg)
