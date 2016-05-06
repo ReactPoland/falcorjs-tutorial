@@ -3,6 +3,8 @@ import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
+import falcor from 'falcor';
+import falcorExpress from 'falcor-express';
 
 mongoose.connect('mongodb://localhost/local');
 
@@ -30,8 +32,32 @@ app.use(cors());
 // This is required by falcor-express middleware to work correctly with falcor-browser
 app.use(bodyParser.json({extended: false}));
 
-app.use(express.static('dist'));
 
+let cache = {
+  articles: [
+    {
+        id: 987654,
+        descriptionTitle: "First title",
+        descriptionContent: "Our description content"
+    },
+    {
+        id: 123456,
+        descriptionTitle: "Second title",
+        descriptionContent: "Another description content"
+    }
+  ]
+};
+
+var model = new falcor.Model({
+  cache: cache
+});
+
+app.use('/model.json', falcorExpress.dataSourceRoute(function(req, res) {
+    return model.asDataSource();
+}));
+
+
+app.use(express.static('dist'));
 
 
 app.get('/', (req, res) => { 

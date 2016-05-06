@@ -1142,7 +1142,7 @@ export default article
 
 and it returns a new articlesList object (with a new reference in the memory thanks to Object.assign).
 
-<!-- I am here -->
+
 ### A summary of client-side Falcor + Redux
 If you will run ***http://localhost:3000/index.html*** then you will see:
 
@@ -1153,7 +1153,7 @@ Currently, we have a two separate applications:
 We need to stick both together, so we will have one source of state for our applications (that comes from MongoDB).
 
 
-
+<!-- I am here -->
 ### Moving Falcor's model to backend:
 
 We also need to update our package.json file:

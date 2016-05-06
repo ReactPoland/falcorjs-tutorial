@@ -449,3 +449,73 @@ export default descriptionReducer
 If you will run http://localhost:3000/index.html then you should see:
 
 ![Display header](react-redux-falcor.jpg)
+
+### Moving Falcor's model to backend:
+
+To do that we need to update our package.json file:
+
+```
+  "scripts": {
+    "dev": "webpack-dev-server",
+    "start": "npm run webpack; node server",
+    "webpack": "webpack --config ./webpack.config.js"
+  },
+```
+
+And next important thing is to install new dependencies that are required for Falcor's on the backend:
+
+```
+npm i --save falcor-express@0.1.2 falcor-router@0.3.0
+```
+Then edit the ***server/server.js*** as following:
+
+1) On top of our file import new libraries in the ***server/server.js***:
+```
+import falcor from 'falcor';
+import falcorExpress from 'falcor-express';
+```
+
+
+2) and then between the two:
+- ***app.use(bodyParser.json({extended: false}));***
+- and ***app.use(bodyParser.json({extended: false}));***
+
+add a new code for managing Falcor's on the backend:
+```
+app.use(bodyParser.json({extended: false}));
+
+let cache = {
+  articles: [
+    {
+        id: 987654,
+        descriptionTitle: "First title",
+        descriptionContent: "Our description content"
+    },
+    {
+        id: 123456,
+        descriptionTitle: "Second title",
+        descriptionContent: "Another description content"
+    }
+  ]
+};
+
+var model = new falcor.Model({
+  cache: cache
+});
+
+app.use('/model.json', falcorExpress.dataSourceRoute(function(req, res) {
+    return model.asDataSource();
+}));
+
+
+app.use(express.static('dist'));
+```
+
+The above code is almost the same as the one in the src/falcorModel.js file.
+
+If you will run your app with:
+```
+npm start
+```
+
+You will see...:
