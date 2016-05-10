@@ -1,10 +1,11 @@
+import falcor from 'falcor';
+import falcorExpress from 'falcor-express';
 import http from 'http';
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
-import falcor from 'falcor';
-import falcorExpress from 'falcor-express';
+
 
 mongoose.connect('mongodb://localhost/local');
 
@@ -37,13 +38,13 @@ let cache = {
   articles: [
     {
         id: 987654,
-        descriptionTitle: "First title",
+        descriptionTitle: "First title form server js file",
         descriptionContent: "Our description content"
     },
     {
         id: 123456,
         descriptionTitle: "Second title",
-        descriptionContent: "Another description content"
+        descriptionContent: "Another description content from server js file "
     }
   ]
 };
