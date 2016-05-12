@@ -5,11 +5,13 @@ import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
+import Router from 'falcor-router';
+import routes from './routes.js';
 
 
 mongoose.connect('mongodb://localhost/local');
 
-var tutorialSchema = {
+var articleSchema = {
     title:String,
     content: String,
     id: String
@@ -22,7 +24,10 @@ First argument is a name of a model?
 Second is that variable looking like some validation
 */
 
-var FalcorTutorial = mongoose.model('FalcorTutorial', tutorialSchema, 'descriptions')
+/*BLAD JEST TUTAJ I JESZCZE TAM GDZIE WPROWADZILEM ZMIANY, PRZESLEDZIC I NAPRAWIC*/
+/*A JEZELI TO NIE POMOZE NO TO ZAJRZEC DO MAIN VIEW COMPONENTU REACTOWEGO , 
+TAM SIE WYSWIETLA DANE PRZECIEZ*/
+var Article = mongoose.model('Article', articleSchema, 'articles')
 
 var app = express();
 app.server = http.createServer(app);
@@ -33,18 +38,17 @@ app.use(cors());
 // This is required by falcor-express middleware to work correctly with falcor-browser
 app.use(bodyParser.json({extended: false}));
 
-
 let cache = {
   articles: [
     {
         id: 987654,
-        descriptionTitle: "First title form server js file",
-        descriptionContent: "Our description content"
+        articleTitle: "Lorem ipsum - article one",
+        articleContent: "Here goes the content of the article"
     },
     {
         id: 123456,
-        descriptionTitle: "Second title",
-        descriptionContent: "Another description content from server js file "
+        articleTitle: "Lorem ipsum - article two from backend",
+        articleContent: "Sky is the limit, the content goes here."
     }
   ]
 };
@@ -62,7 +66,7 @@ app.use(express.static('dist'));
 
 
 app.get('/', (req, res) => { 
-    FalcorTutorial.find(function (err, tutorialDescriptions) {
+    Article.find(function (err, articlesDocs) {
 
     	/*let importedData = tutorialDescriptions;
     	console.log("log first object title --->", importedData[0].title);
@@ -71,8 +75,8 @@ app.get('/', (req, res) => {
 
     	let oneTitle = `<p>${importedData[0].title}</p>`;*/
 
-        let ourDescriptions = tutorialDescriptions.map(function(tutorialItem){
-            return `<h2>${tutorialItem.title}</h2> <p>${tutorialItem.content}</p>`;
+        let ourDescriptions = articlesDocs.map(function(tutorialItem){
+            return `<h2>${tutorialItem.articleTitle}</h2> <p>${tutorialItem.articleContent}</p>`;
         }).join("<br/>");
 
         res.send(`<h1>FalcorJS Tutorial</h1> ${ourDescriptions}`);
@@ -86,3 +90,23 @@ app.server.listen(process.env.PORT || 3000);
 console.log(`Started on port ${app.server.address().port}`);
 
 export default app;
+
+
+/*let cache = {
+  articles: [
+    {
+        id: 987654,
+        descriptionTitle: "First title form server js file",
+        descriptionContent: "Our description content"
+    },
+    {
+        id: 123456,
+        descriptionTitle: "Second title",
+        descriptionContent: "Another description content from server js file "
+    }
+  ]
+};
+
+var model = new falcor.Model({
+  cache: cache
+});*/

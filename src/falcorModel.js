@@ -5,13 +5,13 @@ let cache = {
   articles: [
     {
         id: 987654,
-        descriptionTitle: "First title yo yo yo ",
-        descriptionContent: "Our description content"
+        descriptionTitle: "First from falcor model title yo yo yo ",
+        descriptionContent: "Our from falcor model description content"
     },
     {
         id: 123456,
-        descriptionTitle: "Second title",
-        descriptionContent: "Another hi hi hi description content"
+        descriptionTitle: "Second  from falcor model title",
+        descriptionContent: "Another from falcor model hi hi hi description content"
     }
   ]
 };
