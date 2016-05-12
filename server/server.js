@@ -9,13 +9,13 @@ import Router from 'falcor-router';
 import routes from './routes.js';
 
 
-mongoose.connect('mongodb://localhost/local');
+/*mongoose.connect('mongodb://localhost/local');*/
 
-var articleSchema = {
+/*var articleSchema = {
     title:String,
     content: String,
     id: String
-}
+}*/
 
 /*Explanations for me:
 Third argument  - 'falcor-description' is name of collection of imported to mongodb ---->
@@ -27,7 +27,7 @@ Second is that variable looking like some validation
 /*BLAD JEST TUTAJ I JESZCZE TAM GDZIE WPROWADZILEM ZMIANY, PRZESLEDZIC I NAPRAWIC*/
 /*A JEZELI TO NIE POMOZE NO TO ZAJRZEC DO MAIN VIEW COMPONENTU REACTOWEGO , 
 TAM SIE WYSWIETLA DANE PRZECIEZ*/
-var Article = mongoose.model('Article', articleSchema, 'articles')
+/*var Article = mongoose.model('Article', articleSchema, 'articles')*/
 
 var app = express();
 app.server = http.createServer(app);
@@ -58,7 +58,7 @@ var model = new falcor.Model({
 });
 
 app.use('/model.json', falcorExpress.dataSourceRoute(function(req, res) {
-    return model.asDataSource();
+ return new Router(routes);
 }));
 
 
