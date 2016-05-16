@@ -4,6 +4,16 @@ import falcorModel from '../falcorModel.js';
 import { bindActionCreators } from 'redux';
 import descriptionActions from '../actions/descriptions.js';
 
+/*Almost on everystep the UI part of our app is identical.
+ The above screenshot is taken on the publishing app which:
+
+1) Fetch data from DB with use of Falcor-Express && Falcor-Router 2)
+ The data moves from backend (source is MongoDB)
+  to frontend we populate Redux's src/reducers/article.js state tree 3)
+   We render the DOM elements based on our single state tree.
+
+*/
+
 const mapStateToProps = (state) => ({
   ...state
 });

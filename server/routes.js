@@ -11,17 +11,16 @@ var Article = mongoose.model('Article', articleSchema, 'articles');
 
 let PublishingAppRoutes = [
 {
-  route: 'articles.length',
-  get: () => {
+   route: 'articles.length',
+    get: () => {
     return Article.count({}, function(err, count) {
-    	return count;
-    }).then((articlesCountInDB){
-    	return {
-      path: ['articles', 'length'],
-      value: articlesCountInDB
-    }
+      return count;
+    }).then ((articlesCountInDB) => {
+      return {
+        path: ['articles', 'length'],
+        value: articlesCountInDB
+      }
     })
-    
   }
 },
 {
@@ -46,7 +45,9 @@ let PublishingAppRoutes = [
     })
   }
 }
-/*OLD VERSION of route*/
+
+
+/*OLD VERSION of routes*/
 /*{
   route: 'articles[{integers}]["id","articleTitle","articleContent"]',
   get: (pathSet) => {
