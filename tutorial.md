@@ -952,3 +952,54 @@ let userStatementQuery = {
           return result;
         });
 ```
+
+As you will learn later, we will ask for that token's path on the front-end.
+
+#### Successful login on falcor-route
+
+We need to improve successful login path. We have a case for handling an invalid login, we need to make a case that will handle a successful login, so please replace this code:
+```
+return null; // SUCCESSFUL LOGIN mocked now (will implement next)
+```
+
+with this code that is returning successful login's details:
+```
+let role = result[0].role;
+let userDetailsToHash = username+role;
+let token = jwt.sign(userDetailsToHash, jwtSecret.secret);
+return [
+  {
+    path: ['login', 'token'],
+    value: token
+  },
+  {
+    path: ['login', 'username'],
+    value: username
+  },
+  {
+    path: ['login', 'role'],
+    value: role
+  },
+  {
+    path: ['login', 'error'],
+    value: false
+  }
+];
+```
+
+#### Explanation:
+As you can see, the only thing that we fetch from DB right now is the role value === ***result[0].role***. We need add this to hash, because we don't want our app to be vulnerable so a normal user can get an admin role with some hacking. The value of the ***token*** is calculated based on ***userDetailsToHash = username+role*** - that's enough for now.
+
+After we are fine here the only thing that needs to be done on the backend is returning the paths with values:
+1) The login token with: ['login', 'token']
+2) The username with ['login', 'username']
+3) The logged user's role with: ['login', 'role']
+4) ... and an information that there were no errors' at all with: ['login', 'error']
+
+The next step is to use this route on the Front-end.
+
+Please run the app and then if everything is working for you, and after it works for you then let's to start the front-end codings' fun right now!
+
+
+
+### Front-end side and Falcor

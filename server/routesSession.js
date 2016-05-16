@@ -23,7 +23,27 @@ export default [
           if (err) throw err;
         }).then((result) => {
           if(result.length) {
-            return null; // SUCCESSFUL LOGIN mocked now (will implement next)
+            let role = result[0].role;
+			let userDetailsToHash = username+role;
+			let token = jwt.sign(userDetailsToHash, jwtSecret.secret);
+			return [
+			  {
+			    path: ['login', 'token'],
+			    value: token
+			  },
+			  {
+			    path: ['login', 'username'],
+			    value: username
+			  },
+			  {
+			    path: ['login', 'role'],
+			    value: role
+			  },
+			  {
+			    path: ['login', 'error'],
+			    value: false
+			  }
+			];
           } else {
             // INVALID LOGIN
             return [
