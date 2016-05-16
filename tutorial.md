@@ -1122,3 +1122,46 @@ export default connect(mapStateToProps, mapDispatchToProps)(LoginView);
 We are done with all missing pieces for the ***routes/index.js***, but there some other outstanding stuff to do before our app with the routing will be working.
 
 #### A ROOT's container for our app
+
+```
+$ pwd 
+$ [[[you shall be at the src folder]]]
+$ mkdir containers
+$ cd container
+$ touch Root.js
+```
+
+The Root.js is going to be our main root file - the content of this file is as following:
+```
+import React                    from 'react';
+import { Provider }             from 'react-redux';
+import { Router }               from 'react-router';
+import routes                   from '../routes';
+import createHashHistory        from 'history/lib/createHashHistory';
+
+let noQueryKeyHistory = createHashHistory({
+  queryKey: false
+});
+
+export default class Root extends React.Component {
+  static propTypes = {
+    history : React.PropTypes.object.isRequired,
+    store   : React.PropTypes.object.isRequired
+  }
+
+  render () {
+    return (
+      <Provider store={this.props.store}>
+        <div>
+          <Router history={noQueryKeyHistory}>
+            {routes}
+          </Router>
+          
+        </div>
+      </Provider>
+    );
+  }
+}
+```
+
+#### Remaining configuration for: configureStore & rootReducer
