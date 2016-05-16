@@ -44,7 +44,7 @@ mongoimport --db local --collection descriptions --jsonArray data.js --host=127.
 
 After executing this command we can view through Robomongo that data was succesfully imported :
 
-![Robomongo view data](data-falcor-tutorial.jpg)
+![Robomongo view data](tutorial-screens/data-falcor-tutorial.jpg)
 
 ### Now let's do server setup with NodeJS and Express.js
 
@@ -101,7 +101,7 @@ node server/index.js
 ```
 After running this through node js, 'FalcorJS Tutorial' string that we are sending should show on the screen:
 
-![Display header](falcor-header.jpg)
+![Display header](tutorial-screens/falcor-header.jpg)
 
 ## Adding Redux
 
@@ -698,7 +698,7 @@ The second route ***route: 'descriptions[{integers}]["id","descriptionTitle","de
 ```
 We return a promise again with ***FalcorDescription.find***. Also we have deleted mocked response from database and instead of that we are using ***FalcorDescription.find*** method.
 
-The array of articles is returned in ***}).then ((descriptionsArrayFormDB) => {*** where next we simply iterate and create a results' array.
+The array of descriptions is returned in ***}).then ((descriptionsArrayFormDB) => {*** where next we simply iterate and create a results' array.
 
 Please note that on ***let singleDescriptionObject = descriptionsArrayFormDB[index].toObject();*** we use a method ***.toObject***. This is very important to make this work.
 
@@ -707,3 +707,15 @@ Please note that on ***let singleDescriptionObject = descriptionsArrayFormDB[ind
 After that you shall have complete full-stack version of the app working:
 
 ![final full-stack app](appview-screen.jpg)
+
+### New MongoDB's users collection
+
+We need create a users collection in our database. The users will have privilages to:
+1) Add new descriptions in our publishing application
+2) Edit existing descriptions in our publishing application
+3) Delete descriptions in our publishing application.
+
+```
+$ cd ..]
+$ touch initPubUsers.js
+```
