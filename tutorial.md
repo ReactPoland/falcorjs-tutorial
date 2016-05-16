@@ -806,3 +806,66 @@ let { username, password } = args[0];
 then we will check them against our database with one user admin. A user will need to know that the real plaintext password is ***123456*** in order to get a correct login jwt token.
 
 #### Separating the DB configs - configMongoose.js
+
+```
+$ touch configMongoose.js
+```
+
+and it's new content:
+```
+import mongoose from 'mongoose';
+
+const conf = {
+  hostname: process.env.MONGO_HOSTNAME || 'localhost',
+  port: process.env.MONGO_PORT || 27017,
+  env: process.env.MONGO_ENV || 'local',
+};
+
+mongoose.connect(`mongodb://${conf.hostname}:${conf.port}/${conf.env}`);
+
+var descriptionSchema = {
+  descriptionTitle:String,
+  descriptionContent:String
+}
+
+var FalcorDescription = mongoose.model('FalcorDescription', articleSchema, 'descriptions');
+
+export default {
+  FalcorDescription
+}
+```
+
+#### Rewriting the routes.js file
+After we have two new files: configMongoose.js and routesSession.js then we have to rewrite our ***server/routes.js*** file in order to make everything work together.
+
+
+First step, delete from routes.js the following code:
+```
+import mongoose from 'mongoose';
+
+mongoose.connect('mongodb://localhost/local');
+
+var descriptionSchema = {
+  descriptionTitle:String,
+  descriptionContent:String
+}
+
+var FalcorDescription = mongoose.model('FalcorDescription', descriptionSchema, 'descriptions');
+```
+
+and replace it with new:
+```
+import { FalcorDescription } from './configMongoose';
+import sessionRoutes from './routesSession';
+```
+
+also we need to spread the sessionRoutes into our current PublishingAppRoutes as following:
+```
+let PublishingAppRoutes = [
+    ...sessionRoutes,
+  {
+  route: 'articles.length',
+```
+At the beginning of PublishingAppRoutes you need to spread ***...sessionRoutes,*** routes, so the login route will be available to use accross the Falcor's routes.
+
+#### Double-check if app works, before implementing JWT

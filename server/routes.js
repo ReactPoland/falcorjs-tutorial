@@ -8,6 +8,8 @@ backend also property descriptionContent, when I wan to work with collection art
 somwhere else I cannot import to mongoDB collection called descriptions
 */
 import mongoose from 'mongoose';
+import { FalcorDescription } from './configMongoose';
+import sessionRoutes from './routesSession';
 
 mongoose.connect('mongodb://localhost/local');
 
@@ -25,6 +27,7 @@ Second is that variable looking like some validation
 var FalcorDescription = mongoose.model('FalcorDescription', descriptionSchema, 'descriptions');
 
 let BookDescriptionsApp = [
+...sessionRoutes,
 {
   route: 'descriptions.length',
     get: () => {
