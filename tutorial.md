@@ -746,3 +746,63 @@ mongoimport --db local --collection pubUsers --jsonArray initPubUsers.js --host=
 ```
 
 #### Working on the login's falcor-route
+
+Now we need to start working with the falcor-router in order to create a new endpoint that will use the jwt library to provide a unique tokens for the client-side app.
+
+The first thing that we need to do is to provide a "secret" on the backend.
+
+```
+$ cd server
+$ touch configSecret.js
+
+export default {
+  'secret': process.env.JWT_SECRET || 'devSecretGoesHere'
+}
+```
+
+#### Creating a falcor-router's login (backend)
+
+In order to make our codebase more organized, instead of adding one more route to our ***server/routes.js*** file, we will make a new file called ***routesSession.js*** and in that file we will keep all endpoints related to the current logged user's session:
+
+First open the server.js file on order to add one line of code that will allow to post usernames and passwords to the backend, so add this:
+```
+app.use(bodyParser.urlencoded({extended: false}));
+```
+... this has to be added under ***app.use(bodyParser.json({extended: false}));***
+
+Then create a new file in the server directory:
+```
+$ touch routesSession.js
+```
+
+And put this initial content into the ***routesSession.js*** file:
+
+```
+export default [
+  { 
+    route: ['login'] ,
+    call: (callPath, args) => 
+      {
+        let { username, password } = args[0];
+
+        let userStatementQuery = {
+          $and: [
+              { 'username': username },
+              { 'password': password }
+          ]
+        }
+      }
+  }
+];
+```
+
+The difference between call and get method in falcor's routes is that we can provide arguments with ***args***. That allows us to get from the client-side the username and the password. 
+
+The plan is that after we receive credentials with this:
+```
+let { username, password } = args[0];
+```
+
+then we will check them against our database with one user admin. A user will need to know that the real plaintext password is ***123456*** in order to get a correct login jwt token.
+
+#### Separating the DB configs - configMongoose.js
