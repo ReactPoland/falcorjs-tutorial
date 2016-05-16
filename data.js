@@ -1,12 +1,12 @@
   [
     {
-        id: "987654",
-        title: "First text",
-        content: "Hello World!"
+        id: 987654,
+        descriptionTitle: "First title",
+        descriptionContent: "Our first description content"
     },
     {
-        id: "123456",
-        title: "Second text",
-        content: "Nice to meet you!"
+        id: 123456,
+        descriptionTitle: "Second title",
+        descriptionContent: "Second description content"
     }
-]
+  ]

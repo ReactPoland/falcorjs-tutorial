@@ -5,6 +5,8 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import falcor from 'falcor';
 import falcorExpress from 'falcor-express';
+import Router from 'falcor-router';
+import routes from './routes.js';
 
 mongoose.connect('mongodb://localhost/local');
 
@@ -33,7 +35,7 @@ app.use(cors());
 app.use(bodyParser.json({extended: false}));
 
 
-let cache = {
+/*let cache = {
   articles: [
     {
         id: 987654,
@@ -54,6 +56,10 @@ var model = new falcor.Model({
 
 app.use('/model.json', falcorExpress.dataSourceRoute(function(req, res) {
     return model.asDataSource();
+}));*/
+
+app.use('/model.json', falcorExpress.dataSourceRoute(function(req, res) {
+ return new Router(routes);
 }));
 
 

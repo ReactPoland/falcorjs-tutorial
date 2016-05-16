@@ -582,3 +582,29 @@ Add this code, this new object as a second route in route.js:
   }
 }
 ```
+
+### Last thing to make full-stack's Falcor example run
+
+Currently, we still have a mocked data in our routes, but before we will start making calls to MongoDB we need to wrap-up the current setup, so you will be able to see it running in your browser.
+
+Open your server/server.js and make sure you import those two things:
+```
+import Router from 'falcor-router';
+import routes from './routes.js';
+```
+
+OK, so we have imported our falcor-router and routes.js - now we need to use them, so modify this old code:
+```
+// THIS IS OLD CODE, remove it and replace with new
+app.use('/model.json', falcorExpress.dataSourceRoute(function(req, res) {
+    return model.asDataSource();
+}));
+```
+
+the above replace into new code as following:
+
+```
+app.use('/model.json', falcorExpress.dataSourceRoute(function(req, res) {
+ return new Router(routes);
+}));
+```
