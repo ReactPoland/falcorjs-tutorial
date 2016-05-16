@@ -38,12 +38,12 @@ let cache = {
     {
         id: 987654,
         descriptionTitle: "First title",
-        descriptionContent: "Our description content 1111"
+        descriptionContent: "Our first description content"
     },
     {
         id: 123456,
-        descriptionTitle: "Second title hi ih hi",
-        descriptionContent: "Another description content 33333"
+        descriptionTitle: "Second title",
+        descriptionContent: "Second description content"
     }
   ]
 };
@@ -62,13 +62,6 @@ app.use(express.static('dist'));
 
 app.get('/', (req, res) => { 
     FalcorTutorial.find(function (err, tutorialDescriptions) {
-
-    	/*let importedData = tutorialDescriptions;
-    	console.log("log first object title --->", importedData[0].title);
-    	console.log("log second object content--->", importedData[1].content);
-
-
-    	let oneTitle = `<p>${importedData[0].title}</p>`;*/
 
         let ourDescriptions = tutorialDescriptions.map(function(tutorialItem){
             return `<h2>${tutorialItem.title}</h2> <p>${tutorialItem.content}</p>`;

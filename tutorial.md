@@ -477,12 +477,11 @@ import falcorExpress from 'falcor-express';
 
 
 2) and then between the two:
-- ***app.use(bodyParser.json({extended: false}));***
-- and ***app.use(bodyParser.json({extended: false}));***
+- app.use(bodyParser.json({extended: false}));
+- and app.use(express.static('dist'));
 
 add a new code for managing Falcor's on the backend:
 ```
-app.use(bodyParser.json({extended: false}));
 
 let cache = {
   articles: [
@@ -507,15 +506,21 @@ app.use('/model.json', falcorExpress.dataSourceRoute(function(req, res) {
     return model.asDataSource();
 }));
 
-
-app.use(express.static('dist'));
 ```
 
 The above code is almost the same as the one in the src/falcorModel.js file.
+
+If you follow all the instructions correctly, then you can also make a request to your server directly from your browser by:
+
+```
+http://localhost:3000/model.json?paths=[["articles",{"from":0,"to":1},["descriptionContent","descriptionTitle","id"]]]&method=get
+```
 
 If you will run your app with:
 ```
 npm start
 ```
 
-You will see...:
+You will see:
+
+![Display view from falcor on backend](appview-screen.jpg)
