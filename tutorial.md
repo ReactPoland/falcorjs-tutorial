@@ -381,14 +381,12 @@ class BookDescriptionApp extends React.Component {
  
 ```
 
-In the end, we receive from Falcor an array of descriptions objects:
-![falcor's first response](http://test.przeorski.pl/book/009_falcor_response_object.png).
+In the end, we receive from Falcor an array of descriptions objects
 
 
 Create actions directory with descriptions.js:
 ```
 pwd
-$ /Users/przeor/Desktop/React-Convention-Book
 cd src
 mkdir actions
 cd actions
@@ -448,7 +446,7 @@ export default descriptionReducer
 
 If you will run http://localhost:3000/index.html then you should see:
 
-![Display header](react-redux-falcor.jpg)
+![Display header](tutorial-screens/react-redux-falcor.jpg)
 
 ### Moving Falcor's model to backend:
 
@@ -523,7 +521,7 @@ npm start
 
 You will see:
 
-![Display view from falcor on backend](appview-screen.jpg)
+![Display view from falcor on backend](tutorial-screens/appview-screen.jpg)
 
 ### Configuring Falcor's router (ExpressJS)
 
@@ -632,7 +630,7 @@ npm start
 
 and on ports 3000 you will see:
 
-![content from backend](backend-content.jpg)
+![content from backend](tutorial-screens/backend-content.jpg)
 
 ### Adding MongoDB/Mongoose calls based on Falcor's routes
 
@@ -706,7 +704,7 @@ Please note that on ***let singleDescriptionObject = descriptionsArrayFormDB[ind
 ### First working full-stack app
 After that you shall have complete full-stack version of the app working:
 
-![final full-stack app](appview-screen.jpg)
+![final full-stack app](tutorial-screens/appview-screen.jpg)
 
 ### New MongoDB's users collection
 
