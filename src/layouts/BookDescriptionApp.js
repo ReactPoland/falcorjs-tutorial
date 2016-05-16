@@ -21,19 +21,19 @@ class BookDescriptionApp extends React.Component {
   }
 
   async _fetch() {
-    let articlesLength = await falcorModel.
-      getValue("articles.length").
+    let descriptionsLength = await falcorModel.
+      getValue("descriptions.length").
       then(function(length) {  
         return length;
       });
 
-    let articles = await falcorModel.
-      get(['articles', {from: 0, to: articlesLength-1}, ['id','descriptionTitle', 'descriptionContent']]). 
-      then(function(articlesResponse) {  
-        return articlesResponse.json.articles;
+    let descriptions = await falcorModel.
+      get(['descriptions', {from: 0, to: descriptionsLength-1}, ['id','descriptionTitle', 'descriptionContent']]). 
+      then(function(descriptionsResponse) {  
+        return descriptionsResponse.json.descriptions;
       });
       /*console.log("articles is: ", articles);*/
-      this.props.descriptionActions.descriptionsList(articles);
+      this.props.descriptionActions.descriptionsList(descriptions);
   }
   render () {
     

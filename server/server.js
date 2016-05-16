@@ -27,7 +27,7 @@ app.use(express.static('dist'));
 
 
 app.get('/', (req, res) => { 
-    Article.find(function (err, tutorialDescriptions) {
+    FalcorDescriptionTutorial.find(function (err, tutorialDescriptions) {
 
         let ourDescriptions = tutorialDescriptions.map(function(tutorialItem){
             return `<h2>${tutorialItem.descriptionTitle}</h2> <p>${tutorialItem.descriptionContent}</p>`;

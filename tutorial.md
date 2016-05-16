@@ -328,13 +328,13 @@ let cache = {
   descriptions: [
                   {
                     id: "987654",
-                    title: "First text",
-                    content: "Hello World!"
+                    descriptionTitle: "First text",
+                    descriptionContent: "Hello World!"
                   },
                   {
                     id: "123456",
-                    title: "Second text",
-                    content: "Nice to meet you!"
+                    descriptionTitle: "Second text",
+                    descriptionContent: "Nice to meet you!"
                   }
                 ]
               };
@@ -366,16 +366,16 @@ class BookDescriptionApp extends React.Component {
   }
 
   async _fetch() {
-    let articlesLength = await falcorModel.
-      getValue("articles.length").
+    let descriptionsLength = await falcorModel.
+      getValue("descriptions.length").
       then(function(length) {  
         return length;
       });
 
-    let articles = await falcorModel.
-      get(['articles', {from: 0, to: articlesLength-1}, ['id','articleTitle', 'articleContent']]). 
-      then(function(articlesResponse) {  
-        return articlesResponse.json.articles;
+    let descriptions = await falcorModel.
+      get(['descriptions', {from: 0, to: descriptionsLength-1}, ['id','descriptionTitle', 'descriptionContent']]). 
+      then(function(descriptionsResponse) {  
+        return descriptionsResponse.json.descriptions;
       });
   }
  
@@ -425,7 +425,7 @@ const mapDispatchToProps = (dispatch) => ({
 Now, after you are done with this changes then add an action into our component in _fetch function: 
 
 ```
-this.props.descriptionsList.descriptionsList(articles);
+this.props.descriptionsList.descriptionsList(descriptions);
 ```
 
 Let's improve our ***src/reducers/BookDescriptionReducer.js*** file:
@@ -484,7 +484,7 @@ add a new code for managing Falcor's on the backend:
 ```
 
 let cache = {
-  articles: [
+  descriptions: [
     {
         id: 987654,
         descriptionTitle: "First title",
@@ -513,7 +513,7 @@ The above code is almost the same as the one in the src/falcorModel.js file.
 If you follow all the instructions correctly, then you can also make a request to your server directly from your browser by:
 
 ```
-http://localhost:3000/model.json?paths=[["articles",{"from":0,"to":1},["descriptionContent","descriptionTitle","id"]]]&method=get
+http://localhost:3000/model.json?paths=[["descriptions",{"from":0,"to":1},["descriptionContent","descriptionTitle","id"]]]&method=get
 ```
 
 If you run your app with:
@@ -553,12 +553,12 @@ We have created the server/routes.js file, the content for that router will be a
 
 ```
 let PublishingAppRoutes = [{
-  route: 'articles.length',
+  route: 'descriptions.length',
   get: () => {
-    let articlesCountInDB = 2; // hardcoded for example
+    let descriptionsCountInDB = 2; // hardcoded for example
     return {
-      path: ['articles', 'length'],
-      value: articlesCountInDB
+      path: ['descriptions', 'length'],
+      value: descriptionsCountInDB
     };
   }
 }];
@@ -566,32 +566,32 @@ let PublishingAppRoutes = [{
 export default PublishingAppRoutes;
 ```
 
-### Second route for returning our two articles from backend
+### Second route for returning our two descriptions from backend
 
 Add this code, this new object as a second route in route.js:
 ```
 {
-  route: 'articles[{integers}]["id","articleTitle","articleContent"]',
+  route: 'descriptions[{integers}]["id","descriptionTitle","descriptionContent"]',
   get: (pathSet) => {
-    let articlesIndex = pathSet[1];
-    let articlesArrayFromDB = [{
-      "articleId": "987654",
-      "articleTitle": "BACKEND Lorem ipsum - article one",
-      "articleContent": "BACKEND Here goes the content of the article"
+    let descriptionsIndex = pathSet[1];
+    let descriptionsArrayFromDB = [{
+      "descriptionId": "987654",
+      "descriptionTitle": "BACKEND Lorem ipsum - description one",
+      "descriptionContent": "BACKEND Here goes the content of the description"
     }, {
-      "articleId": "123456",
-      "articleTitle": "BACKEND Lorem ipsum - article two",
-      "articleContent": "BACKEND Sky is the limit, the content goes here."
-    }]; // That are our mocked articles from MongoDB
+      "descriptionId": "123456",
+      "descriptionTitle": "BACKEND Lorem ipsum - description two",
+      "descriptionContent": "BACKEND Sky is the limit, the content goes here."
+    }]; // That are our mocked descriptions from MongoDB
 
     let results = [];
-    articlesIndex.forEach((index) => {
-      let singleArticleObject = articlesArrayFromDB[index];
+    descriptionsIndex.forEach((index) => {
+      let singleDescriptionObject = descriptionsArrayFromDB[index];
       let falcorSingleArticleResult = {
         path: ['articles', index],
-        value: singleArticleObject
+        value: singleDescriptionObject
       };
-      results.push(falcorSingleArticleResult);
+      results.push(falcorSingleDescriptionResult);
     });
 
     return results;
@@ -633,3 +633,77 @@ npm start
 and on ports 3000 you will see:
 
 ![content from backend](backend-content.jpg)
+
+### Adding MongoDB/Mongoose calls based on Falcor's routes
+
+We need to move over (delete from server.js and move into routes.js) this code:
+```
+// this goes to server/routes.js
+import mongoose from 'mongoose';
+
+mongoose.connect('mongodb://localhost/local');
+
+var descriptionSchema = {
+  descriptionTitle:String,
+  descriptionContent:String
+}
+
+var FalcorDescription = mongoose.model('FalcorDescription', descriptionSchema, 'descriptions');
+```
+
+
+... and in first ***route descriptions.length*** you need to replace the mocked number two (descriptions count) into Mongoose's count method:
+```
+  route: 'descriptions.length',
+    get: () => {
+    return FalcorDescription.count({}, function(err, count) {
+      return count;
+    }).then ((descriptionsCountInDB) => {
+      return {
+        path: ['descriptions', 'length'],
+        value: descriptionsCountInDB
+      }
+    })
+  }
+```
+
+The method ***FalcorDescription.count*** simply retrieves the integer number of descriptions count from our ***Description model*** (that was prepared in the beggining).
+
+
+The second route ***route: 'descriptions[{integers}]["id","descriptionTitle","descriptionContent"]',*** has to be changed as following:
+
+```
+{
+  route: 'descriptions[{integers}]["id","descriptionTitle","descriptionContent"]',
+  get: (pathSet) => {
+    let descriptionIndex = pathSet[1];
+
+    return FalcorDescription.find({}, function(err, descriptionsDocs) {
+      return descriptionsDocs;
+    }).then ((descriptionsArrayFormDB) => {
+      let results = [];
+      descriptionIndex.forEach((index) => {
+        let singleDescriptionObject = descriptionsArrayFormDB[index].toObject();
+        let falcorSingleDescriptionResult = {
+          path: ['articles', index],
+          value: singleDescriptionObject
+        };
+        results.push(falcorSingleDescriptionResult);
+      });
+      console.info(">>>> results", results);
+      return results;
+    })
+  }
+}
+```
+We return a promise again with ***FalcorDescription.find***. Also we have deleted mocked response from database and instead of that we are using ***FalcorDescription.find*** method.
+
+The array of articles is returned in ***}).then ((descriptionsArrayFormDB) => {*** where next we simply iterate and create a results' array.
+
+Please note that on ***let singleDescriptionObject = descriptionsArrayFormDB[index].toObject();*** we use a method ***.toObject***. This is very important to make this work.
+
+
+### First working full-stack app
+After that you shall have complete full-stack version of the app working:
+
+![final full-stack app](appview-screen.jpg)

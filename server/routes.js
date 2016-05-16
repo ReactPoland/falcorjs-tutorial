@@ -1,5 +1,5 @@
 /*Here I have problems with routes.js maybe because I have changed earlier 
-data imported to mongoDB as descriptions instead of articles , maybe here this is causing 
+data imported to mongoDB as descriptions instead of descriptions , maybe here this is causing 
 problems maybe somwhere else*/
 
 /*Second thing is , that I need to stick to the same property names in some cases -
@@ -11,7 +11,7 @@ import mongoose from 'mongoose';
 
 mongoose.connect('mongodb://localhost/local');
 
-var articleSchema = {
+var descriptionSchema = {
   descriptionTitle:String,
   descriptionContent:String
 }
@@ -22,38 +22,38 @@ First argument is a name of a model?
 Second is that variable looking like some validation
 */
 
-var Article = mongoose.model('Article', articleSchema, 'articles');
+var FalcorDescription = mongoose.model('FalcorDescription', descriptionSchema, 'descriptions');
 
-let PublishingAppRoutes = [
+let BookDescriptionsApp = [
 {
-  route: 'articles.length',
+  route: 'descriptions.length',
     get: () => {
-    return Article.count({}, function(err, count) {
+    return FalcorDescription.count({}, function(err, count) {
       return count;
-    }).then ((articlesCountInDB) => {
+    }).then ((descriptionsCountInDB) => {
       return {
-        path: ['articles', 'length'],
-        value: articlesCountInDB
+        path: ['descriptions', 'length'],
+        value: descriptionsCountInDB
       }
     })
   }
 },
 {
-  route: 'articles[{integers}]["id","articleTitle","articleContent"]',
+  route: 'descriptions[{integers}]["id","descriptionTitle","descriptionContent"]',
   get: (pathSet) => {
-    let articlesIndex = pathSet[1];
+    let descriptionsIndex = pathSet[1];
 
-    return Article.find({}, function(err, articlesDocs) {
-      return articlesDocs;
-    }).then ((articlesArrayFromDB) => {
+    return FalcorDescription.find({}, function(err, descriptionsDocs) {
+      return descriptionsDocs;
+    }).then ((descriptionsArrayFromDB) => {
       let results = [];
-      articlesIndex.forEach((index) => {
-        let singleArticleObject = articlesArrayFromDB[index].toObject();
-        let falcorSingleArticleResult = {
-          path: ['articles', index],
+      descriptionsIndex.forEach((index) => {
+        let singleArticleObject = descriptionsArrayFromDB[index].toObject();
+        let falcorSingleDescriptionResult = {
+          path: ['descriptions', index],
           value: singleArticleObject
         };
-        results.push(falcorSingleArticleResult);
+        results.push(falcorSingleDescriptionResult);
       });
       console.info(">>>> results", results);
       return results;
@@ -62,4 +62,4 @@ let PublishingAppRoutes = [
 }
 ];
 
-export default PublishingAppRoutes;
+export default BookDescriptionsApp;
