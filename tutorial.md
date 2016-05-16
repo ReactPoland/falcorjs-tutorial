@@ -1043,3 +1043,82 @@ export default (
 At this points we are missing two components for our app called CoreLayout & LoginView (we will implement them in a minute).
 
 #### CoreLayout's component
+
+Create it by doing as following:
+```
+cd ../layouts/
+touch CoreLayout.js
+```
+
+... and then populate it with the following content:
+```
+import React from 'react';
+import { Link } from 'react-router';
+
+class CoreLayout extends React.Component {
+  static propTypes = {
+    children : React.PropTypes.element
+  }
+
+  constructor(props) {
+    super(props);
+
+  }
+
+  render () {
+    return (
+      <div>
+        <span>Links: <Link to='/login'>Login</Link> | <Link to='/'>Home Page</Link></span>
+          <br/>
+          {this.props.children}
+      </div>
+    );
+  }
+}
+
+export default CoreLayout;
+```
+As you probably know, the all content of a current route will go into the ***{this.props.children}***'s target (that is basic's React.JS concept you must to know beforehand). We also created two links to our routes as a header.
+
+
+#### LoginView's component
+
+For the time being, we will create a mocked LoginView as you can find below with the "FORM GOES HERE"'s placeholder:
+```
+"use strict";
+
+import React from 'react';
+import Falcor from 'falcor';
+import falcorModel from '../falcorModel.js';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+const mapStateToProps = (state) => ({
+  ...state
+});
+
+const mapDispatchToProps = (dispatch) => ({
+
+});
+
+class LoginView extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render () {
+    return (
+      <div>
+          <h1>Login view</h1>
+          FORM GOES HERE
+      </div>
+    );
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginView);
+```
+
+We are done with all missing pieces for the ***routes/index.js***, but there some other outstanding stuff to do before our app with the routing will be working.
+
+#### A ROOT's container for our app
