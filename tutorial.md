@@ -527,6 +527,22 @@ You will see:
 
 ### Configuring Falcor's router (ExpressJS)
 
+Replace falcorModel code with this one:
+
+```
+const falcor = require('falcor');
+const FalcorDataSource = require('falcor-http-datasource');
+const $ref = falcor.Model.ref;
+const $atom = falcor.Model.atom;
+
+
+const model = new falcor.Model({
+  source: new FalcorDataSource('/model.json')
+});
+
+export default model;
+```
+
 We need to create our routes definition file that will be consumed by falcor-router's lib:
 ```
 $ cd server
@@ -608,3 +624,12 @@ app.use('/model.json', falcorExpress.dataSourceRoute(function(req, res) {
  return new Router(routes);
 }));
 ```
+
+If you followed the instructions correctly, you will be able to run the project:
+```
+npm start
+```
+
+and on ports 3000 you will see:
+
+![content from backend](backend-content.jpg)

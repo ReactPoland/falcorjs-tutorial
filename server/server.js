@@ -8,22 +8,6 @@ import falcorExpress from 'falcor-express';
 import Router from 'falcor-router';
 import routes from './routes.js';
 
-mongoose.connect('mongodb://localhost/local');
-
-var tutorialSchema = {
-    title:String,
-    content: String,
-    id: String
-}
-
-/*Explanations for me:
-Third argument  - 'falcor-description' is name of collection of imported to mongodb ---->
-mongoimport --db local --collection falcor-description --jsonArray initData.js --host=127.0.0.1
-First argument is a name of a model?
-Second is that variable looking like some validation
-*/
-
-var FalcorTutorial = mongoose.model('FalcorTutorial', tutorialSchema, 'descriptions')
 
 var app = express();
 app.server = http.createServer(app);
@@ -34,30 +18,6 @@ app.use(cors());
 // This is required by falcor-express middleware to work correctly with falcor-browser
 app.use(bodyParser.json({extended: false}));
 
-
-/*let cache = {
-  articles: [
-    {
-        id: 987654,
-        descriptionTitle: "First title",
-        descriptionContent: "Our first description content"
-    },
-    {
-        id: 123456,
-        descriptionTitle: "Second title",
-        descriptionContent: "Second description content"
-    }
-  ]
-};
-
-var model = new falcor.Model({
-  cache: cache
-});
-
-app.use('/model.json', falcorExpress.dataSourceRoute(function(req, res) {
-    return model.asDataSource();
-}));*/
-
 app.use('/model.json', falcorExpress.dataSourceRoute(function(req, res) {
  return new Router(routes);
 }));
@@ -67,10 +27,10 @@ app.use(express.static('dist'));
 
 
 app.get('/', (req, res) => { 
-    FalcorTutorial.find(function (err, tutorialDescriptions) {
+    Article.find(function (err, tutorialDescriptions) {
 
         let ourDescriptions = tutorialDescriptions.map(function(tutorialItem){
-            return `<h2>${tutorialItem.title}</h2> <p>${tutorialItem.content}</p>`;
+            return `<h2>${tutorialItem.descriptionTitle}</h2> <p>${tutorialItem.descriptionContent}</p>`;
         }).join("<br/>");
 
         res.send(`<h1>FalcorJS Tutorial</h1> ${ourDescriptions}`);
