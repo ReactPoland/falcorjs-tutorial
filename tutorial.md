@@ -516,7 +516,7 @@ If you follow all the instructions correctly, then you can also make a request t
 http://localhost:3000/model.json?paths=[["articles",{"from":0,"to":1},["descriptionContent","descriptionTitle","id"]]]&method=get
 ```
 
-If you will run your app with:
+If you run your app with:
 ```
 npm start
 ```
@@ -524,3 +524,61 @@ npm start
 You will see:
 
 ![Display view from falcor on backend](appview-screen.jpg)
+
+### Configuring Falcor's router (ExpressJS)
+
+We need to create our routes definition file that will be consumed by falcor-router's lib:
+```
+$ cd server
+$ touch routes.js
+```
+
+We have created the server/routes.js file, the content for that router will be as following:
+
+```
+let PublishingAppRoutes = [{
+  route: 'articles.length',
+  get: () => {
+    let articlesCountInDB = 2; // hardcoded for example
+    return {
+      path: ['articles', 'length'],
+      value: articlesCountInDB
+    };
+  }
+}];
+
+export default PublishingAppRoutes;
+```
+
+### Second route for returning our two articles from backend
+
+Add this code, this new object as a second route in route.js:
+```
+{
+  route: 'articles[{integers}]["id","articleTitle","articleContent"]',
+  get: (pathSet) => {
+    let articlesIndex = pathSet[1];
+    let articlesArrayFromDB = [{
+      "articleId": "987654",
+      "articleTitle": "BACKEND Lorem ipsum - article one",
+      "articleContent": "BACKEND Here goes the content of the article"
+    }, {
+      "articleId": "123456",
+      "articleTitle": "BACKEND Lorem ipsum - article two",
+      "articleContent": "BACKEND Sky is the limit, the content goes here."
+    }]; // That are our mocked articles from MongoDB
+
+    let results = [];
+    articlesIndex.forEach((index) => {
+      let singleArticleObject = articlesArrayFromDB[index];
+      let falcorSingleArticleResult = {
+        path: ['articles', index],
+        value: singleArticleObject
+      };
+      results.push(falcorSingleArticleResult);
+    });
+
+    return results;
+  }
+}
+```
