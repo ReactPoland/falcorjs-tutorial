@@ -717,3 +717,32 @@ We need create a users collection in our database. The users will have privilage
 $ cd ..]
 $ touch initPubUsers.js
 ```
+
+then add the content following content to the initPubUsers.js:
+
+```
+[
+  {
+    "username" : "admin",
+    "password" : "151c1d587c056c961cefba4d825a0e773ddaaa0b2205935ece4358d00d4be63c",
+    "firstName" : "Michal",
+    "lastName" : "Sawicki",
+    "email" : "michal@mobilewebpro.pl",
+    "role" : "admin",
+    "verified" : false,
+    "imageUrl" : "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Aristoteles_Louvre.jpg/180px-Aristoteles_Louvre.jpg"
+  }
+]
+```
+
+Password : "151c1d587c056c961cefba4d825a0e773ddaaa0b2205935ece4358d00d4be63c" created by visiting - http://www.xorbin.com/tools/sha256-hash-calculator - and typing "123456descApp" calculated to SHA256 hash.
+
+These steps are required only on the beginning, later we need to program a registration form that is salting the password for our own.
+
+##### Importing the initPubUsers.js file into MongoDB
+We can now run a command line as following in order to import that new pubUsers collection to our database:
+```
+mongoimport --db local --collection pubUsers --jsonArray initPubUsers.js --host=127.0.0.1
+```
+
+#### Working on the login's falcor-route
