@@ -1003,3 +1003,43 @@ Please run the app and then if everything is working for you, and after it works
 
 
 ### Front-end side and Falcor
+
+Let's create a new route for login in our redux application. In order to do that, we need to introduce the ***react-router***:
+```
+$ npm i --save react-router@1.0.0 redux-simple-router@0.0.10 redux-thunk@1.0.0
+```
+
+PLEASE NOTE: it's important to use correct NPM's versions
+
+After we have installed them, we need to add routes in the src:
+```
+$ cd src
+$ mkdir routes
+$ touch index.js
+```
+
+then make the content of this index.js file as following:
+```
+import React                        from 'react';
+import { Route, IndexRoute }        from 'react-router';
+
+/* wrappers */
+import CoreLayout                   from '../layouts/CoreLayout';
+
+/* home view */
+import PublishingApp                    from '../layouts/PublishingApp';
+
+/* auth views */
+import LoginView                    from '../views/LoginView';
+
+export default (
+  <Route component={CoreLayout} path='/'>
+    <IndexRoute component={PublishingApp} name='home' />
+    <Route component={LoginView} path='login' name='login' />
+  </Route>
+);
+```
+
+At this points we are missing two components for our app called CoreLayout & LoginView (we will implement them in a minute).
+
+#### CoreLayout's component
