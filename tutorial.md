@@ -864,8 +864,91 @@ also we need to spread the sessionRoutes into our current PublishingAppRoutes as
 let PublishingAppRoutes = [
     ...sessionRoutes,
   {
-  route: 'articles.length',
+  route: 'descriptions.length',
 ```
 At the beginning of PublishingAppRoutes you need to spread ***...sessionRoutes,*** routes, so the login route will be available to use accross the Falcor's routes.
 
 #### Double-check if app works, before implementing JWT
+
+#### Creating a Mongoose users' model
+
+In the file ***configMongoose.js*** we need to create and export a User model. Please add following code to that file:
+```
+var userSchema = {
+  "username" : String,
+  "password" : String,
+  "firstName" : String,
+  "lastName" : String,
+  "email" : String,
+  "role" : String,
+  "verified" : Boolean,
+  "imageUrl" : String
+}
+
+var User = mongoose.model('User', userSchema, 'pubUsers');
+
+
+export default {
+  Article,
+  User
+}
+```
+
+#### Implementing JWT in the routesSession.js file
+
+First step is to export our User's model into the routesSession's scope by adding at the top of that file an import statement:
+```
+import { User } from './configMongoose';
+````
+
+Installing the jsonwebtoken & crypto (for SHA256):
+```
+$ npm i --save jsonwebtoken crypto
+```
+
+After you have installed jsonwebtoken, the we need to import it to the ***routesSession.js***:
+```
+import jwt from 'jsonwebtoken';
+import crypto from 'crypto';
+import jwtSecret from './configSecret';
+```
+
+After you have imported everything in the routesSession, then let's
+continue on working with the ***route: ['login']***.
+
+Below you need to improve the userStatementQuery, so it will have the saltedPassword instead of plain text:
+```
+let saltedPassword = password+"pubApp"; // pubApp is our salt string
+let saltedPassHash = crypto.createHash('sha256').update(saltedPassword).digest('hex');
+let userStatementQuery = {
+  $and: [
+      { 'username': username },
+      { 'password': saltedPassHash }
+  ]
+}
+``` 
+... so instead of plain text, then we will query a salted SHA256 password.
+
+... under this ***userStatementQuery*** please return a Promise, with following details:
+```
+        return User.find(userStatementQuery, function(err, user) {
+          if (err) throw err;
+        }).then((result) => {
+          if(result.length) {
+            return null; // SUCCESSFUL LOGIN mocked now (will implement next)
+          } else {
+            // INVALID LOGIN
+            return [
+              {
+                path: ['login', 'token'], 
+                value: "INVALID"
+              },
+              {
+                path: ['login', 'error'], 
+                value: "NO USER FOUND, incorrect login information" 
+              }
+            ];
+          }
+          return result;
+        });
+```

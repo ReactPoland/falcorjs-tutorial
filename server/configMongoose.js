@@ -8,6 +8,19 @@ const conf = {
 
 mongoose.connect(`mongodb://${conf.hostname}:${conf.port}/${conf.env}`);
 
+var userSchema = {
+  "username" : String,
+  "password" : String,
+  "firstName" : String,
+  "lastName" : String,
+  "email" : String,
+  "role" : String,
+  "verified" : Boolean,
+  "imageUrl" : String
+}
+
+var User = mongoose.model('User', userSchema, 'pubUsers');
+
 var descriptionSchema = {
   descriptionTitle:String,
   descriptionContent:String
@@ -16,5 +29,6 @@ var descriptionSchema = {
 var FalcorDescription = mongoose.model('FalcorDescription', descriptionSchema, 'descriptions');
 
 export default {
-  FalcorDescription
+  FalcorDescription,
+  User
 }

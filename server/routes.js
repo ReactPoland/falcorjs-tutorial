@@ -11,21 +11,6 @@ import mongoose from 'mongoose';
 import { FalcorDescription } from './configMongoose';
 import sessionRoutes from './routesSession';
 
-mongoose.connect('mongodb://localhost/local');
-
-var descriptionSchema = {
-  descriptionTitle:String,
-  descriptionContent:String
-}
-/*Explanations for me:
-Third argument  - 'falcor-description' is name of collection of imported to mongodb ---->
-mongoimport --db local --collection falcor-description --jsonArray initData.js --host=127.0.0.1
-First argument is a name of a model?
-Second is that variable looking like some validation
-*/
-
-var FalcorDescription = mongoose.model('FalcorDescription', descriptionSchema, 'descriptions');
-
 let BookDescriptionsApp = [
 ...sessionRoutes,
 {
@@ -58,7 +43,7 @@ let BookDescriptionsApp = [
         };
         results.push(falcorSingleDescriptionResult);
       });
-      console.info(">>>> results", results);
+      /*console.info(">>>> results", results);*/
       return results;
     })
   }
