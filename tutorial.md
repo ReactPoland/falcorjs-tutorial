@@ -1165,3 +1165,59 @@ export default class Root extends React.Component {
 ```
 
 #### Remaining configuration for: configureStore & rootReducer
+
+Let's create an index.js file in our reducers directory:
+```
+$ pwd 
+$ [[[you should be at the src folder]]]
+$ cd reducers
+$ touch index.js
+```
+
+... and the content for the index.js is as following:
+```
+import { combineReducers }    from 'redux';
+import { routeReducer }       from 'redux-simple-router';
+
+import descriptionReducer  from './BookDescriptionReducer.js';
+
+export default combineReducers({
+  routing: routeReducer,
+  descriptionReducer
+});
+```
+
+```
+$ pwd 
+$ [[[you should be at the src folder]]]
+$ mkdir store
+$ cd store
+$ touch configureStore.js
+```
+
+... and the content for the configureStore.js:
+```
+import rootReducer          from '../reducers';
+import thunk                from 'redux-thunk';
+import {
+  applyMiddleware,
+  compose,
+  createStore
+} from 'redux';
+
+export default function configureStore (initialState, debug = false) {
+  let createStoreWithMiddleware;
+
+  const middleware = applyMiddleware(thunk);
+
+  createStoreWithMiddleware = compose(middleware);
+
+  const store = createStoreWithMiddleware(createStore)(
+    rootReducer, initialState
+  );
+  return store;
+}
+```
+In the above's code we are importing the rootReducer that we've created recently. We also import the redux-thunk's lib which is very useful for server side rendering (described later in the book). 
+
+At the end, we export a store which is composed of many different's reducers (currently routing and article's reducer that you can find in ***reducer/index.js***) and is able to handle the server rendering initial's state.
