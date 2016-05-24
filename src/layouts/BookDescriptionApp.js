@@ -37,11 +37,11 @@ class BookDescriptionApp extends React.Component {
   }
   render () {
     
-    console.log("reducer is stored : ", this.props);
+    console.log("reducer is stored : ", this.props.descriptionReducer);
     
     let descriptionsJSX = [];
-    for(let descriptionKey in this.props) {
-        let descriptionDetails = this.props[descriptionKey];
+    for(let descriptionKey in this.props.descriptionReducer) {
+        let descriptionDetails = this.props.descriptionReducer[descriptionKey];
         let currentDescriptionJSX = (
             <div key={descriptionKey}>
                 <h2>{descriptionDetails.descriptionTitle}</h2>

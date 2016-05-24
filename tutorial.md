@@ -1221,3 +1221,35 @@ export default function configureStore (initialState, debug = false) {
 In the above's code we are importing the rootReducer that we've created recently. We also import the redux-thunk's lib which is very useful for server side rendering (described later in the book). 
 
 At the end, we export a store which is composed of many different's reducers (currently routing and article's reducer that you can find in ***reducer/index.js***) and is able to handle the server rendering initial's state.
+
+#### Last tweaks in layouts/PublishingApp.js before running the app
+
+The last thing that changed in our app is that we have out-of-date code in PublishingApp.
+
+Why outdated? Because we have introduced rootReducer and combineReducers so if you will check your code in render of PublishingApp here:
+```
+   let descriptionsJSX = [];
+    for(let descriptionKey in this.props) {
+        let descriptionDetails = this.props[descriptionKey];
+        let currentDescriptionJSX = (
+            <div key={descriptionKey}>
+                <h2>{descriptionDetails.descriptionTitle}</h2>
+                <h3>{descriptionDetails.descriptionContent}</h3>
+            </div>);
+        descriptionsJSX.push(currentDescriptionJSX);
+    }
+```
+
+... then it won't work, because you are you need to change it to this:
+```
+    let descriptionsJSX = [];
+    for(let descriptionKey in this.props.descriptionReducer) {
+        let descriptionDetails = this.props.descriptionReducer[descriptionKey];
+        let currentDescriptionJSX = (
+            <div key={descriptionKey}>
+                <h2>{descriptionDetails.descriptionTitle}</h2>
+                <h3>{descriptionDetails.descriptionContent}</h3>
+            </div>);
+        descriptionsJSX.push(currentDescriptionJSX);
+    }
+```
