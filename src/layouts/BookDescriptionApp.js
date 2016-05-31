@@ -32,12 +32,12 @@ class BookDescriptionApp extends React.Component {
       then(function(descriptionsResponse) {  
         return descriptionsResponse.json.descriptions;
       });
-      /*console.log("articles is: ", articles);*/
       this.props.descriptionActions.descriptionsList(descriptions);
   }
   render () {
     
-    console.log("reducer is stored : ", this.props.descriptionReducer);
+    console.log("reducer is stored in : ", this.props);
+    console.log("reducer is stored in this.props.descriptionReducer : ", this.props.descriptionReducer);
     
     let descriptionsJSX = [];
     for(let descriptionKey in this.props.descriptionReducer) {

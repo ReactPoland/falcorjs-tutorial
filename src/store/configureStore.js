@@ -6,6 +6,7 @@ import {
   createStore
 } from 'redux';
 
+
 export default function configureStore (initialState, debug = false) {
   let createStoreWithMiddleware;
 

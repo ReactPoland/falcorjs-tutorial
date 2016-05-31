@@ -1,15 +1,25 @@
 import React from 'react'
+import ReactDOM               from 'react-dom';
 import { render } from 'react-dom'
-import { Provider } from 'react-redux'
-import { createStore } from 'redux'
-import BookDescriptionReducer from './reducers/BookDescriptionReducer'
-import BookDescriptionApp from './layouts/BookDescriptionApp'
+/*import descriptionReducer from './reducers/BookDescriptionReducer'
+import BookDescriptionApp from './layouts/BookDescriptionApp'*/
+import Root from './containers/Root.js'
+import configureStore         from './store/configureStore';
+import createBrowserHistory   from 'history/lib/createBrowserHistory';
+import { syncReduxAndRouter } from 'redux-simple-router';
 
-let store = createStore(BookDescriptionReducer)
+const target  = document.getElementById('tutorial-app-root');
+const history = createBrowserHistory();
 
-render(
-    <Provider store={store}>
-        <BookDescriptionApp />
-    </Provider>,
-    document.getElementById('tutorial-app-root')
+export const store = configureStore(window.__INITIAL_STATE__);
+
+syncReduxAndRouter(history, store);
+
+const node = (
+  <Root
+    history={history}
+    store={store}
+  />
 );
+
+ReactDOM.render(node, target);
