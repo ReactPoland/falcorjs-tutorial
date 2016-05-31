@@ -1286,7 +1286,7 @@ import { syncReduxAndRouter } from 'redux-simple-router';
 import Root                   from './containers/Root';
 import configureStore         from './store/configureStore';
 
-const target  = document.getElementById('publishingAppRoot');
+const target  = document.getElementById('tutorial-app-root');
 const history = createBrowserHistory();
 
 export const store = configureStore(window.__INITIAL_STATE__);
@@ -1301,4 +1301,56 @@ const node = (
 );
 
 ReactDOM.render(node, target);
+```
+
+### Working on the login form that will call the backend in order to authenticate.
+
+For making our work easier with forms, we will start using a ***formsy-react***'s library. Let's install them:
+```
+$ npm i --save material-ui@0.15.0-alpha.2 formsy-react@0.17.0
+```
+
+#### Working on LoginForm and DefaultInput components
+
+```
+$ mkdir src/components
+$ cd components
+$ touch DefaultInput.js
+```
+
+and then please make a content of this file as following:
+```
+import React from 'react';
+import {TextField} from 'material-ui';
+import {HOC} from 'formsy-react';
+
+class DefaultInput extends React.Component {
+  constructor(props) {
+    super(props);
+    this.changeValue = this.changeValue.bind(this);
+    this.state = { currentText: null }
+  }
+
+  changeValue(e) {
+    this.setState({currentText: e.target.value})
+    this.props.setValue(e.target.value);
+    this.props.onChange(e);
+  }
+
+  render() {
+    return (<div>
+        <TextField 
+          ref={this.props.name}
+          floatingLabelText={this.props.title}
+          name={this.props.name}
+          onChange={this.changeValue}
+          required={this.props.required}
+          type={this.props.type}
+          value={this.state.currentText ? this.state.currentText : this.props.value}
+          defaultValue={this.props.defaultValue} />
+        {this.props.children}
+      </div>);
+  }
+};
+export default HOC(DefaultInput);
 ```
