@@ -1253,3 +1253,52 @@ Why outdated? Because we have introduced rootReducer and combineReducers so if y
         descriptionsJSX.push(currentDescriptionJSX);
     }
 ```
+#### Last changes in src/app.js before running the app
+
+Last thing is to improve the src/app.js so it will use the Root's container. We need to change the old code:
+
+```
+import React from 'react'
+import { render } from 'react-dom'
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
+import descriptionReducer from './reducers/BookDescriptionReducer'
+import BookDescriptionApp from './layouts/BookDescriptionApp'
+
+
+let store = createStore(descriptionReducer);
+
+render(
+   <Provider store={store}>
+       <BookDescriptionApp />
+   </Provider>,
+   document.getElementById('tutorial-app-root')
+);
+```
+
+... the above's code we need to change to the below's one:
+
+```
+import React                  from 'react';
+import ReactDOM               from 'react-dom';
+import createBrowserHistory   from 'history/lib/createBrowserHistory';
+import { syncReduxAndRouter } from 'redux-simple-router';
+import Root                   from './containers/Root';
+import configureStore         from './store/configureStore';
+
+const target  = document.getElementById('publishingAppRoot');
+const history = createBrowserHistory();
+
+export const store = configureStore(window.__INITIAL_STATE__);
+
+syncReduxAndRouter(history, store);
+
+const node = (
+  <Root
+    history={history}
+    store={store}
+  />
+);
+
+ReactDOM.render(node, target);
+```
