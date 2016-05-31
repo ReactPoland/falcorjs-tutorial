@@ -36,7 +36,7 @@ class BookDescriptionApp extends React.Component {
   }
   render () {
     
-    console.log("reducer is stored in : ", this.props);
+    /*console.log("reducer is stored in this.props : ", this.props);*/
     console.log("reducer is stored in this.props.descriptionReducer : ", this.props.descriptionReducer);
     
     let descriptionsJSX = [];
