@@ -1475,4 +1475,6 @@ to the new one, that is following:
   }
 ```
 
-Great! Now we are done! Below you can find what you shall see after running ***npm start*** and running it in your browser:
+Great! 
+
+### Making DashboardView's component

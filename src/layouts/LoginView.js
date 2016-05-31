@@ -34,6 +34,7 @@ class LoginView extends React.Component {
       then((result) => {
         return loginResult;
       });
+    console.info("credentials", loginResult);
 
     let tokenRes = await falcorModel.getValue('login.token');
     console.info("tokenRes", tokenRes);
@@ -41,6 +42,7 @@ class LoginView extends React.Component {
   }
 
   render () {
+    console.log(falcorModel, "falcorModel is");
     return (
       <div>
           <h1>Login view</h1>
