@@ -1627,3 +1627,221 @@ if(tokenRes) {
 
 return; 
 ```
+
+
+#### Starting working on the new editor's registration
+
+In order to wrap up the registration, let's first make some changes in our User's scheme from Mongoose's config file at location ***server/configMongoose.js***:
+```
+var userSchema = {
+  "username" : String,
+  "password" : String,
+  "firstName" : String,
+  "lastName" : String,
+  "email" : String,
+  "role" : String,
+  "verified" : Boolean,
+  "imageUrl" : String
+}
+```
+
+to new scheme as following:
+```
+var userSchema = {
+  "username" : { type: String, index: {unique: true, dropDups: true }},
+  "password" : String,
+  "firstName" : String,
+  "lastName" : String,
+  "email" : { type: String, index: {unique: true, dropDups: true }},
+  "role" : { type: String, default: 'editor' },
+  "verified" : Boolean,
+  "imageUrl" : String
+}
+```
+
+#### Adding register's falcor-route
+
+In the file located at ***server/routesSession.js*** you need to add a new route (next to the login's route):
+```
+  { 
+    route: ['register'],
+    call: (callPath, args) => 
+      {
+        let newUserObj = args[0];
+        newUserObj.password = newUserObj.password+"pubApp";
+        newUserObj.password = crypto.createHash('sha256').update(newUserObj.password).digest('hex');
+        let newUser = new User(newUserObj);
+        return newUser.save((err, data) => { if (err) return err; })
+          .then ((newRes) => {
+            /*
+              got new obj data, now let's get count:
+             */
+            let newUserDetail = newRes.toObject();
+            if(newUserDetail._id) {
+              return null; // Mocked for now
+            } else {
+              // registration failed
+              return [
+                {
+                  path: ['register', 'newUserId'], 
+                  value: 'INVALID'
+                },
+                {
+                  path: ['register', 'error'], 
+                  value: 'Registration failed - no id has been created'
+                }
+              ];
+            }
+            return;
+          }).catch((reason) => console.error(reason));
+      }
+  }
+```
+
+OK, so we are done with handling an invalid user registration from Falcor. 
+Next step is to replace this:
+```
+// you shall already have this in your codebase, just a recall
+if(newUserDetail._id) {
+  return null; // Mocked for now
+}
+```
+
+and the above needs to be replaced with:
+```
+if(newUserDetail._id) {
+  let newUserId = newUserDetail._id.toString();
+  return [
+    {
+      path: ['register', 'newUserId'], 
+      value: newUserId
+    },
+    {
+      path: ['register', 'error'], 
+      value: false 
+    }
+  ];
+}
+```
+
+#### Front-end implementation (RegisterView and RegisterForm)
+
+Let's create first a component that will manage on the front-end the register's form with following actions:
+```
+$ pwd 
+$ [[[you shall be at the components folder]]]
+$ touch RegisterForm.js
+```
+
+and the content of that file:
+```
+import React from 'react';
+import Formsy from 'formsy-react';
+import { RaisedButton, Paper } from 'material-ui';
+import DefaultInput from './DefaultInput';
+
+export class RegisterForm extends React.Component {
+  constructor() {
+    super();
+  }
+
+  render() {
+    return (
+      <Formsy.Form onSubmit={this.props.onSubmit}>
+        <Paper zDepth={1} style={{padding: 32}}>
+          <h3>Registration form</h3>
+          <DefaultInput onChange={(event) => {}} name='username' title='Username' required />
+          <DefaultInput onChange={(event) => {}} name='firstName' title='Firstname' required />
+          <DefaultInput onChange={(event) => {}} name='lastName' title='Lastname' required />
+          <DefaultInput onChange={(event) => {}} name='email' title='Email' required />
+          <DefaultInput onChange={(event) => {}} type='password' name='password' title='Password' required />
+          <div style={{marginTop: 24}}>
+            <RaisedButton
+              secondary={true}
+              type="submit"
+              style={{margin: '0 auto', display: 'block', width: 150}}
+              label={'Register'} />
+          </div>
+        </Paper>
+      </Formsy.Form>
+    );
+  }
+}
+```
+
+The above's registration component is creating a form exactly the same way as on the LoginForm.
+
+#### RegisterView
+
+Let's create a RegisterView's file at views directory:
+```
+$ touch RegisterView.js
+```
+
+and it's content is:
+```
+"use strict";
+import React from 'react';
+import falcorModel from '../falcorModel.js';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { Snackbar } from 'material-ui';
+import { RegisterForm } from '../components/RegisterForm.js';
+
+const mapStateToProps = (state) => ({ 
+  ...state 
+});
+
+const mapDispatchToProps = (dispatch) => ({
+});
+
+class RegisterView extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      error: null
+    };
+    this.register = this.register.bind(this);
+  }
+  async register (newUserModel) {
+    console.info("newUserModel", newUserModel);
+
+    let registerResult = await falcorModel
+      .call(
+            ['register'],
+            [newUserModel]
+          ).
+      then((result) => {
+        return result;
+      });
+
+    let newUserId = await falcorModel.getValue(['register', 'newUserId']);
+    if(newUserId === "INVALID") {
+      let errorRes = await falcorModel.getValue('register.error');
+      this.setState({error: errorRes});
+      return;
+    }
+
+    if(newUserId) {
+      this.props.history.pushState(null, '/login');
+      return;
+    } else {
+      alert("Fatal registration error, please contact an admin");
+    }
+  }
+
+  render () {
+    return (
+      <div>
+          <h1>Register</h1>
+          <div style={{maxWidth: 450, margin: '0 auto'}}>
+            <RegisterForm 
+              onSubmit={this.register} />
+          </div>
+      </div>
+    );
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterView);
+```
