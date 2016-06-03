@@ -1560,9 +1560,8 @@ The last improvements for login at this point of our publishing app is remaining
     return;
 ```
 
-we have added this ***if(tokenRes === "INVALID")*** in order to update the  error state with ***this.setState({error: errorRes})***.
 
-2) next step is to add into the render function a Snackbar that will show to the user a type of the error - in top of the LoginView's component add this import:
+Next step is to add into the render function a Snackbar that will show to the user a type of the error - in top of the LoginView's component add this import:
 
 ```
 import { Snackbar } from 'material-ui';
@@ -1598,3 +1597,33 @@ render () {
 OK, so we are handling login's error - now let's work on successful logins.
 
 #### Handling successful logins in the LoginView's component
+
+For handling successful token's backend responses add to the login function under the:
+```
+    if(tokenRes === "INVALID") {
+      // login failed, get error msg
+      let errorRes = await falcorModel.getValue('login.error');
+      this.setState({error: errorRes});
+      return;
+    }
+
+```
+
+a new code for handling correct responses as following:
+```
+if(tokenRes) {
+  let username = await falcorModel.getValue('login.username');
+  let role = await falcorModel.getValue('login.role');
+
+  localStorage.setItem("token", tokenRes);
+  localStorage.setItem("username", username);
+  localStorage.setItem("role", role);
+
+  this.props.history.pushState(null, '/dashboard');
+  return;
+} else {
+  alert("Fatal login error, please contact an admin");
+}
+
+return; 
+```
