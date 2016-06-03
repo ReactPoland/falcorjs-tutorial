@@ -1,12 +1,12 @@
 [
   {
     "username" : "admin",
-    "password" : "151c1d587c056c961cefba4d825a0e773ddaaa0b2205935ece4358d00d4be63c",
-    "firstName" : "Michal",
-    "lastName" : "Sawicki",
-    "email" : "michal@mobilewebpro.pl",
+    "password" : "c5a0df4e293953d6048e78bd9849ec0ddce811f0b29f72564714e474615a7852",
+    "firstName" : "Kamil",
+    "lastName" : "Przeorski",
+    "email" : "kamil@mobilewebpro.pl",
     "role" : "admin",
     "verified" : false,
-    "imageUrl" : "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Aristoteles_Louvre.jpg/180px-Aristoteles_Louvre.jpg"
+    "imageUrl" : "http://lorempixel.com/100/100/people/"
   }
 ]
