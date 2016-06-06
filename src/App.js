@@ -5,7 +5,7 @@ import { syncReduxAndRouter } from 'redux-simple-router';
 import Root                   from './containers/Root';
 import configureStore         from './store/configureStore';
 
-const target  = document.getElementById('publishingAppRoot');
+const target  = document.getElementById('tutorial-app-root');
 const history = createBrowserHistory();
 
 export const store = configureStore(window.__INITIAL_STATE__);
