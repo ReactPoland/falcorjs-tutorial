@@ -3,7 +3,7 @@ import Formsy from 'formsy-react';
 import { RaisedButton, Paper } from 'material-ui';
 import DefaultInput from './DefaultInput';
 
-export class RegisterForm extends React.Component {
+export class RegistrationComponent extends React.Component {
   constructor() {
     super();
   }

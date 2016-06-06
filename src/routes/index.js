@@ -8,14 +8,14 @@ import CoreLayout                   from '../layouts/CoreLayout';
 /* auth views */
 import LoginView                   	from '../layouts/LoginView';
 import BookDescriptionApp           from '../layouts/BookDescriptionApp';
-import DashboardView 				from '../views/DashboardView';
-import RegisterView					from '../views/RegisterView.js';
+import MainView 					from '../views/MainView';
+import ShowRegistration				from '../views/ShowRegistration.js';
 
 export default (
   <Route component={CoreLayout} path='/'>
-    <IndexRoute component={RegisterView} name='home' />
+    <IndexRoute component={ShowRegistration} name='home' />
     <Route component={LoginView} path='login' name='login' />
-    <Route component={DashboardView} path='dashboard' name='dashboard' />
-    <Route component={RegisterView} path='register' name='register' />
+    <Route component={MainView} path='main-view' name='main-view' />
+    <Route component={ShowRegistration} path='register' name='register' />
   </Route>
 );

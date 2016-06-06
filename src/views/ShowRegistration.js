@@ -4,7 +4,7 @@ import falcorModel from '../falcorModel.js';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Snackbar } from 'material-ui';
-import { RegisterForm } from '../components/RegisterForm.js';
+import { RegistrationComponent } from '../components/RegistrationComponent.js';
 
 const mapStateToProps = (state) => ({ 
   ...state 
@@ -13,7 +13,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
 });
 
-class RegisterView extends React.Component {
+class ShowRegistration extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -53,7 +53,7 @@ class RegisterView extends React.Component {
       <div>
           <h1>Register</h1>
           <div style={{maxWidth: 450, margin: '0 auto'}}>
-            <RegisterForm 
+            <RegistrationComponent 
               onSubmit={this.register} />
           </div>
       </div>
@@ -61,4 +61,4 @@ class RegisterView extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(RegisterView);
+export default connect(mapStateToProps, mapDispatchToProps)(ShowRegistration);

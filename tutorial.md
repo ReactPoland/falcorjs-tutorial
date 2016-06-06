@@ -550,7 +550,7 @@ $ touch routes.js
 We have created the server/routes.js file, the content for that router will be as following:
 
 ```
-let PublishingAppRoutes = [{
+let BookDescriptionsApp = [{
   route: 'descriptions.length',
   get: () => {
     let descriptionsCountInDB = 2; // hardcoded for example
@@ -561,7 +561,7 @@ let PublishingAppRoutes = [{
   }
 }];
 
-export default PublishingAppRoutes;
+export default BookDescriptionsApp;
 ```
 
 ### Second route for returning our two descriptions from backend
@@ -574,19 +574,19 @@ Add this code, this new object as a second route in route.js:
     let descriptionsIndex = pathSet[1];
     let descriptionsArrayFromDB = [{
       "descriptionId": "987654",
-      "descriptionTitle": "BACKEND Lorem ipsum - description one",
-      "descriptionContent": "BACKEND Here goes the content of the description"
+      "descriptionTitle": "Book nr 1 title",
+      "descriptionContent": "Book nr 1 description content"
     }, {
       "descriptionId": "123456",
-      "descriptionTitle": "BACKEND Lorem ipsum - description two",
-      "descriptionContent": "BACKEND Sky is the limit, the content goes here."
+      "descriptionTitle": "Book nr 2 title",
+      "descriptionContent": "Book nr 2 description content"
     }]; // That are our mocked descriptions from MongoDB
 
     let results = [];
     descriptionsIndex.forEach((index) => {
       let singleDescriptionObject = descriptionsArrayFromDB[index];
-      let falcorSingleArticleResult = {
-        path: ['articles', index],
+      let falcorSingleDescriptionResult = {
+        path: ['descriptions', index],
         value: singleDescriptionObject
       };
       results.push(falcorSingleDescriptionResult);
@@ -683,7 +683,7 @@ The second route ***route: 'descriptions[{integers}]["id","descriptionTitle","de
       descriptionIndex.forEach((index) => {
         let singleDescriptionObject = descriptionsArrayFormDB[index].toObject();
         let falcorSingleDescriptionResult = {
-          path: ['articles', index],
+          path: ['descriptions', index],
           value: singleDescriptionObject
         };
         results.push(falcorSingleDescriptionResult);
@@ -828,7 +828,7 @@ var descriptionSchema = {
   descriptionContent:String
 }
 
-var FalcorDescription = mongoose.model('FalcorDescription', articleSchema, 'descriptions');
+var FalcorDescription = mongoose.model('FalcorDescription', descriptionSchema, 'descriptions');
 
 export default {
   FalcorDescription
@@ -859,14 +859,14 @@ import { FalcorDescription } from './configMongoose';
 import sessionRoutes from './routesSession';
 ```
 
-also we need to spread the sessionRoutes into our current PublishingAppRoutes as following:
+also we need to spread the sessionRoutes into our current BookDescriptionsApp as following:
 ```
-let PublishingAppRoutes = [
+let BookDescriptionsApp = [
     ...sessionRoutes,
   {
   route: 'descriptions.length',
 ```
-At the beginning of PublishingAppRoutes you need to spread ***...sessionRoutes,*** routes, so the login route will be available to use accross the Falcor's routes.
+At the beginning of BookDescriptionsApp you need to spread ***...sessionRoutes,*** routes, so the login route will be available to use accross the Falcor's routes.
 
 #### Double-check if app works, before implementing JWT
 
@@ -889,7 +889,7 @@ var User = mongoose.model('User', userSchema, 'pubUsers');
 
 
 export default {
-  Article,
+  Description,
   User
 }
 ```
@@ -918,7 +918,7 @@ continue on working with the ***route: ['login']***.
 
 Below you need to improve the userStatementQuery, so it will have the saltedPassword instead of plain text:
 ```
-let saltedPassword = password+"pubApp"; // pubApp is our salt string
+let saltedPassword = password+"bookApp"; // bookApp is our salt string
 let saltedPassHash = crypto.createHash('sha256').update(saltedPassword).digest('hex');
 let userStatementQuery = {
   $and: [
@@ -987,19 +987,7 @@ return [
 ];
 ```
 
-#### Explanation:
-As you can see, the only thing that we fetch from DB right now is the role value === ***result[0].role***. We need add this to hash, because we don't want our app to be vulnerable so a normal user can get an admin role with some hacking. The value of the ***token*** is calculated based on ***userDetailsToHash = username+role*** - that's enough for now.
-
-After we are fine here the only thing that needs to be done on the backend is returning the paths with values:
-1) The login token with: ['login', 'token']
-2) The username with ['login', 'username']
-3) The logged user's role with: ['login', 'role']
-4) ... and an information that there were no errors' at all with: ['login', 'error']
-
 The next step is to use this route on the Front-end.
-
-Please run the app and then if everything is working for you, and after it works for you then let's to start the front-end codings' fun right now!
-
 
 
 ### Front-end side and Falcor
@@ -1027,14 +1015,14 @@ import { Route, IndexRoute }        from 'react-router';
 import CoreLayout                   from '../layouts/CoreLayout';
 
 /* home view */
-import PublishingApp                    from '../layouts/PublishingApp';
+import BookDescriptionApp                    from '../layouts/BookDescriptionApp';
 
 /* auth views */
 import LoginView                    from '../views/LoginView';
 
 export default (
   <Route component={CoreLayout} path='/'>
-    <IndexRoute component={PublishingApp} name='home' />
+    <IndexRoute component={BookDescriptionApp} name='home' />
     <Route component={LoginView} path='login' name='login' />
   </Route>
 );
@@ -1220,13 +1208,13 @@ export default function configureStore (initialState, debug = false) {
 ```
 In the above's code we are importing the rootReducer that we've created recently. We also import the redux-thunk's lib which is very useful for server side rendering (described later in the book). 
 
-At the end, we export a store which is composed of many different's reducers (currently routing and article's reducer that you can find in ***reducer/index.js***) and is able to handle the server rendering initial's state.
+At the end, we export a store which is composed of many different's reducers (currently routing and description's reducer that you can find in ***reducer/index.js***) and is able to handle the server rendering initial's state.
 
-#### Last tweaks in layouts/PublishingApp.js before running the app
+#### Last tweaks in layouts/BookDescriptionsApp.js before running the app
 
-The last thing that changed in our app is that we have out-of-date code in PublishingApp.
+The last thing that changed in our app is that we have out-of-date code in BookDescriptionsApp.
 
-Why outdated? Because we have introduced rootReducer and combineReducers so if you will check your code in render of PublishingApp here:
+Why outdated? Because we have introduced rootReducer and combineReducers so if you will check your code in render of BookDescriptionsApp here:
 ```
    let descriptionsJSX = [];
     for(let descriptionKey in this.props) {
@@ -1529,7 +1517,7 @@ import DashboardView from '../views/DashboardView';
 
 export default (
   <Route component={CoreLayout} path='/'>
-    <IndexRoute component={PublishingApp} name='home' />
+    <IndexRoute component={BookDescriptionsApp} name='home' />
     <Route component={LoginView} path='login' name='login' />
     <Route component={DashboardView} path='dashboard' name='dashboard' />
   </Route>
@@ -1668,7 +1656,7 @@ In the file located at ***server/routesSession.js*** you need to add a new route
     call: (callPath, args) => 
       {
         let newUserObj = args[0];
-        newUserObj.password = newUserObj.password+"pubApp";
+        newUserObj.password = newUserObj.password+"bookApp";
         newUserObj.password = crypto.createHash('sha256').update(newUserObj.password).digest('hex');
         let newUser = new User(newUserObj);
         return newUser.save((err, data) => { if (err) return err; })
@@ -1724,13 +1712,13 @@ if(newUserDetail._id) {
 }
 ```
 
-#### Front-end implementation (RegisterView and RegisterForm)
+#### Front-end implementation (ShowRegistration and RegistrationComponent)
 
 Let's create first a component that will manage on the front-end the register's form with following actions:
 ```
 $ pwd 
 $ [[[you shall be at the components folder]]]
-$ touch RegisterForm.js
+$ touch RegistrationComponent.js
 ```
 
 and the content of that file:
@@ -1740,7 +1728,7 @@ import Formsy from 'formsy-react';
 import { RaisedButton, Paper } from 'material-ui';
 import DefaultInput from './DefaultInput';
 
-export class RegisterForm extends React.Component {
+export class RegistrationComponent extends React.Component {
   constructor() {
     super();
   }
@@ -1771,11 +1759,11 @@ export class RegisterForm extends React.Component {
 
 The above's registration component is creating a form exactly the same way as on the LoginForm.
 
-#### RegisterView
+#### ShowRegistration
 
-Let's create a RegisterView's file at views directory:
+Let's create a ShowRegistration's file at views directory:
 ```
-$ touch RegisterView.js
+$ touch ShowRegistration.js
 ```
 
 and it's content is:
@@ -1786,7 +1774,7 @@ import falcorModel from '../falcorModel.js';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Snackbar } from 'material-ui';
-import { RegisterForm } from '../components/RegisterForm.js';
+import { RegistrationComponent } from '../components/RegistrationComponent.js';
 
 const mapStateToProps = (state) => ({ 
   ...state 
@@ -1795,7 +1783,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
 });
 
-class RegisterView extends React.Component {
+class ShowRegistration extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -1835,7 +1823,7 @@ class RegisterView extends React.Component {
       <div>
           <h1>Register</h1>
           <div style={{maxWidth: 450, margin: '0 auto'}}>
-            <RegisterForm 
+            <RegistrationComponent 
               onSubmit={this.register} />
           </div>
       </div>
@@ -1843,5 +1831,5 @@ class RegisterView extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(RegisterView);
+export default connect(mapStateToProps, mapDispatchToProps)(ShowRegistration);
 ```

@@ -10,7 +10,7 @@ export default [
       {
         let { username, password } = args[0];
 
-        let saltedPassword = password+"pubApp"; // pubApp is our salt string
+        let saltedPassword = password+"bookApp"; // bookApp is our salt string
 		    let saltedPassHash = crypto.createHash('sha256').update(saltedPassword).digest('hex');
 
         let userStatementQuery = {
@@ -66,7 +66,7 @@ export default [
     call: (callPath, args) => 
       {
         let newUserObj = args[0];
-        newUserObj.password = newUserObj.password+"pubApp";
+        newUserObj.password = newUserObj.password+"bookApp";
         newUserObj.password = crypto.createHash('sha256').update(newUserObj.password).digest('hex');
         let newUser = new User(newUserObj);
         return newUser.save((err, data) => { if (err) return err; })
