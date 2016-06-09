@@ -20,9 +20,7 @@ class PublishingApp extends React.Component {
     super(props);
   }
   componentWillMount() {
-    if (typeof window !== 'undefined') {
-      this._fetch(); //we are server side rendering, no fetching
-    }
+    this._fetch();
   }
   async _fetch() {
     let articlesLength = await falcorModel.
