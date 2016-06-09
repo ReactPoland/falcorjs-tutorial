@@ -103,10 +103,30 @@ touch index.js
 
 Installing express and other initial dependencies:
 ```
-npm i express@4.13.4 babel@4.7.16 babel-register@6.5.2 cors@2.7.1 body-parser@1.15.0 --save
+npm i express@4.13.4 babel@6.5.2 babel-preset-stage-0@6.5.0 babel-register@6.5.2 cors@2.7.1 body-parser@1.15.0 --save
 ```
 
 @4.13.4 means that we will use this version of the Express' Framework. 
+
+
+Also you must note that we install babel for our give our node's server ability to use the ES6 features. We need to add the .babelrc file so create a file:
+
+```
+$ [[[you are in the main project's directory]]]
+$ touch .babelrc
+```
+
+... and open the .babelrc file and fill in it with the content is as following:
+
+```
+{
+  "presets": [
+  	"es2015",
+    "react",
+    "stage-0"
+  ]
+}
+```
 
 We also need libraries as following:
 1) babel - [QUESTION: DO WE NEED DESCRIPTION?]
@@ -129,9 +149,10 @@ The ******* is a wildcard which means that there are files reqired for our proje
 
 In the index.js we need to add babel/register in order XYZ
 
-The index.js file content:
+The server/index.js file content:
 ```
-require("babel/register");
+require("babel-core/register");
+require("babel-polyfill");
 require('./server');
 ```
 
@@ -273,6 +294,5 @@ Started on port 3000
 ```
 
 ![articles import success](http://test.przeorski.pl/book/006_fetching_articles_from_mongoose.png)
-
 
 
