@@ -101,6 +101,17 @@ cd server
 touch index.js
 ```
 
+The server/index.js file content:
+```
+require("babel-core/register");
+require("babel-polyfill");
+require('./server');
+```
+
+In general, this file adds the ES6 abilities for our server side's javascript. In the server.js' file we will keep our express-node server. We will create the server/server.js file in a moment. 
+
+#### Dependencies installation
+
 Installing express and other initial dependencies:
 ```
 npm i express@4.13.4 babel@6.5.2 babel-preset-stage-0@6.5.0 babel-register@6.5.2 cors@2.7.1 body-parser@1.15.0 --save
@@ -145,18 +156,7 @@ After this your project's files structure shall looks like:
 ```
 The ******* is a wildcard which means that there are files reqired for our project, but we don't list it here as it would be too long.
 
-### Working on our server (server.js & index.js)
-
-In the index.js we need to add babel/register in order XYZ
-
-The server/index.js file content:
-```
-require("babel-core/register");
-require("babel-polyfill");
-require('./server');
-```
-
-and
+### Working on our server (server.js)
 
 The server.js file content:
 ```
