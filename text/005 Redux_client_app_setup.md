@@ -128,6 +128,7 @@ and the dist/index.html content is:
 </head>
 <body>
   <div id="publishingAppRoot"></div>
+  <script src="app.js"></script>
 </body>
 </html>
 ```
