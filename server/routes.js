@@ -1,15 +1,11 @@
-import mongoose from 'mongoose';
+/*import { Article } from './configMongoose';*/
+import configMongoose from './configMongoose.js';
+let Article = configMongoose.Article;
+import sessionRoutes from './routesSession';
 
-mongoose.connect('mongodb://localhost/local');
-
-var articleSchema = {
-  articleTitle:String,
-  articleContent:String
-}
-
-var Article = mongoose.model('Article', articleSchema, 'articles');
-
-let PublishingAppRoutes = [{
+let PublishingAppRoutes = [
+   ...sessionRoutes,
+{
   route: 'articles.length',
     get: () => {
       return Article.count({}, function(err, count) {
