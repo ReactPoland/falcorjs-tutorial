@@ -303,7 +303,8 @@ var Article = mongoose.model('Article', articleSchema, 'articles');
 
 and replace it with new:
 ```
-import { Article } from './configMongoose';
+import configMongoose from './configMongoose.js';
+let Article = configMongoose.Article;
 import sessionRoutes from './routesSession';
 ```
 
