@@ -172,8 +172,8 @@ Above you can find where you can get the info about the localStorage's data.
 Below this is our ***current code in src/falcorModel.js***:
 ```
 // this code is already in the codebase
-const falcor = require('falcor');
-const FalcorDataSource = require('falcor-http-datasource');
+import falcor from 'falcor';
+import FalcorDataSource from 'falcor-http-datasource';
 
 const model = new falcor.Model({
   source: new FalcorDataSource('/model.json')

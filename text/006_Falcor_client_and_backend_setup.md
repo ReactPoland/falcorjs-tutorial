@@ -85,8 +85,8 @@ touch falcorModel.js
 
 and then the content of the falcorModel.js will be:
 ```
-const falcor = require('falcor');
-const FalcorDataSource = require('falcor-http-datasource');
+import falcor from 'falcor';
+import FalcorDataSource from 'falcor-http-datasource';
 
 let cache = {
   articles: [
@@ -411,8 +411,8 @@ The above code is almost the same as the one in the src/falcorModel.js file. The
 And the last thing that we need to change is the src/falcorModel.js and we need to replace this below:
 ```
 // this below already shall be in your codebase
-const falcor = require('falcor');
-const FalcorDataSource = require('falcor-http-datasource');
+import falcor from 'falcor';
+import FalcorDataSource from 'falcor-http-datasource';
 
 let cache = {
   articles: [
@@ -438,8 +438,8 @@ export default model;
 
 ... and thise above has to be replaced to new http data source that will come from model.json:
 ```
-const falcor = require('falcor');
-const FalcorDataSource = require('falcor-http-datasource');
+import falcor from 'falcor';
+import FalcorDataSource from 'falcor-http-datasource';
 const $ref = falcor.Model.ref;
 const $atom = falcor.Model.atom;
 

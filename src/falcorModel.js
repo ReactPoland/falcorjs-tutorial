@@ -1,5 +1,5 @@
-const falcor = require('falcor');
-const FalcorDataSource = require('falcor-http-datasource');
+import falcor from 'falcor';
+import FalcorDataSource from 'falcor-http-datasource';
 const $ref = falcor.Model.ref;
 const $atom = falcor.Model.atom;
 
