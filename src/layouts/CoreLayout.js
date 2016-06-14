@@ -14,7 +14,7 @@ class CoreLayout extends React.Component {
   render () {
     return (
       <div>
-        <span>Links: <Link to='/login'>Login</Link> | <Link to='/'>Home Page</Link></span>
+        <span>Links: <Link to='/login'>Login</Link> | <Link to='/'>Home Page</Link> | <Link to='/register'>Register</Link></span>
           <br/>
           {this.props.children}
       </div>
