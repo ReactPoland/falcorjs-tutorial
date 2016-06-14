@@ -1,7 +1,8 @@
-import { User } from './configMongoose';
+import configMongoose from './configMongoose';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
 import jwtSecret from './configSecret';
+let User = configMongoose.User;
 
 export default [
   { 
