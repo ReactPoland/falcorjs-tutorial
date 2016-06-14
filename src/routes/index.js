@@ -8,7 +8,7 @@ import CoreLayout                   from '../layouts/CoreLayout';
 import PublishingApp                    from '../layouts/PublishingApp';
 
 /* auth views */
-import LoginView                    from '../layouts/LoginView';
+import LoginView                    from '../views/LoginView';
 
 export default (
   <Route component={CoreLayout} path='/'>
