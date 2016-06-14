@@ -377,7 +377,8 @@ The ***userSchema*** describes our user's json model, next the ***User*** is our
 
 First step is to export our User's model into the routesSession's scope by adding at the top of that file an import statement:
 ```
-import { User } from './configMongoose';
+import configMongoose from './configMongoose';
+let User = configMongoose.User;
 ````
 
 Installing the jsonwebtoken & crypto (for SHA256):
