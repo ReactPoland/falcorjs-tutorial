@@ -59,5 +59,49 @@ export default [
           return result;
         });
       }
+  },
+   { 
+    route: ['register'],
+    call: (callPath, args) => 
+      {
+        let newUserObj = args[0];
+        newUserObj.password = newUserObj.password+"pubApp";
+        newUserObj.password = crypto.createHash('sha256').update(newUserObj.password).digest('hex');
+        let newUser = new User(newUserObj);
+        return newUser.save((err, data) => { if (err) return err; })
+          .then ((newRes) => {
+            /*
+              got new obj data, now let's get count:
+             */
+            let newUserDetail = newRes.toObject();
+           if(newUserDetail._id) {
+              let newUserId = newUserDetail._id.toString();
+              return [
+                {
+                  path: ['register', 'newUserId'], 
+                  value: newUserId
+                },
+                {
+                  path: ['register', 'error'], 
+                  value: false 
+                }
+              ];
+            } else {
+              // registration failed
+              return [
+                {
+                  path: ['register', 'newUserId'], 
+                  value: 'INVALID'
+                },
+                {
+                  path: ['register', 'error'], 
+                  value: 'Registration failed - no id has been created'
+                }
+              ];
+            }
+            return;
+          }).catch((reason) => console.error(reason));
+      }
   }
+
 ];
