@@ -54,7 +54,6 @@ class PublishingApp extends React.Component {
     }
     return (
       <div>
-          <h1>Our publishing app</h1>
           {articlesJSX}
       </div>
     );
