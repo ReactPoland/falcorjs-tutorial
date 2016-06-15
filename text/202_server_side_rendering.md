@@ -225,8 +225,8 @@ We need some tweaks on front-end. First of them, please go to the file in the **
 import React from 'react';
 import { Link } from 'react-router';
 
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import MuiThemeProvider from 'material-ui/lib/MuiThemeProvider';
+import getMuiTheme from 'material-ui/lib/styles/getMuiTheme';
 
 const muiTheme = getMuiTheme({ userAgent: 'all' });
 
@@ -237,8 +237,8 @@ class CoreLayout extends React.Component {
 ```
 ... from the above code, the new thing to add is:
 ```
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import MuiThemeProvider from 'material-ui/lib/MuiThemeProvider';
+import getMuiTheme from 'material-ui/lib/styles/getMuiTheme';
 
 const muiTheme = getMuiTheme({ userAgent: 'all' });
 ```
