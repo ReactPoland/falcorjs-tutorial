@@ -20,10 +20,16 @@ class LoginView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      error: null
+      error: null,
+      open: false
     };
     this.login = this.login.bind(this);
   }
+  handleRequestClose = () => {
+    this.setState({
+      open: false,
+    });
+  };
    async login(credentials) {
     console.info("credentials", credentials);
 
@@ -72,7 +78,8 @@ class LoginView extends React.Component {
           <Snackbar
           autoHideDuration={4000}
           open={!!this.state.error}
-          message={this.state.error || ""} />
+          message={this.state.error || ""}
+          onRequestClose={this.handleRequestClose} />
       </div>
     );
   }
