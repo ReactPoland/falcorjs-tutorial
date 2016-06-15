@@ -189,7 +189,7 @@ import {
   CardMedia, 
   CardTitle, 
   CardText 
-} from 'material-ui/Card';
+} from 'material-ui/lib/card';
 import { Paper } from 'material-ui';
 
 class ArticleCard extends React.Component {
