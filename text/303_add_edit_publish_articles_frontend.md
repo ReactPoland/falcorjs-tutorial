@@ -127,7 +127,7 @@ All both h1 paragraphs are not needed as we want to have nice looking design ins
 
 After that go to the ***src/CoreLayout.js*** and please import a new AppBar component from the Material UI:
 ```
-import AppBar from 'material-ui/AppBar';
+import AppBar from 'material-ui/lib/app-bar.js';
 ```
 
 .. and add this AppBar together with inline styles into the render:
