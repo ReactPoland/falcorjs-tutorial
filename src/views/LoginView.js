@@ -24,6 +24,7 @@ class LoginView extends React.Component {
       open: false
     };
     this.login = this.login.bind(this);
+    this.handleRequestClose = this.handleRequestClose.bind(this);
   }
   handleRequestClose = () => {
     this.setState({
