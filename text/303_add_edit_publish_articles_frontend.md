@@ -125,9 +125,11 @@ and registration in the ***src/RegisterView.js***:
 All both h1 paragraphs are not needed as we want to have nice looking design instead of old one.
 
 
-After that go to the ***src/CoreLayout.js*** and please import a new AppBar component from the Material UI:
+After that go to the ***src/CoreLayout.js*** and please import a new AppBar component from the Material UI and two buttons:
 ```
 import AppBar from 'material-ui/lib/app-bar.js';
+import RaisedButton from 'material-ui/lib/raised-button';
+import ActionHome from 'material-ui/lib/svg-icons/action/home';
 ```
 
 .. and add this AppBar together with inline styles into the render:
