@@ -35,7 +35,7 @@ let PublishingAppRoutes = [
         };
         results.push(falcorSingleArticleResult);
       });
-      console.info(">>>> results", results);
+      /*console.info(">>>> results", results);*/
       return results;
     })
   }
