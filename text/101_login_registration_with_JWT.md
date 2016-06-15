@@ -1157,12 +1157,32 @@ we have added this ***if(tokenRes === "INVALID")*** in order to update the  erro
 import { Snackbar } from 'material-ui';
 ```
 
+Also change this piece of code:
+```
+this.state = {
+      error: null
+    };
+    this.login = this.login.bind(this);
+```
+
+That it has new handler and new initial state:
+```
+
+this.state = {
+      error: null,
+      open: false
+    };
+    this.login = this.login.bind(this);
+    this.handleRequestClose = this.handleRequestClose.bind(this);
+```
+
 then you need to update render function as following:
 ```
 <Snackbar
   autoHideDuration={4000}
   open={!!this.state.error}
-  message={this.state.error || ""} />
+  message={this.state.error || ""}
+  onRequestClose={this.handleRequestClose} />
 ```
 
 so after adding it, the render function will look like:
@@ -1178,7 +1198,8 @@ render () {
         <Snackbar
           autoHideDuration={4000}
           open={!!this.state.error}
-          message={this.state.error || ""} />
+          message={this.state.error || ""}
+          onRequestClose={this.handleRequestClose} />
     </div>
   );
 }
