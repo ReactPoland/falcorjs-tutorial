@@ -1,3 +1,12 @@
+import http from 'http';
+import express from 'express';
+import cors from 'cors';
+import bodyParser from 'body-parser';
+import mongoose from 'mongoose';
+import falcor from 'falcor';
+import falcorExpress from 'falcor-express';
+import Router from 'falcor-router';
+import routes from './routes.js';
 import React from 'react'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
@@ -8,15 +17,7 @@ import * as hist  from 'history';
 import rootReducer from '../src/reducers';
 import reactRoutes from '../src/routes';
 import fetchServerSide from './fetchServerSide';
-import http from 'http';
-import express from 'express';
-import cors from 'cors';
-import bodyParser from 'body-parser';
-import mongoose from 'mongoose';
-import falcor from 'falcor';
-import falcorExpress from 'falcor-express';
-import Router from 'falcor-router';
-import routes from './routes.js';
+
 
 var app = express();
 app.server = http.createServer(app);
@@ -27,6 +28,8 @@ app.use(cors());
 // This is required by falcor-express middleware to work correctly with falcor-browser
 app.use(bodyParser.json({extended: false}));
 app.use(bodyParser.urlencoded({extended: false}));
+
+app.use('/static', express.static('dist'));
 
 app.use('/model.json', falcorExpress.dataSourceRoute(function(req, res) {
  return new Router(routes);
@@ -90,7 +93,7 @@ let renderFullPage = (html, initialState) =>
 
 app.use(handleServerSideRender);
 
-app.use('/static', express.static('dist'));
+
 
 app.get('/', (req, res) => { 
     Article.find(function (err, articlesDocs) {
