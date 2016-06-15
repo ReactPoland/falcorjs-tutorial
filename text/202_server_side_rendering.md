@@ -328,6 +328,8 @@ into this:
 Why we need to do all this above? It helps us to get rid off ***/#/*** sign from our client-side browser's url so next time when we hit for example ***http://localhost:3000/register*** then our ***server.js*** can see the user's current url with the ***req.path*** (***in our case when hitting the http://localhost:3000/register then the req.path is equal to /register***) that we use in the handleServerSideRender's function.
 
 
+
+
 After all that, then you will be able to see in your client-browser as following:
 
 ![server side html markup](http://test.przeorski.pl/book/201_server_side_markup.png)
