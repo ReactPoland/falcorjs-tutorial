@@ -1,5 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+
+const muiTheme = getMuiTheme({ userAgent: 'all' });
 
 class CoreLayout extends React.Component {
   static propTypes = {
@@ -11,13 +15,15 @@ class CoreLayout extends React.Component {
 
   }
 
-  render () {
+ render () {
     return (
-      <div>
-        <span>Links: <Link to='/login'>Login</Link> | <Link to='/'>Home Page</Link> | <Link to='/register'>Register</Link></span>
-          <br/>
-          {this.props.children}
-      </div>
+      <MuiThemeProvider muiTheme={muiTheme}>
+        <div>
+          <span>Links: <Link to='/register'>Register</Link> | <Link to='/login'>Login</Link> | <Link to='/'>Home Page</Link></span>
+            <br/>
+            {this.props.children}
+        </div>
+      </MuiThemeProvider>
     );
   }
 }
