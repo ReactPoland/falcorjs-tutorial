@@ -1157,23 +1157,37 @@ we have added this ***if(tokenRes === "INVALID")*** in order to update the  erro
 import { Snackbar } from 'material-ui';
 ```
 
-Also change this piece of code:
+also change this piece of code:
 ```
-this.state = {
+constructor(props) {
+    super(props);
+    this.state = {
       error: null
     };
     this.login = this.login.bind(this);
+  }
 ```
 
-That it has new handler and new initial state:
+that it has and new initial state:
 ```
-
-this.state = {
+constructor(props) {
+    super(props);
+    this.state = {
       error: null,
       open: false
     };
     this.login = this.login.bind(this);
     this.handleRequestClose = this.handleRequestClose.bind(this);
+  }
+```
+
+add a onRequestClose handler:
+```
+handleRequestClose = () => {
+    this.setState({
+      open: false,
+    });
+  };
 ```
 
 then you need to update render function as following:
