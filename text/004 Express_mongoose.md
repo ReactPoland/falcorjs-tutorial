@@ -200,7 +200,7 @@ This how our app should looks on that stage of our development:
 Having the working simple express.js server, now we have to add Mongoose to our project.
 
 ```
-npm i mongoose --save
+npm i mongoose@4.4.5 --save
 ```
 
 Once we have installed mongoose and a running mongoDB database in the background, we can import it to our server.js file and do the coding:

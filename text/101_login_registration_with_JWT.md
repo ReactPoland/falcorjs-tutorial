@@ -839,7 +839,7 @@ OK, so we have done a lot of preparation in terms of having an extensible projec
 
 In order to make our app nicer from a user perspective we will start using Material Design CSS. For making our work easier with forms, we will start using a ***formsy-react***'s library. Let's install them:
 ```
-$ npm i --save material-ui@0.15.0-alpha.1 formsy-react@0.17.0
+$ npm i --save material-ui@0.14.4 formsy-react@0.17.0
 ```
 
 At the time writing this, the version ***0.15.0-alpha.2*** if Material UI is the newest one - I put this version above because the ecosystem is changing so quickly that it's better to mark the used version in here so you won't have any suprises when following the instructions in that book.
