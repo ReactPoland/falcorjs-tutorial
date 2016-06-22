@@ -76,10 +76,10 @@ class LoginView extends React.Component {
               onSubmit={this.login} />
           </div>
           <Snackbar
-          autoHideDuration={4000}
-          open={!!this.state.error}
-          message={this.state.error || ""}
-          onRequestClose={this.handleRequestClose} />
+            autoHideDuration={4000}
+            open={!!this.state.error}
+            message={this.state.error || ""}
+            onRequestClose={this.handleRequestClose} />
       </div>
     );
   }
