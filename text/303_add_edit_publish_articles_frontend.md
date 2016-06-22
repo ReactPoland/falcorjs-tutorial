@@ -566,12 +566,13 @@ As you can find, we have added that ***if(userIsLoggedIn)*** statement and a new
 The last piece to wrap up at this stage is to modify the ***src/views/DashboardView.js***'s component. Import the Link from react-router by adding Link. Also we need to import new material-UI's components in order to make the DashboardView nicer:
 ```
 import { Link } from 'react-router';
-import { List, ListItem } from 'material-ui/List';
-import Avatar from 'material-ui/Avatar';
-import ActionInfo from 'material-ui/svg-icons/action/info';
-import FileFolder from 'material-ui/svg-icons/file/folder';
-import RaisedButton from 'material-ui/RaisedButton';
-import Divider from 'material-ui/Divider';
+import List from 'material-ui/lib/lists/list';
+import ListItem from 'material-ui/lib/lists/list-item';
+import Avatar from 'material-ui/lib/avatar';
+import ActionInfo from 'material-ui/lib/svg-icons/action/info';
+import FileFolder from 'material-ui/lib/svg-icons/file/folder';
+import RaisedButton from 'material-ui/lib/raised-button';
+import Divider from 'material-ui/lib/divider';
 ```
 
 After you have imported all this above in your ***src/views/DashboardView.js*** then we need to start work on improving the render function:
