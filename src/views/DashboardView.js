@@ -6,6 +6,14 @@ import falcorModel from '../falcorModel.js';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { LoginForm } from '../components/LoginForm.js';
+import { Link } from 'react-router';
+import List from 'material-ui/lib/lists/list';
+import ListItem from 'material-ui/lib/lists/list-item';
+import Avatar from 'material-ui/lib/avatar';
+import ActionInfo from 'material-ui/lib/svg-icons/action/info';
+import FileFolder from 'material-ui/lib/svg-icons/file/folder';
+import RaisedButton from 'material-ui/lib/raised-button';
+import Divider from 'material-ui/lib/divider';
 
 const mapStateToProps = (state) => ({
   ...state
@@ -21,9 +29,33 @@ class DashboardView extends React.Component {
   }
 
   render () {
+
+    let articlesJSX = [];
+    for(let articleKey in this.props.article) {
+      let articleDetails = this.props.article[articleKey];
+      let currentArticleJSX = (
+        <ListItem
+          key={articleKey}
+          leftAvatar={<img src="/static/placeholder.png" width="50" height="50" />}
+          primaryText={articleDetails.articleTitle}
+          secondaryText={articleDetails.articleContent}
+        />
+      );
+
+      articlesJSX.push(currentArticleJSX);
+    }
     return (
-      <div>
-          <h1>Dashboard - loggedin!</h1>
+      <div style={{height: '100%', width: '75%', margin: 'auto'}}>
+        <Link to='/add-article'>
+          <RaisedButton 
+            label="Create an article" 
+            secondary={true} 
+            style={{margin: '20px 20px 20px 20px'}} />
+        </Link>
+
+        <List>
+          {articlesJSX}
+        </List>
       </div>
     );
   }
