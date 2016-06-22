@@ -18,7 +18,7 @@ class CoreLayout extends React.Component {
 
   }
 
- render () {
+render () {
     const buttonStyle = {
       margin: 5
     };
@@ -26,14 +26,26 @@ class CoreLayout extends React.Component {
       margin: 5,
       paddingTop: 5
     };
-    let menuLinksJSX = (<span>
-        <Link to='/register'><RaisedButton label="Register" style={buttonStyle}  /></Link> 
-        <Link to='/login'><RaisedButton label="Login" style={buttonStyle}  /></Link> 
-      </span>);
+
+    let menuLinksJSX;
+    let userIsLoggedIn = typeof localStorage !== 'undefined' && localStorage.token && this.props.routes[1].name !== 'logout';
+
+    if(userIsLoggedIn) {
+      menuLinksJSX = (<span>
+          <Link to='/dashboard'><RaisedButton label="Dashboard" style={buttonStyle}  /></Link> 
+          <Link to='/logout'><RaisedButton label="Logout" style={buttonStyle}  /></Link> 
+        </span>);
+    } else {
+      menuLinksJSX = (<span>
+          <Link to='/register'><RaisedButton label="Register" style={buttonStyle}  /></Link> 
+          <Link to='/login'><RaisedButton label="Login" style={buttonStyle}  /></Link> 
+        </span>);
+    }
 
     let homePageButtonJSX = (<Link to='/'>
         <RaisedButton label={<ActionHome />} style={homeIconStyle}  />
       </Link>);
+
 
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
