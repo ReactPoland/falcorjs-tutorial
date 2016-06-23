@@ -28,6 +28,11 @@ class CoreLayout extends React.Component {
     super(props);
 
   }
+   componentWillMount() {
+    if(typeof window !== 'undefined' && !this.props.article.get) {
+      this.props.articleActions.articlesList(this.props.article);
+    }
+  }
 
 render () {
     const buttonStyle = {
@@ -73,4 +78,4 @@ render () {
   }
 }
 
-export default CoreLayout;
+export default connect(mapStateToProps, mapDispatchToProps)(CoreLayout);
