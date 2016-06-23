@@ -35,25 +35,25 @@ class ArticleCard extends React.Component {
   }
 
   return (
-    <Paper style={paperStyle}>
-      <CardHeader
-        title={this.props.title}
-        subtitle="Subtitle"
-        avatar="/static/avatar.png"
-      />
+      <Paper style={paperStyle}>
+        <CardHeader
+          title={this.props.title}
+          subtitle="Subtitle"
+          avatar="/static/avatar.png"
+        />
 
-      <div style={leftDivStyle}>
-        <Card >
-          <CardMedia
-            overlay={<CardTitle title={title} subtitle="Overlay subtitle" />}>
-            <img src="/static/placeholder.png" height="190" />
-          </CardMedia>
-        </Card>
-      </div>
-      <div style={rightDivStyle}>
-        {content}
-      </div>
-    </Paper>);
+        <div style={leftDivStyle}>
+          <Card >
+            <CardMedia
+              overlay={<CardTitle title={title} subtitle="Overlay subtitle" />}>
+              <img src="/static/placeholder.png" height="190" />
+            </CardMedia>
+          </Card>
+        </div>
+        <div style={rightDivStyle}>
+          <div dangerouslySetInnerHTML={{__html: content}} />
+        </div>
+      </Paper>);
 	}
 };
 export default ArticleCard;
