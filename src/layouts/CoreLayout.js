@@ -5,6 +5,17 @@ import getMuiTheme from 'material-ui/lib/styles/getMuiTheme';
 import AppBar from 'material-ui/lib/app-bar';
 import RaisedButton from 'material-ui/lib/raised-button';
 import ActionHome from 'material-ui/lib/svg-icons/action/home';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import articleActions from '../actions/article.js';
+
+const mapStateToProps = (state) => ({
+  ...state
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  articleActions: bindActionCreators(articleActions, dispatch)
+});
 
 const muiTheme = getMuiTheme({ userAgent: 'all' });
 
