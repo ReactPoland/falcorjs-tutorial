@@ -33,7 +33,7 @@ class AddArticleView extends React.Component {
       <div style={{height: '100%', width: '75%', margin: 'auto'}}>
         <h1>Add Article</h1>
         <WYSWIGeditor
-          initialValue=''
+          initialValue='hey'
           title="Create an article"
           onChangeTextJSON={this._onDraftJSChange} />
       </div>
