@@ -6,7 +6,8 @@ import {
   CardTitle, 
   CardText 
 } from 'material-ui/lib/card';
-import { Paper } from 'material-ui';
+import { Paper } from 'material-ui/lib';
+
 
 class ArticleCard extends React.Component {
   constructor(props) {
@@ -14,27 +15,27 @@ class ArticleCard extends React.Component {
   }
 
   render() {
-  let title = this.props.title || 'no title provided';
-  let content = this.props.content || 'no content provided';
+    let title = this.props.title || 'no title provided';
+    let content = this.props.content || 'no content provided';
 
-  let paperStyle = {
-    padding: 10, 
-    width: '100%', 
-    height: 300
-  };
+    let paperStyle = {
+      padding: 10, 
+      width: '100%', 
+      height: 300
+    };
 
-  let leftDivStyle = {
-    width: '30%', 
-    float: 'left'
-  }
+    let leftDivStyle = {
+      width: '30%', 
+      float: 'left'
+    }
+    
+    let rightDivStyle = {
+      width: '60%', 
+      float: 'left', 
+      padding: '10px 10px 10px 10px'
+    }
 
-  let rightDivStyle = {
-    width: '60%', 
-    float: 'left', 
-    padding: '10px 10px 10px 10px'
-  }
-
-  return (
+    return (
       <Paper style={paperStyle}>
         <CardHeader
           title={this.props.title}
@@ -54,6 +55,6 @@ class ArticleCard extends React.Component {
           <div dangerouslySetInnerHTML={{__html: content}} />
         </div>
       </Paper>);
-	}
+  }
 };
 export default ArticleCard;
