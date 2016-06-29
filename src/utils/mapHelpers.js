@@ -1,9 +1,6 @@
 
 
 const duplicate = (map) => {
-	console.log('map', map);
-	console.log('started map helpers');
-	console.log(typeof map , 'typeof map is');
   const newMap = new Map();
   map.forEach((item, key) => {
     if(item['_id']) {
