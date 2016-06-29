@@ -9,6 +9,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import articleActions from '../actions/article.js';
 
+const muiTheme = getMuiTheme({ userAgent: 'all' });
+
 const mapStateToProps = (state) => ({
   ...state
 });
