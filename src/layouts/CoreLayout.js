@@ -17,8 +17,6 @@ const mapDispatchToProps = (dispatch) => ({
   articleActions: bindActionCreators(articleActions, dispatch)
 });
 
-const muiTheme = getMuiTheme({ userAgent: 'all' });
-
 class CoreLayout extends React.Component {
   static propTypes = {
     children : React.PropTypes.element
@@ -28,13 +26,14 @@ class CoreLayout extends React.Component {
     super(props);
 
   }
-   componentWillMount() {
+
+  componentWillMount() {
     if(typeof window !== 'undefined' && !this.props.article.get) {
       this.props.articleActions.articlesList(this.props.article);
     }
   }
 
-render () {
+  render () {
     const buttonStyle = {
       margin: 5
     };
@@ -42,10 +41,10 @@ render () {
       margin: 5,
       paddingTop: 5
     };
-
+    
     let menuLinksJSX;
     let userIsLoggedIn = typeof localStorage !== 'undefined' && localStorage.token && this.props.routes[1].name !== 'logout';
-
+    
     if(userIsLoggedIn) {
       menuLinksJSX = (<span>
           <Link to='/dashboard'><RaisedButton label="Dashboard" style={buttonStyle}  /></Link> 
@@ -61,7 +60,6 @@ render () {
     let homePageButtonJSX = (<Link to='/'>
         <RaisedButton label={<ActionHome />} style={homeIconStyle}  />
       </Link>);
-
 
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
