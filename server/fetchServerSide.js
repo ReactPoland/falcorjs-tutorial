@@ -5,8 +5,6 @@ export default () => {
   return Article.find({}, function(err, articlesDocs) {
     return articlesDocs;
   }).then ((articlesArrayFromDB) => {
-    return {
-      "article": articlesArrayFromDB
-    };
+    return articlesArrayFromDB;
   });
 }

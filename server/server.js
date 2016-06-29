@@ -29,54 +29,60 @@ app.use(cors());
 app.use(bodyParser.json({extended: false}));
 app.use(bodyParser.urlencoded({extended: false}));
 
-app.use('/static', express.static('dist'));
+
 
 app.use('/model.json', falcorExpress.dataSourceRoute(function(req, res) {
  return new Router(routes);
 }));
 
+app.use('/static', express.static('dist'));
+
 let handleServerSideRender = async (req, res, next) => {
-  let articlesArray = await fetchServerSide();
-  let initMOCKstore = {
-    article: articlesArray
-  }
-
-  // Create a new Redux store instance
-  const store = createStore(rootReducer, initMOCKstore)
-  const location = hist.createLocation(req.path);
-
-  match({
-    routes: reactRoutes,
-    location: location,
-  }, (err, redirectLocation, renderProps) => {
-    if (redirectLocation) {
-      res.redirect(301, redirectLocation.pathname + redirectLocation.search);
-    } else if (err) {
-      console.log(err);
-      next(err);
-      // res.send(500, error.message);
-    } else if (renderProps === null) {
-      res.status(404)
-        .send('Not found');
-    } else {
-      
-      try {
-        console.info(JSON.stringify(store))
-        let html = renderToStaticMarkup(
-          <Provider store={store}>
-            <RoutingContext {...renderProps}/>
-          </Provider>
-        );
-      } catch (err) {
-          next(err);
-      }
-
-      const initialState = store.getState()
-
-      let fullHTML = renderFullPage(html, initialState);
-      res.send(fullHTML);
+  try {
+    let articlesArray = await fetchServerSide();
+    let initMOCKstore = {
+      article: articlesArray
     }
-  });
+
+    // Create a new Redux store instance
+    const store = createStore(rootReducer, initMOCKstore)
+    const location = hist.createLocation(req.path);
+
+    match({
+      routes: reactRoutes,
+      location: location,
+    }, (err, redirectLocation, renderProps) => {
+      if (redirectLocation) {
+        res.redirect(301, redirectLocation.pathname + redirectLocation.search);
+      } else if (err) {
+        console.log(err);
+        next(err);
+        // res.send(500, error.message);
+      } else if (renderProps === null) {
+        res.status(404)
+          .send('Not found');
+      } else {
+        let html = 'not working';
+        try {
+          console.info(JSON.stringify(store))
+          html = renderToStaticMarkup(
+            <Provider store={store}>
+              <RoutingContext {...renderProps}/>
+            </Provider>
+          );
+        } catch (err) {
+            next(err);
+        }
+
+        const initialState = store.getState()
+
+        let fullHTML = renderFullPage(html, initialState);
+        res.send(fullHTML);
+      }
+    });
+  } catch (err) {
+      next(err);
+  }
 }
 
 let renderFullPage = (html, initialState) =>

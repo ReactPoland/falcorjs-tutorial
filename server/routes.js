@@ -1,11 +1,14 @@
 /*import { Article } from './configMongoose';*/
 import configMongoose from './configMongoose.js';
-let Article = configMongoose.Article;
 import sessionRoutes from './routesSession';
+import jsonGraph from 'falcor-json-graph';
+
+let $atom = jsonGraph.atom;
+let Article = configMongoose.Article;
 
 let PublishingAppRoutes = [
-   ...sessionRoutes,
-{
+    ...sessionRoutes,
+  {
   route: 'articles.length',
     get: () => {
       return Article.count({}, function(err, count) {
@@ -28,14 +31,28 @@ let PublishingAppRoutes = [
     }).then ((articlesArrayFromDB) => {
       let results = [];
       articlesIndex.forEach((index) => {
+        console.info('*********');
+        console.info(JSON.stringify(articlesArrayFromDB[index]));
+        console.info('*********');
         let singleArticleObject = articlesArrayFromDB[index].toObject();
+        console.info('--------');
+        console.info(JSON.stringify(singleArticleObject.articleContent));
+        console.info('--------');
+
+        console.info(typeof singleArticleObject.articleContent);
+        console.info(typeof singleArticleObject.articleContent.entityMap);
+        console.info(typeof singleArticleObject.articleContent.entityMap);
+
+
+        singleArticleObject.articleContent = $atom(singleArticleObject.articleContent);
         let falcorSingleArticleResult = {
           path: ['articles', index],
           value: singleArticleObject
         };
+
         results.push(falcorSingleArticleResult);
       });
-      /*console.info(">>>> results", results);*/
+      console.info(">>>> results", JSON.stringify(results));
       return results;
     })
   }

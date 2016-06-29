@@ -1,23 +1,28 @@
+"use strict";
+
 import configMongoose from './configMongoose';
 import jwt from 'jsonwebtoken';
-import crypto from 'crypto';
 import jwtSecret from './configSecret';
+import crypto from 'crypto';
+
 let User = configMongoose.User;
 
 export default [
   { 
-    route: ['login'] ,
+    route: ['login'],
     call: (callPath, args) => 
       {
         let { username, password } = args[0];
         let saltedPassword = password+"pubApp"; // pubApp is our salt string
         let saltedPassHash = crypto.createHash('sha256').update(saltedPassword).digest('hex');
+
         let userStatementQuery = {
           $and: [
               { 'username': username },
               { 'password': saltedPassHash }
           ]
         }
+
         return User.find(userStatementQuery, function(err, user) {
           if (err) throw err;
         }).then((result) => {
@@ -60,13 +65,13 @@ export default [
         });
       }
   },
-   { 
+  { 
     route: ['register'],
     call: (callPath, args) => 
       {
         let newUserObj = args[0];
         newUserObj.password = newUserObj.password+"pubApp";
-        newUserObj.password = crypto.createHash('sha256').update(newUserObj.password).digest('hex');
+        newUserObj.password = crypto.createHash('sha256').update(newUserObj.password).digest('hex')
         let newUser = new User(newUserObj);
         return newUser.save((err, data) => { if (err) return err; })
           .then ((newRes) => {
@@ -74,7 +79,7 @@ export default [
               got new obj data, now let's get count:
              */
             let newUserDetail = newRes.toObject();
-           if(newUserDetail._id) {
+            if(newUserDetail._id) {
               let newUserId = newUserDetail._id.toString();
               return [
                 {
@@ -103,5 +108,4 @@ export default [
           }).catch((reason) => console.error(reason));
       }
   }
-
 ];
