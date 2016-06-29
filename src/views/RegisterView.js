@@ -13,44 +13,52 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
 });
 
-class DashboardView extends React.Component {
+class RegisterView extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      error: null
+    };
+    this.register = this.register.bind(this);
+  }
+
+  async register (newUserModel) {
+    console.info("newUserModel", newUserModel);
+
+    let registerResult = await falcorModel
+      .call(
+            ['register'],
+            [newUserModel]
+          ).
+      then((result) => {
+        return result;
+      });
+
+    let newUserId = await falcorModel.getValue(['register', 'newUserId']);
+    if(newUserId === "INVALID") {
+      let errorRes = await falcorModel.getValue('register.error');
+      this.setState({error: errorRes});
+      return;
+    }
+
+    if(newUserId) {
+      this.props.history.pushState(null, '/login');
+      return;
+    } else {
+      alert("Fatal registration error, please contact an admin");
+    }
   }
 
   render () {
-    
-    let articlesJSX = [];
-    this.props.article.forEach((articleDetails, articleKey) => {
-      let currentArticleJSX = (
-        <Link to={`/edit-article/${articleDetails['_id']}`}>
-          <ListItem
-            key={articleKey}
-            leftAvatar={<img src="/static/placeholder.png" width="50" height="50" />}
-            primaryText={articleDetails.articleTitle}
-            secondaryText={articleDetails.articleContent}
-          />
-        </Link>
-      );
-
-      articlesJSX.push(currentArticleJSX);
-    });
-
     return (
-      <div style={{height: '100%', width: '75%', margin: 'auto'}}>
-        <Link to='/add-article'>
-          <RaisedButton 
-            label="Create an article" 
-            secondary={true} 
-            style={{margin: '20px 20px 20px 20px'}} />
-        </Link>
-
-        <List>
-          {articlesJSX}
-        </List>
+      <div>
+          <div style={{maxWidth: 450, margin: '0 auto'}}>
+            <RegisterForm 
+              onSubmit={this.register} />
+          </div>
       </div>
     );
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DashboardView);
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterView);
