@@ -59,12 +59,17 @@ let handleServerSideRender = async (req, res, next) => {
       res.status(404)
         .send('Not found');
     } else {
-
-      let html = renderToStaticMarkup(
-        <Provider store={store}>
-          <RoutingContext {...renderProps}/>
-        </Provider>
-      );
+      
+      try {
+        console.info(JSON.stringify(store))
+        let html = renderToStaticMarkup(
+          <Provider store={store}>
+            <RoutingContext {...renderProps}/>
+          </Provider>
+        );
+      } catch (err) {
+          next(err);
+      }
 
       const initialState = store.getState()
 

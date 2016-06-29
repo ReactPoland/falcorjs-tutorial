@@ -8,6 +8,7 @@ import { bindActionCreators } from 'redux';
 import articleActions from '../actions/article.js';
 import ArticleCard from '../components/ArticleCard';
 
+
 const mapStateToProps = (state) => ({
   ...state
 });
@@ -58,7 +59,7 @@ class PublishingApp extends React.Component {
 
       articlesJSX.push(currentArticleJSX);
     });
-    
+
     return (
       <div style={{height: '100%', width: '75%', margin: 'auto'}}>
           {articlesJSX}

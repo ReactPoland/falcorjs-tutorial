@@ -13,4 +13,4 @@ const article = (state = {}, action) => {
   }
 }
 
-export default article
+export default article;
