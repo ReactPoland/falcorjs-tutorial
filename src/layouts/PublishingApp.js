@@ -45,8 +45,7 @@ class PublishingApp extends React.Component {
   render () {
 
     let articlesJSX = [];
-    for(let articleKey in this.props.article) {
-      let articleDetails = this.props.article[articleKey];
+    this.props.article.forEach((articleDetails, articleKey) => {
       let currentArticleJSX = (
         <div key={articleKey}>
           <ArticleCard 
@@ -56,7 +55,8 @@ class PublishingApp extends React.Component {
       );
 
       articlesJSX.push(currentArticleJSX);
-    }
+    });
+    
     return (
       <div style={{height: '100%', width: '75%', margin: 'auto'}}>
           {articlesJSX}
