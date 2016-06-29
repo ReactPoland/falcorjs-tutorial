@@ -17,13 +17,12 @@ class DefaultInput extends React.Component {
 
   render() {
     return (<div>
-        <TextField 
-          ref={this.props.name}
+        <TextField ref={this.props.name}
           floatingLabelText={this.props.title}
           name={this.props.name}
           onChange={this.changeValue}
-          required={this.props.required}
           type={this.props.type}
+          required={this.props.required}
           value={this.state.currentText ? this.state.currentText : this.props.value}
           defaultValue={this.props.defaultValue} />
         {this.props.children}

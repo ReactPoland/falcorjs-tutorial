@@ -1,5 +1,3 @@
-
-
 const duplicate = (map) => {
   const newMap = new Map();
   map.forEach((item, key) => {

@@ -7,7 +7,7 @@ import { Snackbar } from 'material-ui';
 import { RegisterForm } from '../components/RegisterForm.js';
 
 const mapStateToProps = (state) => ({ 
-  ...state 
+	...state 
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -21,6 +21,7 @@ class RegisterView extends React.Component {
     };
     this.register = this.register.bind(this);
   }
+
   async register (newUserModel) {
     console.info("newUserModel", newUserModel);
 
@@ -52,9 +53,9 @@ class RegisterView extends React.Component {
     return (
       <div>
           <div style={{maxWidth: 450, margin: '0 auto'}}>
-            <RegisterForm 
-              onSubmit={this.register} />
-          </div>
+	          <RegisterForm 
+	          	onSubmit={this.register} />
+	        </div>
       </div>
     );
   }

@@ -9,7 +9,7 @@ import { LoginForm } from '../components/LoginForm.js';
 import { Snackbar } from 'material-ui';
 
 const mapStateToProps = (state) => ({
-  ...state
+	...state
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -20,18 +20,13 @@ class LoginView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      error: null,
-      open: false
+      error: null
     };
     this.login = this.login.bind(this);
-    this.handleRequestClose = this.handleRequestClose.bind(this);
   }
-  handleRequestClose = () => {
-    this.setState({
-      open: false,
-    });
-  };
-   async login(credentials) {
+
+
+  async login(credentials) {
     console.info("credentials", credentials);
 
     let loginResult = await falcorModel
@@ -44,13 +39,16 @@ class LoginView extends React.Component {
       });
 
     let tokenRes = await falcorModel.getValue('login.token');
+
     console.info("tokenRes", tokenRes);
+
     if(tokenRes === "INVALID") {
       // login failed, get error msg
       let errorRes = await falcorModel.getValue('login.error');
       this.setState({error: errorRes});
       return;
     }
+
     if(tokenRes) {
       let username = await falcorModel.getValue('login.username');
       let role = await falcorModel.getValue('login.role');
@@ -65,7 +63,7 @@ class LoginView extends React.Component {
       alert("Fatal login error, please contact an admin");
     }
 
-    return;
+    return; 
   }
 
   render () {
@@ -78,8 +76,7 @@ class LoginView extends React.Component {
           <Snackbar
             autoHideDuration={4000}
             open={!!this.state.error}
-            message={this.state.error || ""}
-            onRequestClose={this.handleRequestClose} />
+            message={this.state.error || ""} />
       </div>
     );
   }
