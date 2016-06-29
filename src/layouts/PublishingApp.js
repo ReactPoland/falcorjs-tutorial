@@ -9,7 +9,7 @@ import articleActions from '../actions/article.js';
 import ArticleCard from '../components/ArticleCard';
 
 const mapStateToProps = (state) => ({
-	...state
+  ...state
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -20,11 +20,13 @@ class PublishingApp extends React.Component {
   constructor(props) {
     super(props);
   }
+  
   componentWillMount() {
-  if(typeof window !== 'undefined') {
-    this._fetch(); // we are server side rendering, no fetching
+    if(typeof window !== 'undefined') {
+      this._fetch(); // we are server side rendering, no fetching
+    }
   }
-}
+
   async _fetch() {
     let articlesLength = await falcorModel.
       getValue("articles.length").
@@ -35,7 +37,6 @@ class PublishingApp extends React.Component {
     let articles = await falcorModel.
       get(['articles', {from: 0, to: articlesLength-1}, ['_id','articleTitle', 'articleContent']]). 
       then(function(articlesResponse) {  
-        console.info(articlesResponse);
         return articlesResponse.json.articles;
       });
 
@@ -45,8 +46,8 @@ class PublishingApp extends React.Component {
   render () {
 
     let articlesJSX = [];
-    for(let articleKey in this.props.article) {
-      let articleDetails = this.props.article[articleKey];
+
+    this.props.article.forEach((articleDetails, articleKey) => {
       let currentArticleJSX = (
         <div key={articleKey}>
           <ArticleCard 
@@ -56,7 +57,8 @@ class PublishingApp extends React.Component {
       );
 
       articlesJSX.push(currentArticleJSX);
-    }
+    });
+    
     return (
       <div style={{height: '100%', width: '75%', margin: 'auto'}}>
           {articlesJSX}
