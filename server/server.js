@@ -18,8 +18,9 @@ import rootReducer from '../src/reducers';
 import reactRoutes from '../src/routes';
 import fetchServerSide from './fetchServerSide';
 
-
 var app = express();
+
+
 app.server = http.createServer(app);
 
 // CORS - 3rd party middleware
@@ -62,7 +63,7 @@ let handleServerSideRender = async (req, res, next) => {
       } else {
         let html = 'not working';
         try {
-          console.info(JSON.stringify(store))
+          /*console.info(JSON.stringify(store));*/
           html = renderToStaticMarkup(
             <Provider store={store}>
               <RoutingContext {...renderProps}/>
