@@ -13,12 +13,26 @@ export default class  WYSWIGeditor extends React.Component {
   constructor(props) {
     super(props);
 
-    let initialEditorFromProps = EditorState.createWithContent(ContentState.createFromText(''));
+    let initialEditorFromProps;
+
+    if(typeof props.initialValue === 'undefined' || typeof props.initialValue !== 'object') {
+      initialEditorFromProps = EditorState.createWithContent(ContentState.createFromText(''));
+    } else {
+      let isInvalidObject = typeof props.initialValue.entityMap === 'undefined' || typeof props.initialValue.blocks === 'undefined';
+      if(isInvalidObject) {
+        alert('Invalid article-edit error provided, exit');
+        return;
+      }
+      let draftBlocks = convertFromRaw(props.initialValue);
+      let contentToConsume = ContentState.createFromBlockArray(draftBlocks);
+      initialEditorFromProps = EditorState.createWithContent(contentToConsume);
+    }
 
     this.state = {
       editorState: initialEditorFromProps
     };
 
+    this.focus = () => this.refs['WYSWIGeditor'].focus();
     this.onChange = (editorState) => { 
       var contentState = editorState.getCurrentContent();
 
@@ -26,9 +40,9 @@ export default class  WYSWIGeditor extends React.Component {
       props.onChangeTextJSON(contentJSON, contentState);
       this.setState({editorState}) 
     };
-    this.focus = () => this.refs['WYSWIGeditor'].focus();
-	this.handleKeyCommand = (command) => this._handleKeyCommand(command);
-	this.toggleInlineStyle = (style) => this._toggleInlineStyle(style);
+
+    this.handleKeyCommand = (command) => this._handleKeyCommand(command);
+    this.toggleInlineStyle = (style) => this._toggleInlineStyle(style);
     this.toggleBlockType = (type) => this._toggleBlockType(type);
   }
   _handleKeyCommand(command) {
