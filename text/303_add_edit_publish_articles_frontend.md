@@ -1599,9 +1599,8 @@ A small tweak in the ***src/views/DashboardView.js***:
   let articlesJSX = [];
   this.props.article.forEach((articleDetails, articleKey) => {
     let currentArticleJSX = (
-      <Link to={`/edit-article/${articleDetails['_id']}`}>
+      <Link to={`/edit-article/${articleDetails['_id']}`} key={articleKey}>
         <ListItem
-          key={articleKey}
           leftAvatar={<img src="/static/placeholder.png" width="50" height="50" />}
           primaryText={articleDetails.articleTitle}
           secondaryText={articleDetails.articleContent}
@@ -1612,7 +1611,7 @@ A small tweak in the ***src/views/DashboardView.js***:
     articlesJSX.push(currentArticleJSX);
   });
 ```
-Above the only thing that we have changes is adding a Link with the ***to={`/edit-article/${articleDetails['_id']}`***. This will redirect a user to the article's edition view after clicking on a ListItem.
+Above we have two things that need to be changeg: adding a Link with the ***to={`/edit-article/${articleDetails['_id']}`***. This will redirect a user to the article's edition view after clicking on a ListItem. We also need to give Link element a unique key property,so we don't need it on the ListItem anymore and it can be removed from there. 
 
 
 #### Creating a new action and reducer (EDIT_ARTICLE)
