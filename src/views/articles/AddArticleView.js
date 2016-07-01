@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import WYSWIGeditor from '../../components/articles/WYSWIGeditor.js';
 import { stateToHTML } from 'draft-js-export-html';
 import { bindActionCreators } from 'redux';
+
+import falcorModel from '../../falcorModel.js';
 import { Link } from 'react-router';
 import articleActions from '../../actions/article.js';
 import RaisedButton from 'material-ui/lib/raised-button';
@@ -37,6 +39,7 @@ class AddArticleView extends React.Component {
       articleContent: this.state.htmlContent,
       articleContentJSON: this.state.contentJSON
     }
+    console.log(falcorModel, '---> falcorModel');
 
     let newArticleID = await falcorModel
       .call(
