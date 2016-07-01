@@ -5,7 +5,7 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import falcor from 'falcor';
 import falcorExpress from 'falcor-express';
-import Router from 'falcor-router';
+import FalcorRouter from 'falcor-router';
 import routes from './routes.js';
 import React from 'react'
 import { createStore } from 'redux'
@@ -33,7 +33,10 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use('/static', express.static('dist'));
 
 app.use('/model.json', falcorExpress.dataSourceRoute(function(req, res) {
- return new Router(routes);
+  return new FalcorRouter(
+      []
+        .concat(routes(req, res))
+    );
 }));
 
 let handleServerSideRender = async (req, res, next) => {
