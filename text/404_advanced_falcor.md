@@ -63,7 +63,7 @@ Let's try to compare these both.
 
 As any tool, there are always pros and cons.
 
-For certain Falcor is always better than Relay/GraphQL in small/mid sized projects at least until you have masters' developers (or you a master yourself) who knows Relay/GraphQL very well. Why? 
+For certain Falcor is always better than Relay/GraphQL in small/mid sized projects at least until you have masters' developers (or you are a master yourself) who knows Relay/GraphQL very well. Why? 
 
 In general, the Relay (for front-end) and GrapQL (for backend) are two different set tools that YOU must be efficient to use it properly.
 
