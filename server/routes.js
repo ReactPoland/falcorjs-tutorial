@@ -4,6 +4,7 @@ import jsonGraph from 'falcor-json-graph';
 import jwt from 'jsonwebtoken';
 import jwtSecret from './configSecret';
 
+let $ref = jsonGraph.ref; // this is new
 let $atom = jsonGraph.atom; // this will be explained later in that chapter
 let Article = configMongoose.Article;
 
@@ -51,6 +52,33 @@ export default ( req, res ) => {
         });
         return results;
       })
+    }
+  },{
+    route: 'articlesById[{keys}]["_id","articleTitle","articleContent","articleContentJSON"]',
+    get: function(pathSet) {
+      let articlesIDs = pathSet[1];
+      return Article.find({
+            '_id': { $in: articlesIDs}
+        }, function(err, articlesDocs) {
+          return articlesDocs;
+        }).then ((articlesArrayFromDB) => {
+          let results = [];
+
+          articlesArrayFromDB.map((articleObject) => {
+            let articleResObj = articleObject.toObject();
+            let currentIdString = String(articleResObj['_id']);
+
+            if(typeof articleResObj.articleContentJSON !== 'undefined') {
+              articleResObj.articleContentJSON = $atom(articleResObj.articleContentJSON);
+            }
+
+            results.push({
+              path: ['articlesById', currentIdString],
+              value: articleResObj
+            });
+          });
+          return results;
+        });
     }
   }];
 
