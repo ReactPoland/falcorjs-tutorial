@@ -149,6 +149,25 @@ export default ( req, res ) => {
         ];
       });
     }
+  },{
+  route: 'articles.delete',
+  call: (callPath, args) => 
+    {
+      let toDeleteArticleId = args[0];
+      return Article.find({ _id: toDeleteArticleId }).remove((err) => {
+        if (err) {
+          console.info("ERROR", err);
+          return err;
+        }
+      }).then((res) => {
+        return [
+          {
+            path: ["articlesById", toDeleteArticleId],
+            invalidate: true
+          }
+        ]
+      });
+    }
   }];
 
 
