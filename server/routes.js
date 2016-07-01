@@ -32,20 +32,21 @@ export default ( req, res ) => {
         })
     }
   },{
-    route: 'articles[{integers}]["_id","articleTitle","articleContent"]',
+    route: 'articles[{integers}]',
     get: (pathSet) => {
       let articlesIndex = pathSet[1];
 
-      return Article.find({}, function(err, articlesDocs) {
+      return Article.find({}, '_id', function(err, articlesDocs) {
         return articlesDocs;
       }).then ((articlesArrayFromDB) => {
         let results = [];
         articlesIndex.forEach((index) => {
-          let singleArticleObject = articlesArrayFromDB[index].toObject();
+          let currentMongoID = String(articlesArrayFromDB[index]['_id']);
+          let articleRef = $ref(['articlesById', currentMongoID]);
 
           let falcorSingleArticleResult = {
             path: ['articles', index],
-            value: singleArticleObject
+            value: articleRef
           };
 
           results.push(falcorSingleArticleResult);
@@ -79,6 +80,32 @@ export default ( req, res ) => {
           });
           return results;
         });
+    }
+  },{
+    route: 'articles.add',
+    call: (callPath, args) => {
+      let newArticleObj = args[0];
+      var article = new Article(newArticleObj);
+
+      return article.save(function (err, data) {
+        if (err) {
+          console.info("ERROR", err);
+          return err;
+        }
+        else {
+          return data;
+        }
+      }).then ((data) => {
+        return Article.count({}, function(err, count) {
+        }).then((count) => {
+          return { count, data };
+        });
+      }).then ((res) => {
+        //
+        // we will add more stuff here in a moment, below
+        //
+        return results;
+      });
     }
   }];
 
