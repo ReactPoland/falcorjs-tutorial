@@ -101,9 +101,24 @@ export default ( req, res ) => {
           return { count, data };
         });
       }).then ((res) => {
-        //
-        // we will add more stuff here in a moment, below
-        //
+        let newArticleDetail = res.data.toObject();
+        let newArticleID = String(newArticleDetail["_id"]);
+        let NewArticleRef = $ref(['articlesById', newArticleID]);
+        let results = [
+          {
+            path: ['articles', res.count-1],
+            value: NewArticleRef
+          },
+          {
+            path: ['articles', 'newArticleID'],
+            value: newArticleID
+          },
+          {
+            path: ['articles', 'length'],
+            value: res.count
+          }
+        ];
+
         return results;
       });
     }
