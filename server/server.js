@@ -59,9 +59,15 @@ let handleServerSideRender = async (req, res, next) => {
         .send('Not found');
     } else {
 
+      if(typeof renderProps === 'undefined') {
+        // using handleServerSideRender middleware not required:
+        // we are not requesting HTML (probably an app.js or other file)
+        return;
+      }
+
       let html = renderToStaticMarkup(
         <Provider store={store}>
-          <RoutingContext {...renderProps}/>
+          <RoutingContext {...renderProps} />
         </Provider>
       );
 
@@ -94,8 +100,6 @@ let renderFullPage = (html, initialState) =>
 };
 
 app.use(handleServerSideRender);
-
-
 
 app.get('/', (req, res) => { 
     Article.find(function (err, articlesDocs) {
