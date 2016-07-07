@@ -24,16 +24,64 @@ const mapDispatchToProps = (dispatch) => ({
   articleActions: bindActionCreators(articleActions, dispatch)
 });
 
-class MyComponent extends React.Component {
- render() {
-    console.info(this.props);
+class CoreLayout extends React.Component {
+  static propTypes = {
+    children : React.PropTypes.element
+  }
+
+  constructor(props) {
+    super(props);
+
+  }
+
+  componentWillMount() {
+    if(typeof window !== 'undefined' && !this.props.article.get) {
+      this.props.articleActions.articlesList(this.props.article);
+    }
+  }
+
+  render () {
+    const buttonStyle = {
+      margin: 5
+    };
+    const homeIconStyle = {
+      margin: 5,
+      paddingTop: 5
+    };
+    
+    let menuLinksJSX;
+    let userIsLoggedIn = typeof localStorage !== 'undefined' && localStorage.token && this.props.routes[1].name !== 'logout';
+    
+    if(userIsLoggedIn) {
+      menuLinksJSX = (<span>
+          <Link to='/dashboard'><RaisedButton label="Dashboard" style={buttonStyle}  /></Link> 
+          <Link to='/logout'><RaisedButton label="Logout" style={buttonStyle}  /></Link> 
+        </span>);
+    } else {
+      menuLinksJSX = (<span>
+          <Link to='/register'><RaisedButton label="Register" style={buttonStyle}  /></Link> 
+          <Link to='/login'><RaisedButton label="Login" style={buttonStyle}  /></Link> 
+        </span>);
+    }
+
+    let homePageButtonJSX = (<Link to='/'>
+        <RaisedButton label={<ActionHome />} style={homeIconStyle}  />
+      </Link>);
+
     return (
-      <div>Hello world<RaisedButton label="Default" /></div>
+        <div>
+          <AppBar
+            title='Publishing App'
+            iconElementLeft={homePageButtonJSX}
+            iconElementRight={menuLinksJSX} />
+            <br/>
+            {this.props.children}
+        </div>
     );
   }
 }
 
 
-const muiCoreLayout = themeDecorator(getMuiTheme(null, { userAgent: 'all' }))(MyComponent);
+const muiCoreLayout = themeDecorator(getMuiTheme(null, { userAgent: 'all' }))(CoreLayout);
 
 export default connect(mapStateToProps, mapDispatchToProps)(muiCoreLayout);
