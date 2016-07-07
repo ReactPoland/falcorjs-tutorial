@@ -6,8 +6,5 @@ export default () => {
     return articlesDocs;
   }).then ((articlesArrayFromDB) => {
     return articlesArrayFromDB;
-    // return {
-    //   "article": articlesArrayFromDB
-    // };
   });
 }

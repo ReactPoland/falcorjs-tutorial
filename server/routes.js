@@ -126,18 +126,27 @@ export default ( req, res ) => {
   route: 'articles.update',
   call: async (callPath, args) => 
     {
+
+      console.info('---> b1');
+      console.info(args);
       let updatedArticle = args[0];
+      console.info('---> b2');
       let articleID = String(updatedArticle._id);
+      console.info('---> b3');
       let article = new Article(updatedArticle);
+      console.info('---> b4');
       article.isNew = false;
 
       return article.save(function (err, data) {
+        console.info('---> b5');
         if (err) {
           console.info("ERROR", err);
           return err;
         }
       }).then ((res) => {
-        return [
+        console.info('---> b6');
+        updatedArticle.articleContentJSON = $atom(updatedArticle.articleContentJSON);
+        let res1 = [
           {
             path: ["articlesById", articleID],
             value: updatedArticle
@@ -147,6 +156,11 @@ export default ( req, res ) => {
             invalidate: true
           }
         ];
+
+        console.info(JSON.stringify(res1));
+        return res1;
+
+
       });
     }
   },{

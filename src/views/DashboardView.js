@@ -30,7 +30,7 @@ class DashboardView extends React.Component {
 
   render () {
 
-    let articlesJSX = [];
+  let articlesJSX = [];
   this.props.article.forEach((articleDetails, articleKey) => {
     let currentArticleJSX = (
       <Link to={`/edit-article/${articleDetails['_id']}`} key={articleKey} >

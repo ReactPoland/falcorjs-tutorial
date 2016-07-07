@@ -110,20 +110,6 @@ let renderFullPage = (html, initialState) =>
 app.use(handleServerSideRender);
 
 
-
-app.get('/', (req, res) => { 
-    Article.find(function (err, articlesDocs) {
-
-        let ourArticles = articlesDocs.map(function(articleItem){
-            return `<h2>${articleItem.articleTitle}</h2> ${articleItem.articleContent}`;
-        }).join("<br/>");
-
-        res.send(`<h1>Publishing App Initial Application!</h1> ${ourArticles}`);
-    });
-});
-
-
-
 app.server.listen(process.env.PORT || 3000);
 console.log(`Started on port ${app.server.address().port}`);
 

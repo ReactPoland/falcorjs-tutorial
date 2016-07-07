@@ -90,15 +90,29 @@ class EditArticleView extends React.Component {
     });
   }
 
-  _articleEditSubmit() {
+  async _articleEditSubmit() {
+    console.info(1111);
     let currentArticleID = this.state.editedArticleID;
+    console.info(1112);
     let editedArticle = {
       _id: currentArticleID,
       articleTitle: this.state.title,
       articleContent: this.state.htmlContent,
       articleContentJSON: this.state.contentJSON
     }
-
+    console.info('editedArticle >>>', editedArticle);
+    console.info(1113);
+    let editResults = await falcorModel
+      .call(
+            ['articles', 'update'],
+            [editedArticle]
+          ).
+      then((result) => {
+        console.log('result>>>>>>>>', result);
+        return result;
+      });
+    console.info('editResults', editResults);
+    console.info(1114);
     this.props.articleActions.editArticle(editedArticle);
     this.setState({ articleEditSuccess: true });
   }
