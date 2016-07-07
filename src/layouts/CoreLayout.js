@@ -1,17 +1,16 @@
 "use strict"; 
   
 import React from 'react';
-import getMuiTheme from 'material-ui/lib/styles/getMuiTheme';
 import themeDecorator from 'material-ui/lib/styles/theme-decorator';
+import RaisedButton from 'material-ui/lib/raised-button';
+import getMuiTheme from 'material-ui/lib/styles/getMuiTheme';
 
-const muiTheme = getMuiTheme({userAgent: 'all'});
-
-class Main extends React.Component {
-  render() {
+class MyComponent extends React.Component {
+ render() {
     return (
-      <div>Hello world</div>
+      <div>Hello world<RaisedButton label="Default" /></div>
     );
   }
 }
 
-export default themeDecorator(muiTheme)(Main)
+export default themeDecorator(getMuiTheme(null, { userAgent: 'all' }))(MyComponent);
