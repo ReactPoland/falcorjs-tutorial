@@ -1,3 +1,10 @@
+//
+// Tell any CSS tooling (such as Material UI) to use all vendor prefixes if the
+// user agent is not known.
+// -----------------------------------------------------------------------------
+global.navigator = global.navigator || {};
+global.navigator.userAgent = global.navigator.userAgent || 'all';
+
 import http from 'http';
 import express from 'express';
 import cors from 'cors';
@@ -17,7 +24,6 @@ import * as hist  from 'history';
 import rootReducer from '../src/reducers';
 import reactRoutes from '../src/routes';
 import fetchServerSide from './fetchServerSide';
-
 
 var app = express();
 app.server = http.createServer(app);
