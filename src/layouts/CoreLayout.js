@@ -3,11 +3,17 @@ import { Link } from 'react-router';
 import MuiThemeProvider from 'material-ui/lib/MuiThemeProvider';
 import getMuiTheme from 'material-ui/lib/styles/getMuiTheme';
 import AppBar from 'material-ui/lib/app-bar';
+import Snackbar from 'material-ui/lib/snackbar';
 import RaisedButton from 'material-ui/lib/raised-button';
 import ActionHome from 'material-ui/lib/svg-icons/action/home';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import articleActions from '../actions/article.js';
+
+let errorFuncUtil =  (errMsg, errPath) => {
+}
+
+export { errorFuncUtil as errorFunc };
 
 const mapStateToProps = (state) => ({
   ...state
@@ -26,15 +32,33 @@ class CoreLayout extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      errorValue: null
+    }
 
+    if(typeof window !== 'undefined') {
+      errorFuncUtil = this.handleFalcorErrors.bind(this);
+    }
   }
    componentWillMount() {
     if(typeof window !== 'undefined' && !this.props.article.get) {
       this.props.articleActions.articlesList(this.props.article);
     }
   }
+  handleFalcorErrors(errMsg, errPath) {
+    let errorValue = `Error: ${errMsg} (path ${JSON.stringify(errPath)})
+    this.setState({errorValue});
+  }
 
-render () {
+  render () {
+    let errorSnackbarJSX = null;
+    if(this.state.errorValue) {
+      errorSnackbarJSX = <Snackbar
+        open={true}
+        message={this.state.errorValue}
+        autoHideDuration={8000} />;
+    }
+
     const buttonStyle = {
       margin: 5
     };
@@ -62,10 +86,10 @@ render () {
         <RaisedButton label={<ActionHome />} style={homeIconStyle}  />
       </Link>);
 
-
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div>
+          {errorSnackbarJSX}
           <AppBar
             title='Publishing App'
             iconElementLeft={homePageButtonJSX}
