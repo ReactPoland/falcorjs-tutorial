@@ -35,12 +35,14 @@ class CoreLayout extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      errorValue: null
+      errorValue: null,
+      open: false
     }
 
     if(typeof window !== 'undefined') {
       errorFuncUtil = this.handleFalcorErrors.bind(this);
     }
+    this.handleRequestClose = this.handleRequestClose.bind(this);
   }
    componentWillMount() {
     if(typeof window !== 'undefined' && !this.props.article.get) {
@@ -54,6 +56,11 @@ class CoreLayout extends React.Component {
     let errorValue = `Error: ${errMsg} (path ${JSON.stringify(errPath)})`;
     this.setState({errorValue});
   }
+  handleRequestClose = () => {
+    this.setState({
+      open: false
+    });
+  };
 
   render () {
     let errorSnackbarJSX = null;
@@ -61,7 +68,8 @@ class CoreLayout extends React.Component {
       errorSnackbarJSX = <Snackbar
         open={true}
         message={this.state.errorValue}
-        autoHideDuration={8000} />;
+        autoHideDuration={8000}
+        onRequestClose={this.handleRequestClose} />;
     }
 
     const buttonStyle = {
