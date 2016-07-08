@@ -28,7 +28,7 @@ class LoginView extends React.Component {
   }
   handleRequestClose = () => {
     this.setState({
-      open: false,
+      open: false
     });
   };
    async login(credentials) {
