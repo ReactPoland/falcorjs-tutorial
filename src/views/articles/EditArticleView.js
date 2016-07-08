@@ -74,10 +74,19 @@ class EditArticleView extends React.Component {
     });
   }
 
-  _handleDeletion() {
+  async _handleDeletion() {
     let articleID = this.state.editedArticleID;
-    this.props.articleActions.deleteArticle(articleID);
 
+    let deletetionResults = await falcorModel
+      .call(
+            ['articles', 'delete'],
+            [articleID]
+          ).
+      then((result) => {
+        return result;
+      });
+
+    this.props.articleActions.deleteArticle(articleID);
     this.setState({
       openDelete: false
     });
@@ -91,9 +100,7 @@ class EditArticleView extends React.Component {
   }
 
   async _articleEditSubmit() {
-    console.info(1111);
     let currentArticleID = this.state.editedArticleID;
-    console.info(1112);
     let editedArticle = {
       _id: currentArticleID,
       articleTitle: this.state.title,
@@ -101,7 +108,6 @@ class EditArticleView extends React.Component {
       articleContentJSON: this.state.contentJSON
     }
     console.info('editedArticle >>>', editedArticle);
-    console.info(1113);
     let editResults = await falcorModel
       .call(
             ['articles', 'update'],
@@ -112,7 +118,6 @@ class EditArticleView extends React.Component {
         return result;
       });
     console.info('editResults', editResults);
-    console.info(1114);
     this.props.articleActions.editArticle(editedArticle);
     this.setState({ articleEditSuccess: true });
   }
