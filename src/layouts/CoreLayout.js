@@ -10,10 +10,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import articleActions from '../actions/article.js';
 
-let errorFuncUtil =  (errMsg, errPath) => {
-}
-
-export { errorFuncUtil as errorFunc };
 
 const mapStateToProps = (state) => ({
   ...state
@@ -22,6 +18,12 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   articleActions: bindActionCreators(articleActions, dispatch)
 });
+
+let errorFuncUtil =  (errMsg, errPath) => {
+}
+
+export { errorFuncUtil as errorFunc };
+
 
 const muiTheme = getMuiTheme({ userAgent: 'all' });
 
@@ -46,8 +48,11 @@ class CoreLayout extends React.Component {
     }
   }
   handleFalcorErrors(errMsg, errPath) {
-    let errorValue = `Error: ${errMsg} (path ${JSON.stringify(errPath)})
-    this.setState({errorValue})`;
+    console.info(errMsg, '------> errMsg');
+    console.info(errPath, '------> errPath');
+
+    let errorValue = `Error: ${errMsg} (path ${JSON.stringify(errPath)})`;
+    this.setState({errorValue});
   }
 
   render () {
