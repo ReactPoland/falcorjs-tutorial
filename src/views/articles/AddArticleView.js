@@ -10,6 +10,8 @@ import falcorModel from '../../falcorModel.js';
 import { Link } from 'react-router';
 import articleActions from '../../actions/article.js';
 import RaisedButton from 'material-ui/lib/raised-button';
+import ImgUploader from '../../components/articles/ImgUploader';
+
 
 const mapStateToProps = (state) => ({
   ...state
@@ -24,12 +26,14 @@ class AddArticleView extends React.Component {
     super(props);
     this._onDraftJSChange = this._onDraftJSChange.bind(this);
     this._articleSubmit = this._articleSubmit.bind(this);
+    this.updateImgUrl = this.updateImgUrl.bind(this);
 
     this.state = {
       title: 'test',
       contentJSON: {},
       htmlContent: '',
-      newArticleID: null
+      newArticleID: null,
+      articlePicUrl: '/static/placeholder.png'
     };
   }
 
@@ -37,9 +41,9 @@ class AddArticleView extends React.Component {
     let newArticle = {
       articleTitle: this.state.title,
       articleContent: this.state.htmlContent,
-      articleContentJSON: this.state.contentJSON
+      articleContentJSON: this.state.contentJSON,
+      articlePicUrl: this.state.articlePicUrl
     }
-    /*console.log(falcorModel, '---> falcorModel');*/
 
     let newArticleID = await falcorModel
       .call(
@@ -56,7 +60,12 @@ class AddArticleView extends React.Component {
 
     newArticle['_id'] = newArticleID;
     this.props.articleActions.pushNewArticle(newArticle);
-    this.setState({ newArticleID: newArticleID});
+    this.setState({ newArticleID: newArticleID });
+  }
+  updateImgUrl(articlePicUrl) {
+    this.setState({ 
+      articlePicUrl: articlePicUrl
+    });
   }
   _onDraftJSChange(contentJSON, contentState) {
     let htmlContent = stateToHTML(contentState);
@@ -86,12 +95,17 @@ class AddArticleView extends React.Component {
           name="addarticle"
           title="Create an article"
           onChangeTextJSON={this._onDraftJSChange} />
-          <RaisedButton
-            onClick={this._articleSubmit}
-            secondary={true}
-            type="submit"
-            style={{margin: '10px auto', display: 'block', width: 150}}
-            label={'Submit Article'} />
+
+        <div style={{margin: '10px 10px 10px 10px'}}> 
+          <ImgUploader updateImgUrl={this.updateImgUrl} articlePicUrl={this.state.articlePicUrl} />
+        </div>
+
+        <RaisedButton
+          onClick={this._articleSubmit}
+          secondary={true}
+          type="submit"
+          style={{margin: '10px auto', display: 'block', width: 150}}
+          label={'Submit Article'} />
       </div>
     );
   }
