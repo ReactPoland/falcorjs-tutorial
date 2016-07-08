@@ -47,7 +47,7 @@ class CoreLayout extends React.Component {
   }
   handleFalcorErrors(errMsg, errPath) {
     let errorValue = `Error: ${errMsg} (path ${JSON.stringify(errPath)})
-    this.setState({errorValue});
+    this.setState({errorValue})`;
   }
 
   render () {
