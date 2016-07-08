@@ -23,7 +23,50 @@ class ImgUploader extends React.Component {
   }
 
   render () {
-    return <div>S3 Image uploader placeholder</div>;
+    let imgUploadProgressJSX;
+    let uploadProgress = this.state.uploadProgress;
+    if(uploadProgress) {
+      imgUploadProgressJSX = (
+          <div>
+            {uploadProgress.uploadStatusText} ({uploadProgress.progressInPercent}%)
+          </div>
+        );
+    } else if(this.state.articlePicUrl) {
+      let articlePicStyles = {
+        maxWidth: 200, 
+        maxHeight: 200, 
+        margin: 'auto'
+      };
+      imgUploadProgressJSX = <img src={this.state.articlePicUrl} style={articlePicStyles} />;
+    }
+
+    let uploaderJSX = (
+        <ReactS3Uploader
+        signingUrl="/s3/sign"
+        accept="image/*"
+          onProgress={(progressInPercent, uploadStatusText) => {
+            this.setState({ 
+              uploadProgress: { progressInPercent, uploadStatusText }, 
+              uploadError: null
+            });
+          }} 
+          onError={(errorDetails) => {
+            this.setState({ 
+              uploadProgress: null,
+              uploadError: errorDetails
+            });
+          }}
+          onFinish={(uploadDetails) => {
+            this.uploadFinished(uploadDetails);
+          }} />
+      );
+
+    return (
+      <Paper zDepth={1} style={{padding: 32, margin: 'auto', width: 300}}>
+        {imgUploadProgressJSX}
+        {uploaderJSX}
+      </Paper>
+    );
   }
 }
 
