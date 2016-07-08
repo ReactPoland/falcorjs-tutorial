@@ -67,7 +67,7 @@ class LoginView extends React.Component {
 
     return;
   }
-
+autoHideDuration={8000}
   render () {
     return (
       <div>
