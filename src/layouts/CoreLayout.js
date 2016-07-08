@@ -53,7 +53,7 @@ class CoreLayout extends React.Component {
     console.info(errMsg, '------> errMsg');
     console.info(errPath, '------> errPath');
 
-    let errorValue = `Error: ${errMsg} (path ${JSON.stringify(errPath)})`;
+    let errorValue = `Error: ${errMsg} (path ${JSON.stringify(errPath)})`; //COMMENT JUST TO MARK FOUND ERROR/MISTAKE
     this.setState({errorValue});
   }
   handleRequestClose = () => {
