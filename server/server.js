@@ -23,6 +23,10 @@ import s3router from 'react-s3-uploader/s3router';
 // Load any undefined ENV variables form a specified file. 
 env(__dirname + '/.env');
 
+
+
+var app = express();
+
 app.use('/s3', s3router({
   bucket: process.env.AWS_BUCKET_NAME,
   region: process.env.AWS_REGION_NAME,
@@ -30,9 +34,6 @@ app.use('/s3', s3router({
   headers: {'Access-Control-Allow-Origin': '*'}, 
   ACL: 'public-read'
 }));
-
-var app = express();
-
 
 app.server = http.createServer(app);
 
