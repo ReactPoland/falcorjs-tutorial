@@ -38,10 +38,10 @@ export default ( req, res ) => {
       console.info('from route articles[{integers}] pathSet is >>>>>', pathSet);
       let articlesIndex = pathSet[1];
 
-      return {
+      /*return {
         path: ['articles'],
         value: $error('auth error')
-      }
+      }*/
 
       return Article.find({}, '_id', function(err, articlesDocs) {
         return articlesDocs;
@@ -96,7 +96,7 @@ export default ( req, res ) => {
           path: ['articles'],
           value: $error('auth error')
         }
-      } else if(sessionObject.role !== 'editor') {
+      } else if(sessionObject.role !== 'editor' && sessionObject.role !== 'admin') {
         return {
           path: ['articles'],
           value: $error('you must be an editor in order to perform this action')
@@ -150,7 +150,7 @@ export default ( req, res ) => {
           path: ['articles'],
           value: $error('auth error')
         }
-      } else if(sessionObject.role !== 'editor') {
+      } else if(sessionObject.role !== 'editor' && sessionObject.role !== 'admin') {
         return {
           path: ['articles'],
           value: $error('you must be an editor in order to perform this action')
@@ -197,7 +197,7 @@ export default ( req, res ) => {
           path: ['articles'],
           value: $error('auth error')
         }
-      } else if(sessionObject.role !== 'editor') {
+      } else if(sessionObject.role !== 'editor' && sessionObject.role !== 'admin') {
         return {
           path: ['articles'],
           value: $error('you must be an editor in order to perform this action')
