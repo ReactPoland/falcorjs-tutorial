@@ -19,7 +19,13 @@ class ImgUploader extends React.Component {
   }
 
   uploadFinished(uploadDetails) {
-    // here will be more code in a moment
+    let articlePicUrl = '/s3/img/'+uploadDetails.filename;
+    this.setState({ 
+      uploadProgress: null,
+      uploadDetails:  uploadDetails,
+      articlePicUrl: articlePicUrl
+    });
+    this.props.updateImgUrl(articlePicUrl);
   }
 
   render () {
