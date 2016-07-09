@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
-import MuiThemeProvider from 'material-ui/lib/MuiThemeProvider';
+import themeDecorator from 'material-ui/lib/styles/theme-decorator';
 import getMuiTheme from 'material-ui/lib/styles/getMuiTheme';
 import AppBar from 'material-ui/lib/app-bar';
 import Snackbar from 'material-ui/lib/snackbar';
@@ -100,7 +100,6 @@ class CoreLayout extends React.Component {
       </Link>);
 
     return (
-      <MuiThemeProvider muiTheme={muiTheme}>
         <div>
           {errorSnackbarJSX}
           <AppBar
@@ -110,9 +109,9 @@ class CoreLayout extends React.Component {
             <br/>
             {this.props.children}
         </div>
-      </MuiThemeProvider>
     );
   }
 }
+const muiCoreLayout = themeDecorator(getMuiTheme(null, { userAgent: 'all' }))(CoreLayout);
 
-export default connect(mapStateToProps, mapDispatchToProps)(CoreLayout);
+export default connect(mapStateToProps, mapDispatchToProps)(muiCoreLayout);
