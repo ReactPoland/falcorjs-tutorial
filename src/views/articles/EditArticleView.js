@@ -56,7 +56,10 @@ class EditArticleView extends React.Component {
         if(articleDetails) {
           this.setState({ 
             editedArticleID: articleID, 
-            articleDetails: articleDetails
+            articleDetails: articleDetails,
+            articlePicUrl: articleDetails.articlePicUrl,
+            contentJSON: articleDetails.articleContentJSON,
+            htmlContent: articleDetails.articleContent
           });
         } else {
           this.setState({
@@ -108,8 +111,10 @@ class EditArticleView extends React.Component {
       _id: currentArticleID,
       articleTitle: this.state.title,
       articleContent: this.state.htmlContent,
-      articleContentJSON: this.state.contentJSON
+      articleContentJSON: this.state.contentJSON,
+      articlePicUrl: this.state.articlePicUrl
     }
+
     console.info('editedArticle >>>', editedArticle);
     let editResults = await falcorModel
       .call(
@@ -123,6 +128,11 @@ class EditArticleView extends React.Component {
     console.info('editResults', editResults);
     this.props.articleActions.editArticle(editedArticle);
     this.setState({ articleEditSuccess: true });
+  }
+  updateImgUrl(articlePicUrl) {
+    this.setState({ 
+      articlePicUrl: articlePicUrl
+    });
   }
 
   render () {
@@ -155,12 +165,17 @@ class EditArticleView extends React.Component {
           name="editarticle"
           title="Edit an article"
           onChangeTextJSON={this._onDraftJSChange} />
-          <RaisedButton
-            onClick={this._articleEditSubmit}
-            secondary={true}
-            type="submit"
-            style={{margin: '10px auto', display: 'block', width: 150}}
-            label={'Submit Edition'} />
+
+        <div style={{margin: '10px 10px 10px 10px'}}> 
+          <ImgUploader updateImgUrl={this.updateImgUrl} articlePicUrl={this.state.articlePicUrl} />
+        </div>
+
+        <RaisedButton
+          onClick={this._articleEditSubmit}
+          secondary={true}
+          type="submit"
+          style={{margin: '10px auto', display: 'block', width: 150}}
+          label={'Submit Edition'} />
         <hr />
         <h1>Delete permamently this article</h1>
           <RaisedButton
