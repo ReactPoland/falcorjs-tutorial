@@ -35,7 +35,6 @@ export default ( req, res ) => {
   },{
     route: 'articles[{integers}]',
     get: (pathSet) => {
-      console.info('from route articles[{integers}] pathSet is >>>>>', pathSet);
       let articlesIndex = pathSet[1];
 
       /*return {
