@@ -75,7 +75,23 @@ class AddArticleView extends React.Component {
     this.setState({contentJSON, htmlContent});
   }
 
-    return (
+    render () {
+    if(this.state.newArticleID) {
+      return (
+        <div style={{height: '100%', width: '75%', margin: 'auto'}}>
+          <h3>Your new article ID is {this.state.newArticleID}</h3>
+          <Link to='/dashboard'>
+            <RaisedButton
+              secondary={true}
+              type="submit"
+              style={{margin: '10px auto', display: 'block', width: 150}}
+              label='Done' />
+          </Link>
+        </div>
+      );
+    }
+
+     return (
       <div style={{height: '100%', width: '75%', margin: 'auto'}}>
         <h1>Add Article</h1>
 
