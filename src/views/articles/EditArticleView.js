@@ -11,6 +11,7 @@ import WYSWIGeditor from '../../components/articles/WYSWIGeditor';
 import { stateToHTML } from 'draft-js-export-html';
 import RaisedButton from 'material-ui/lib/raised-button';
 import Popover from 'material-ui/lib/popover/popover';
+import ImgUploader from '../../components/articles/ImgUploader';
 
 const mapStateToProps = (state) => ({
   ...state
@@ -29,6 +30,7 @@ class EditArticleView extends React.Component {
     this._handleDeleteTap = this._handleDeleteTap.bind(this);
     this._handleDeletion = this._handleDeletion.bind(this);
     this._handleClosePopover = this._handleClosePopover.bind(this);
+    this.updateImgUrl = this.updateImgUrl.bind(this);
 
     this.state = {
       articleFetchError: null,
@@ -39,7 +41,8 @@ class EditArticleView extends React.Component {
       contentJSON: {},
       htmlContent: '',
       openDelete: false,
-      deleteAnchorEl: null
+      deleteAnchorEl: null,
+      articlePicUrl: '/static/placeholder.png'
     };
   }
   componentWillMount() {
