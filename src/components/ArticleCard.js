@@ -14,27 +14,28 @@ class ArticleCard extends React.Component {
   }
 
   render() {
-  let title = this.props.title || 'no title provided';
-  let content = this.props.content || 'no content provided';
+    let title = this.props.title || 'no title provided';
+    let content = this.props.content || 'no content provided';
+    let articlePicUrl = this.props.articlePicUrl || '/static/placeholder.png';
 
-  let paperStyle = {
-    padding: 10, 
-    width: '100%', 
-    height: 300
-  };
+    let paperStyle = {
+      padding: 10, 
+      width: '100%', 
+      height: 300
+    };
 
-  let leftDivStyle = {
-    width: '30%', 
-    float: 'left'
-  }
+    let leftDivStyle = {
+      width: '30%', 
+      float: 'left'
+    }
 
-  let rightDivStyle = {
-    width: '60%', 
-    float: 'left', 
-    padding: '10px 10px 10px 10px'
-  }
+    let rightDivStyle = {
+      width: '60%', 
+      float: 'left', 
+      padding: '10px 10px 10px 10px'
+    }
 
-  return (
+    return (
       <Paper style={paperStyle}>
         <CardHeader
           title={this.props.title}
@@ -46,7 +47,7 @@ class ArticleCard extends React.Component {
           <Card >
             <CardMedia
               overlay={<CardTitle title={title} subtitle="Overlay subtitle" />}>
-              <img src="/static/placeholder.png" height="190" />
+              <img src={articlePicUrl} height="190" />
             </CardMedia>
           </Card>
         </div>
@@ -54,6 +55,6 @@ class ArticleCard extends React.Component {
           <div dangerouslySetInnerHTML={{__html: content}} />
         </div>
       </Paper>);
-	}
+  }
 };
 export default ArticleCard;
