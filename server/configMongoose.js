@@ -9,11 +9,17 @@ const conf = {
 
 mongoose.connect(`mongodb://${conf.hostname}:${conf.port}/${conf.env}`);
 
+var defaultDraftJSobject = {
+    "blocks" : [],
+    "entityMap" : {}
+}
+
 var articleSchema = new Schema({
-    articleTitle: String,
-    articleContent: String,
-    articleContentJSON: Object,
-    articlePicUrl: { type: String, default: '/static/placeholder.png' }
+    articleTitle: { type: String, required: true, default: 'default article title' },
+    articleSubTitle: { type: String, required: true, default: '' },
+    articleContent: { type: String, required: true, default: '' },
+    articleContentJSON: { type: Object, required: true, default: defaultDraftJSobject },
+    articlePicUrl: { type: String, required: true, default: '/static/placeholder.png' }
   }, 
   { 
     minimize: false 
