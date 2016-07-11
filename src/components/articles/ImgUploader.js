@@ -43,7 +43,7 @@ class ImgUploader extends React.Component {
         maxHeight: 200, 
         margin: 'auto'
       };
-      imgUploadProgressJSX = <img src={this.state.articlePicUrl} style={articlePicStyles} />;
+      imgUploadProgressJSX = <img  src={this.state.articlePicUrl} style={articlePicStyles}  />;
     }
 
     let uploaderJSX = (
