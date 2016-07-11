@@ -11,6 +11,8 @@ import { Link } from 'react-router';
 import articleActions from '../../actions/article.js';
 import RaisedButton from 'material-ui/lib/raised-button';
 import ImgUploader from '../../components/articles/ImgUploader';
+import DefaultInput from '../../components/DefaultInput';
+import Formsy from 'formsy-react';
 
 
 const mapStateToProps = (state) => ({
@@ -37,9 +39,10 @@ class AddArticleView extends React.Component {
     };
   }
 
-  async _articleSubmit() {
+  async _articleSubmit(articleModel) {
     let newArticle = {
-      articleTitle: this.state.title,
+      articleTitle: articleModel.title,
+      articleSubTitle: articleModel.subTitle,
       articleContent: this.state.htmlContent,
       articleContentJSON: this.state.contentJSON,
       articlePicUrl: this.state.articlePicUrl
@@ -72,40 +75,36 @@ class AddArticleView extends React.Component {
     this.setState({contentJSON, htmlContent});
   }
 
-    render () {
-    if(this.state.newArticleID) {
-      return (
-        <div style={{height: '100%', width: '75%', margin: 'auto'}}>
-          <h3>Your new article ID is {this.state.newArticleID}</h3>
-          <Link to='/dashboard'>
-            <RaisedButton
-              secondary={true}
-              type="submit"
-              style={{margin: '10px auto', display: 'block', width: 150}}
-              label='Done' />
-          </Link>
-        </div>
-      );
-    }
-
     return (
       <div style={{height: '100%', width: '75%', margin: 'auto'}}>
         <h1>Add Article</h1>
-        <WYSWIGeditor
-          name="addarticle"
-          title="Create an article"
-          onChangeTextJSON={this._onDraftJSChange} />
 
-        <div style={{margin: '10px 10px 10px 10px'}}> 
-          <ImgUploader updateImgUrl={this.updateImgUrl} articlePicUrl={this.state.articlePicUrl} />
-        </div>
+        <Formsy.Form onSubmit={this._articleSubmit}>
+          <DefaultInput 
+            onChange={(event) => {}} 
+            name='title' 
+            title='Article Title (required)' required />
 
-        <RaisedButton
-          onClick={this._articleSubmit}
-          secondary={true}
-          type="submit"
-          style={{margin: '10px auto', display: 'block', width: 150}}
-          label={'Submit Article'} />
+          <DefaultInput 
+            onChange={(event) => {}} 
+            name='subTitle' 
+            title='Article Subtitle' />
+
+          <WYSWIGeditor
+            name="addarticle"
+            title="Create an article"
+            onChangeTextJSON={this._onDraftJSChange} />
+
+          <div style={{margin: '10px 10px 10px 10px'}}> 
+            <ImgUploader updateImgUrl={this.updateImgUrl} articlePicUrl={this.state.articlePicUrl} />
+          </div>
+
+          <RaisedButton
+            secondary={true}
+            type="submit"
+            style={{margin: '10px auto', display: 'block', width: 150}}
+            label={'Submit Article'} />
+        </Formsy.Form>
       </div>
     );
   }
