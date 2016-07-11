@@ -27,6 +27,15 @@ env(__dirname + '/.env');
 
 var app = express();
 
+
+
+app.server = http.createServer(app);
+
+
+
+// CORS - 3rd party middleware
+app.use(cors());
+
 app.use('/s3', s3router({
   bucket: process.env.AWS_BUCKET_NAME,
   region: process.env.AWS_REGION_NAME,
@@ -35,14 +44,11 @@ app.use('/s3', s3router({
   ACL: 'public-read'
 }));
 
-app.server = http.createServer(app);
-
-// CORS - 3rd party middleware
-app.use(cors());
-
 // This is required by falcor-express middleware to work correctly with falcor-browser
 app.use(bodyParser.json({extended: false}));
 app.use(bodyParser.urlencoded({extended: false}));
+
+
 
 app.use('/static', express.static('dist'));
 
