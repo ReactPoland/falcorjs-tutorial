@@ -33,11 +33,17 @@ class PublishingApp extends React.Component {
       });
 
     let articles = await falcorModel.
-      get(['articles', {from: 0, to: articlesLength-1}, ['_id','articleTitle', 'articleContent', 'articleContentJSON']]). 
-      then(function(articlesResponse) {  
-        
+      get(['articles', {from: 0, to: articlesLength-1}, ['_id','articleTitle', 'articleContent', 'articleContentJSON', 'articlePicUrl']]). 
+      then((articlesResponse) => {  
         return articlesResponse.json.articles;
+      }).catch(e => {
+        console.debug(e);
+        return 500;
       });
+
+    if(articles === 500) {
+      return;
+    }
 
     this.props.articleActions.articlesList(articles);
   }
@@ -45,12 +51,13 @@ class PublishingApp extends React.Component {
   render () {
 
     let articlesJSX = [];
-    this.props.article.forEach((articleDetails, articleKey) => {
+     this.props.article.forEach((articleDetails, articleKey) => {
       let currentArticleJSX = (
         <div key={articleKey}>
           <ArticleCard 
             title={articleDetails.articleTitle}
-            content={articleDetails.articleContent} />
+            content={articleDetails.articleContent} 
+            articlePicUrl={articleDetails.articlePicUrl} />
         </div>
       );
 
