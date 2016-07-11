@@ -29,21 +29,23 @@ class DashboardView extends React.Component {
   }
 
   render () {
+    let articlesJSX = [];
+    this.props.article.forEach((articleDetails, articleKey) => {
+      console.log('articleKey>>>>', articleKey);
+      let articlePicUrl = articleDetails.articlePicUrl || '/static/placeholder.png';
+      let currentArticleJSX = (
+        <Link key={articleKey} to={`/edit-article/${articleDetails['_id']}`}>
+          <ListItem
+            
+            leftAvatar={<img src={articlePicUrl} width="50" height="50" />}
+            primaryText={articleDetails.articleTitle}
+            secondaryText={articleDetails.articleContent}
+          />
+        </Link>
+      );
 
-  let articlesJSX = [];
-  this.props.article.forEach((articleDetails, articleKey) => {
-    let currentArticleJSX = (
-      <Link to={`/edit-article/${articleDetails['_id']}`} key={articleKey} >
-        <ListItem
-          leftAvatar={<img src="/static/placeholder.png" width="50" height="50" />}
-          primaryText={articleDetails.articleTitle}
-          secondaryText={articleDetails.articleContent}
-        />
-      </Link>
-    );
-
-    articlesJSX.push(currentArticleJSX);
-  });
+      articlesJSX.push(currentArticleJSX);
+    });
     return (
       <div style={{height: '100%', width: '75%', margin: 'auto'}}>
         <Link to='/add-article'>
