@@ -32,13 +32,14 @@ class DashboardView extends React.Component {
     let articlesJSX = [];
     this.props.article.forEach((articleDetails, articleKey) => {
       let articlePicUrl = articleDetails.articlePicUrl || '/static/placeholder.png';
+      let articleContentPlanText = articleDetails.articleContent.replace(/<\/?[^>]+(>|$)/g, "");
       let currentArticleJSX = (
-        <Link to={`/edit-article/${articleDetails['_id']}`} key={articleKey}>
+        <Link key={articleKey} to={`/edit-article/${articleDetails['_id']}`}>
           <ListItem
             
             leftAvatar={<img src={articlePicUrl} width="50" height="50" />}
             primaryText={articleDetails.articleTitle}
-            secondaryText={articleDetails.articleContent}
+            secondaryText={articleContentPlanText}
           />
         </Link>
       );
