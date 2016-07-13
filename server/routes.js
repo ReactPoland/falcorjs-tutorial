@@ -163,7 +163,7 @@ export default ( req, res ) => {
 
       return article.save(function (err, data) {
         if (err) {
-          console.info("ERROR", err);
+          console.info("ERROR on update", err);
           return err;
         }
       }).then ((res) => {
