@@ -16,7 +16,6 @@ import * as hist  from 'history';
 import rootReducer from '../src/reducers';
 import reactRoutes from '../src/routes';
 import fetchServerSide from './fetchServerSide';
-import env from 'node-env-file';
 import s3router from 'react-s3-uploader/s3router';
 
 // Load any undefined ENV variables form a specified file. 
