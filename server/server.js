@@ -18,8 +18,7 @@ import reactRoutes from '../src/routes';
 import fetchServerSide from './fetchServerSide';
 import s3router from 'react-s3-uploader/s3router';
 
-// Load any undefined ENV variables form a specified file. 
-env(__dirname + '/.env');
+
 
 
 
